@@ -8,12 +8,23 @@ import kegiatan2 from "../../assets/gimage.jpeg";
 import kegiatan3 from "../../assets/gimage.jpeg";
 import kegiatan4 from "../../assets/gimage.jpeg";
 import kegiatan5 from "../../assets/gimage.jpeg";
-import backgroundImage from "../../assets/bg.png";
+import backgroundImage from "../../assets/bgsementara2.jpg";
 import sponsor1 from "../../assets/corel.png";
 import sponsor2 from "../../assets/corel.png";
 import sponsor3 from "../../assets/corel.png";
 import sponsor4 from "../../assets/corel.png";
 import sponsor5 from "../../assets/corel.png";// Ganti dengan path gambar yang sesuai
+import mediaPartner1 from "../../assets/corel.png";
+import mediaPartner2 from "../../assets/corel.png"; // Ganti dengan path gambar yang sesuai
+import mediaPartner3 from "../../assets/corel.png";
+import mediaPartner4 from "../../assets/corel.png"; // Ganti dengan path gambar yang sesuai
+import mediaPartner5 from "../../assets/corel.png";
+import mediaPartner6 from "../../assets/corel.png";
+import mediaPartner7 from "../../assets/corel.png";
+import mediaPartner8 from "../../assets/corel.png";
+import mediaPartner9 from "../../assets/corel.png";
+import mediaPartner10 from "../../assets/corel.png"; // Ganti dengan path gambar yang sesuai
+
 
 const Deskripsi = () => {
   return (
@@ -108,7 +119,7 @@ const Deskripsi = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
           {/* Teks di sebelah kiri */}
           <div className="w-full lg:pr-9 lg:ml-6">
-          <h1 className="font-bold text-5xl lg:text-5xl leading-tight mb-4 lg:mb-6 text-purple-700">
+          <h1 className="font-bold text-5xl lg:text-5xl leading-tight mb-4 lg:mb-6 text-white">
               Karya Tulis Ilmiah
             </h1>
             <p className="text-lg lg:text-l mb-5 lg:mb-8 text-justify text-white">
@@ -151,7 +162,7 @@ const Deskripsi = () => {
           
           {/* Teks di sebelah kiri */}
           <div className="w-full lg:pr-9 lg:-ml-9">
-          <h1 className="font-bold text-5xl lg:text-5xl leading-tight mb-4 lg:mb-6 text-purple-700">
+          <h1 className="font-bold text-5xl lg:text-5xl leading-tight mb-4 lg:mb-6 text-white">
               Olimpiade CBT
             </h1>
             <p className="text-lg lg:text-l mb-5 lg:mb-8 text-justify text-white">
@@ -184,8 +195,8 @@ const Deskripsi = () => {
                 { name: "Gama", role: "CP1", phone: "+6281234567890" },
                 { name: "Angel", role: "CP2", phone: "+6281345678901" },
               ],
-              color: "bg-blue-100",
-              textColor: "text-blue-700", // Warna teks untuk KTI
+              color: "bg-purple-300",
+              textColor: "text-[#1E0038]", // Warna teks untuk KTI
             },
             {
               title: "CBT",
@@ -193,8 +204,8 @@ const Deskripsi = () => {
                 { name: "Raka", role: "CP1", phone: "+6281298765432" },
                 { name: "Nina", role: "CP2", phone: "+6281387654321" },
               ],
-              color: "bg-green-100",
-              textColor: "text-green-700", // Warna teks untuk CBT
+              color: "bg-purple-300",
+              textColor: "text-[#1E0038]", // Warna teks untuk CBT
             },
           ].map((section, index) => (
             <div
@@ -268,7 +279,7 @@ const Deskripsi = () => {
           Sponsor
         </h2>
         <div className="flex justify-center">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-14">
+          <div className="grid grid-cols-2 mt-4 sm:grid-cols-5 gap-14">
             {[sponsor1, sponsor2, sponsor3, sponsor4, sponsor5].map((sponsor, index) => (
               <div 
                 key={index} 
@@ -277,6 +288,27 @@ const Deskripsi = () => {
                 <img 
                   src={sponsor} 
                   alt={`Sponsor ${index + 1}`} 
+                  className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Media Partner Section */}
+      <div className="mt-20 max-w-screen-xl mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-8 text-white">Media Partner</h2>
+        <div className="flex justify-center">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-14 mt-4">
+            {[mediaPartner1, mediaPartner2, mediaPartner3, mediaPartner4, mediaPartner5, mediaPartner6, mediaPartner7, mediaPartner8, mediaPartner9, mediaPartner10].map((partner, index) => (
+              <div 
+                key={index} 
+                className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl"
+              >
+                <img 
+                  src={partner} 
+                  alt={`Media Partner ${index + 1}`} 
                   className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain"
                 />
               </div>
