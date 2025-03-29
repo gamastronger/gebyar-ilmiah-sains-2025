@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import bgwelcome2 from "../../assets/bgwelcome2.png";
 
 const Instagram = () => {
   const portfolioItems = [
@@ -50,7 +51,15 @@ const Instagram = () => {
   };
 
   return (
-    <div className="bg-[#03346E] py-16 pt-0 md:pt-6 pb-0 -mb-1">
+    <section
+          className="px-6 py-16 lg:py-11 h-90"
+          style={{
+            backgroundImage: `url(${bgwelcome2})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+    >
       <h2 className="text-center text-4xl sm:text-5xl font-sans font-bold text-white mb-4 md:mb-8">
         Desain Instagram
       </h2>
@@ -96,7 +105,7 @@ const Instagram = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

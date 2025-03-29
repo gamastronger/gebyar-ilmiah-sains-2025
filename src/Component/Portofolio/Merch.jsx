@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import bgwelcome from "../../assets/bgwelcome.png";
 
 const Merch = () => {
   const portfolioItems = [
@@ -50,7 +51,15 @@ const Merch = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-[#03346E] to-[#021526] py-16 pt-0 md:pt-6 pb-5 md:pb-12 lg:pb-20 -mb-1">
+    <section
+          className="px-6 py-16 lg:py-10 h-87"
+          style={{
+            backgroundImage: `url(${bgwelcome})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+    >
       <h2 className="text-center text-4xl sm:text-5xl font-sans font-bold text-white mb-4 md:mb-8">
         Desain Merchandise
       </h2>
@@ -96,7 +105,7 @@ const Merch = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

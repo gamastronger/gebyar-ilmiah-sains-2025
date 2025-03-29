@@ -1,128 +1,292 @@
 import foto4 from "../../assets/gimage.jpeg";
-import corel from "../../assets/corel.png";
-import ilustrator from "../../assets/ilustrator.png";
-import indesign from "../../assets/indesign.png";
-import netflixLogo from "../../assets/photoshop.png";
-import Inkscape from "../../assets/Inkscape.png";
-import affinity from "../../assets/affinity.png";
-import poster from "../../assets/poster bawah.png";
-import kualitas from "../../assets/iquliaty.png";
-import profesional from "../../assets/iprofesional.png";
-import kreatif from "../../assets/ikreatif.png";
-import totalitas from "../../assets/itotality.png";
-import ontime from "../../assets/iontime.png";
-import fastrespon from "../../assets/iresponse.png";
+// import poster from "../../assets/poster bawah.png";
+import facebookLogo from "../../assets/facebooklogo.png";
+import instagramLogo from "../../assets/instagramlogo.png";
+import twitterLogo from "../../assets/linkedlogo.png";
+import kegiatan1 from "../../assets/gimage.jpeg";
+import kegiatan2 from "../../assets/gimage.jpeg";
+import kegiatan3 from "../../assets/gimage.jpeg";
+import kegiatan4 from "../../assets/gimage.jpeg";
+import kegiatan5 from "../../assets/gimage.jpeg";
+import backgroundImage from "../../assets/bg.png";
+import sponsor1 from "../../assets/corel.png";
+import sponsor2 from "../../assets/corel.png";
+import sponsor3 from "../../assets/corel.png";
+import sponsor4 from "../../assets/corel.png";
+import sponsor5 from "../../assets/corel.png";// Ganti dengan path gambar yang sesuai
 
 const Deskripsi = () => {
   return (
-    <div className="bg-gradient-to-tr from-[#FFFFFF] from-60% via-[#BDE2FF] via-80% to-[#FFFFFF] to-90% text-black py-16 px-8 lg:px-16">
-      {/* Header Section */}
+    <div
+      id="deskripsi"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover', // Cover the entire area
+        backgroundPosition: 'center', // Center the image
+      }}
+      className="text-black py-16 px-8 lg:px-16"
+    >
+      {/* Social Media Section */}
       <div className="max-w-screen-xl mx-auto">
+        <div className="flex flex-col items-center gap-8">
+          {/* Gambar di tengah */}
+          <h1 className="font-bold text-4xl lg:text-5xl leading-tight mb-2 lg:mb-2 text-white font-[Arial Sans]">
+            Poster
+          </h1>
+          <div className="lg:w-[350px]">
+            <img
+              src={foto4}
+              alt="Grafistix Hero"
+              className="w-full h-auto rounded-lg shadow-xl hover:scale-105 transition-transform"
+            />
+          </div>
+
+          {/* Sosial Media */}
+          <div className="grid grid-cols-3 gap-8 justify-center mt-0">
+            {/* Facebook */}
+            <div className="flex flex-col items-center">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-110 hover:rotate-6 transition-transform"
+              >
+                <img
+                  src={facebookLogo}
+                  alt="Facebook"
+                  className="w-11 h-11"
+                />
+              </a>
+              <span className="mt-2 text-s font-semibold text-[#4267B2]">
+                Facebook
+              </span>
+            </div>
+
+            {/* Twitter */}
+            <div className="flex flex-col items-center">
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-110 hover:rotate-6 transition-transform"
+              >
+                <img
+                  src={twitterLogo}
+                  alt="Twitter"
+                  className="w-11 h-11"
+                />
+              </a>
+              <span className="mt-2 text-sm font-semibold text-[#1DA1F2]">
+                Twitter
+              </span>
+            </div>
+
+            {/* Instagram */}
+            <div className="flex flex-col items-center">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-110 hover:rotate-6 transition-transform"
+              >
+                <img
+                  src={instagramLogo}
+                  alt="Instagram"
+                  className="w-11 h-11"
+                />
+              </a>
+              <span className="mt-2 text-sm font-semibold text-[#E1306C]">
+                Instagram
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Deskripsi Lomba */}
+      <div className="max-w-screen-xl mt-20 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
           {/* Teks di sebelah kiri */}
-          <div>
-            <h1 className="font-bold text-5xl lg:text-6xl leading-tight mb-4 lg:mb-8 text-[#0D255E]">
-              Jasa Desain Grafis & Manipulasi Foto
+          <div className="w-full lg:pr-9 lg:ml-6">
+          <h1 className="font-bold text-5xl lg:text-5xl leading-tight mb-4 lg:mb-6 text-purple-700">
+              Karya Tulis Ilmiah
             </h1>
-            <p className="text-lg lg:text-xl mb-5 lg:mb-8 text-justify">
-              Jasa Desain Grafis berpengalaman yang menangani klien dari berbagai daerah. Kami melayani secara online dan tatap muka langsung.
+            <p className="text-lg lg:text-l mb-5 lg:mb-8 text-justify text-white">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+              eget felis eget nunc lacinia lacinia. Nullam nec nunc nec
+              nunceget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
             </p>
-            <button className="bg-[#151F38] text-white px-6 py-3 rounded-full font-semibold hover:scale-105 hover:bg-[#18334F] hover:text-[#0089C4] transition text-align: center">
-              Selengkapnya
-            </button>
+            <div className="flex flex-row gap-4 w-full">
+              <button className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#18334F] hover:text-[#0089C4] transition text-center">
+                Daftar
+              </button>
+              <button className="bg-[#4FA3D1] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] hover:text-[#FFFFFF] transition text-center">
+                Login
+              </button>
+            </div>
           </div>
 
           {/* Gambar di sebelah kanan */}
-          <div className="lg:w-[480px]">
-            <img src={foto4} alt="Grafistix Hero" className="w-full h-auto rounded-lg shadow-xl hover:scale-105 transition-transform" />
-          </div>
-        </div>
-      </div>
-
-      {/* Logo Section */}
-      <div className="max-w-screen-xl mx-auto py-12">
-        <div className="place-items-center items-center grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 justify-center">
-          <img src={corel} alt="CorelDraw" className="w-24 h-auto transform transition duration-300 hover:scale-110" />
-          <img src={ilustrator} alt="Ilustrator" className="w-24 h-auto transform transition duration-300 hover:scale-110" />
-          <img src={indesign} alt="Indesign" className="w-24 h-auto transform transition duration-300 hover:scale-110" />
-          <img src={netflixLogo} alt="Photoshop" className="w-24 h-auto transform transition duration-300 hover:scale-110" />
-          <img src={Inkscape} alt="Inkscape" className="w-24 h-auto transform transition duration-300 hover:scale-110" />
-          <img src={affinity} alt="Affinity Designer" className="w-24 h-auto transform transition duration-300 hover:scale-110" />
-        </div>
-        <p className="border border-[#38BDF8] bg-[#E5F6FF] text-[#1D2B50] p-6 rounded-lg flex flex-col items-center justify-center h-24 font-sans text-center text-lg lg:text-xl mt-11 text-[#03346E]">
-          Software terbaik yang membantu Grafistix untuk menciptakan Desain dan berinovasi
-        </p>
-      </div>
-
-      {/* Why Grafistix Section */}
-      <div className="mt-0 text-center">
-        <h2 className="font-bold text-3xl lg:text-5xl mb-5 lg:mb-8 text-[#03346E]">
-          Kenapa harus Grafistix?
-        </h2>
-        <p className="text-lg lg:text-xl mb-8 lg:mb-12 max-w-2xl mx-auto">
-          Kami adalah pilihan tepat untuk Anda yang membutuhkan desain grafis profesional, kreatif, dan berkualitas. Dengan layanan cepat dan hasil yang memuaskan.
-        </p>
-
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            {
-              title: "Berkualitas",
-              description: "Grafistix menyediakan layanan desain grafis berkualitas tinggi dengan fokus pada kreativitas, keahlian, dan kepuasan klien.",
-              icon: kualitas,
-            },
-            {
-              title: "Profesional",
-              description: "Di Grafistix, kami menjamin layanan desain grafis yang profesional, didukung oleh tim ahli yang berkomitmen untuk memenuhi kebutuhan klien dengan tepat dan efisien.",
-              icon: profesional,
-            },
-            {
-              title: "Kreatif",
-              description: "Grafistix mengedepankan kekreatifan dalam setiap proyek desain grafis, menciptakan solusi unik yang memperkuat identitas dan visi merek klien.",
-              icon: kreatif,
-            },
-            {
-              title: "Totalitas",
-              description: "Di Grafistix, kami berkomitmen pada totalitas layanan desain grafis, memastikan setiap detail dikerjakan dengan dedikasi penuh untuk mencapai hasil terbaik bagi klien.",
-              icon: totalitas,
-            },
-            {
-              title: "On Time",
-              description: "Grafistix selalu mengutamakan penyelesaian proyek desain grafis tepat waktu, memastikan kepuasan klien tanpa mengorbankan kualitas.",
-              icon: ontime,
-            },
-            {
-              title: "Fast Response",
-              description: "Grafistix memberikan layanan desain grafis dengan fast response, siap merespon kebutuhan klien dengan cepat dan efisien.",
-              icon: fastrespon,
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="border border-[#38BDF8] bg-[#E5F6FF] text-[#1D2B50] hover:bg-[#D6F1FF] hover:text-black p-6 rounded-lg flex flex-col items-lg items-center justify-center h-58 shadow-lg transition-transform hover:scale-105"
-            >
-              <img src={item.icon} alt={item.title} className="w-12 h-auto mb-4" />
-              <h3 className="font-bold text-xl lg:text-2xl mb-2">{item.title}</h3>
-              <p className="text-sm lg:text-base text-center text-black">
-                {item.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Team Section */}
-      <div className="mt-14 md:mt-13 text-center">
-        <div className="mt-5 flex justify-center mx-auto text-[#021526] text-xs md:text-xl">
-          <div className="text-center">
+          <div className="lg:w-[400px] w-full lg:ml-19">
             <img
-              className="h-[150px] md:h-[100px] lg:h-[398px] w-30 mx-auto rounded-lg shadow-lg hover:scale-105 transition-transform"
-              src={poster}
-              alt="Refa Setyagama Abdillah"
+              src={foto4}
+              alt="Grafistix Hero"
+              className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:rotate-3"
             />
           </div>
         </div>
       </div>
+
+      {/* Deskripsi Lomba */}
+      <div className="max-w-screen-xl mt-20 mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+          {/* Gambar di sebelah kanan */}
+          <div className="lg:w-[400px] w-full lg:ml-9">
+            <img
+              src={foto4}
+              alt="Grafistix Hero"
+              className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:rotate-3"
+            />
+          </div>
+          
+          {/* Teks di sebelah kiri */}
+          <div className="w-full lg:pr-9 lg:-ml-9">
+          <h1 className="font-bold text-5xl lg:text-5xl leading-tight mb-4 lg:mb-6 text-purple-700">
+              Olimpiade CBT
+            </h1>
+            <p className="text-lg lg:text-l mb-5 lg:mb-8 text-justify text-white">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+              eget felis eget nunc lacinia lacinia. Nullam nec nunc nec
+              nunceget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
+            </p>
+            <div className="flex flex-row gap-4 w-full">
+              <button className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#18334F] hover:text-[#0089C4] transition text-center">
+                Daftar
+              </button>
+              <button className="bg-[#4FA3D1] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] hover:text-[#FFFFFF] transition text-center">
+                Login
+              </button>
+            </div>
+          </div>          
+        </div>
+      </div>
+
+      {/* Contact Person Section */}
+      <div className="mt-20 max-w-screen-xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-12 text-white">
+          Contact Person
+        </h2>
+        <div className="px-8 grid grid-cols-1 md:grid-cols-2 gap-9">
+          {[
+            {
+              title: "KTI",
+              contacts: [
+                { name: "Gama", role: "CP1", phone: "+6281234567890" },
+                { name: "Angel", role: "CP2", phone: "+6281345678901" },
+              ],
+              color: "bg-blue-100",
+              textColor: "text-blue-700", // Warna teks untuk KTI
+            },
+            {
+              title: "CBT",
+              contacts: [
+                { name: "Raka", role: "CP1", phone: "+6281298765432" },
+                { name: "Nina", role: "CP2", phone: "+6281387654321" },
+              ],
+              color: "bg-green-100",
+              textColor: "text-green-700", // Warna teks untuk CBT
+            },
+          ].map((section, index) => (
+            <div
+              key={index}
+              className={`p-6 rounded-lg shadow-lg ${section.color}`}
+            >
+              <h3
+                className={`text-2xl font-bold text-center mb-4 ${section.textColor}`}
+              >
+                {section.title}
+              </h3>
+              <div className="space-y-4">
+                {section.contacts.map((contact, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between bg-white text-black p-4 rounded-lg shadow-md"
+                  >
+                    <div>
+                      <p className="text-lg font-semibold">{contact.name}</p>
+                      <p className="text-sm text-gray-500">{contact.role}</p>
+                    </div>
+                    <a
+                      href={`https://wa.me/${contact.phone.replace(/\+/g, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-green-500 text-white px-2 py-2 rounded-lg font-semibold hover:bg-green-600 transition"
+                    >
+                      WhatsApp
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+  
+      {/* Dokumentasi Kegiatan */}
+      <div className="mt-20 max-w-screen-xl mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-8 text-white">
+          Dokumentasi Kegiatan
+        </h2>
+        <div className="relative">
+          {/* Kontainer Scroll */}
+          <div
+            className="flex flex-row space-x-4 py-4 overflow-x-auto scrollbar-hide"
+            style={{
+              scrollbarWidth: "none", // Untuk browser modern
+              msOverflowStyle: "none", // Untuk Internet Explorer
+            }}
+          >
+            {[kegiatan1, kegiatan2, kegiatan3, kegiatan4, kegiatan5].map((imgSrc, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-[250px] h-[150px] sm:w-[300px] sm:h-[200px] relative group transition-transform duration-300"
+              >
+                <img
+                  src={imgSrc}
+                  alt={`Kegiatan ${index + 1}`}
+                  className="w-full h-full object-cover rounded-lg shadow-lg group-hover:scale-105 group-hover:shadow-2xl transition-all duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Sponsor Section */}
+      <div className="mt-20 max-w-screen-xl mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-8 text-white">
+          Sponsor
+        </h2>
+        <div className="flex justify-center">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-14">
+            {[sponsor1, sponsor2, sponsor3, sponsor4, sponsor5].map((sponsor, index) => (
+              <div 
+                key={index} 
+                className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl"
+              >
+                <img 
+                  src={sponsor} 
+                  alt={`Sponsor ${index + 1}`} 
+                  className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
   );
 };

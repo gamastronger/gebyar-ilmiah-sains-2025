@@ -6,7 +6,7 @@ import logo4 from "../../assets/imglogo/postlog4.png";
 import logo5 from "../../assets/imglogo/postlog5.png";
 import logo6 from "../../assets/imglogo/postlog6.png";
 import logo7 from "../../assets/imglogo/postlog7.png";
-import bglogo from "../../assets/bgwelcome2.png"; 
+import bglogo from "../../assets/bgwelcome2.png";
 
 
 const Logo = () => {
@@ -39,7 +39,7 @@ const Logo = () => {
 
   return (
     <section
-          className="px-6 py-16 lg:py-10"
+          className="px-6 py-16 lg:py-10 h-87"
           style={{
             backgroundImage: `url(${bglogo})`,
             backgroundSize: "cover",
