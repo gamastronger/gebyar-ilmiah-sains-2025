@@ -1,31 +1,28 @@
 import { Link } from "react-router-dom";
+import facebookLogo from "../assets/facebooklogo.png";
+import instagramLogo from "../assets/instagramlogo.png";
+import twitterLogo from "../assets/linkedlogo.png";
 
 const Footer = () => {
   return (
-    <footer className="text-justify bg-gradient-to-r from-[#021526] via-[#03346e] to-[#021526] text-white py-10 px-8 lg:px-16">
+    <footer className="text-justify bg-[#290040] text-white py-10 px-8 lg:px-16">
       <div className="max-w-screen-xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Tentang Kami */}
           <div>
-            <h3 className="text-2xl font-semibold mb-4">Grafistix</h3>
+            <h3 className="text-2xl font-semibold mb-4">About GIS</h3>
             <p className="text-sm mb-4">
-              Kami menyediakan solusi desain grafis yang cepat, kreatif, dan
-              terjangkau dengan jaminan kepuasan.
-            </p>
-            <p className="text-sm">
-              Dapatkan desain berkualitas untuk kebutuhan Anda dengan layanan
-              yang profesional.
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam placeat laboriosam earum cumque quidem odit. Sunt fuga alias quo, in laudantium at non accusamus reiciendis ut, sapiente necessitatibus, fugit similique!
             </p>
           </div>
 
           {/* Layanan Kami */}
-          <div>
-            <h3 className="text-2xl font-semibold mb-4">Layanan Kami</h3>
+          <div className="pl-4">
+            <h3 className="text-2xl font-semibold mb-4">GIS Competition</h3>
             <ul className="space-y-1">
               {[
-                { name: "Desain Logo", icon: "🎨" },
-                { name: "Desain Banner", icon: "🖼" },
-                { name: "Desain Instagram", icon: "📱" },
-                { name: "Desain Merchandise", icon: "🎁" },
+                { name: "Karya Tulis Ilmiah", icon: "📄" },
+                { name: "Olimpiade CBT", icon: "🏆" },
               ].map((service, index) => (
                 <li key={index} className="flex items-center">
                   <span className="text-lg">{service.icon}</span>
@@ -42,7 +39,7 @@ const Footer = () => {
 
           {/* Kontak */}
           <div>
-            <h3 className="text-2xl font-semibold mb-4">Kontak</h3>
+            <h3 className="text-2xl font-semibold mb-4">Contact</h3>
             <ul className="space-y-1">
               <li className="flex items-center">
                 <span className="text-lg">✉</span>
@@ -71,15 +68,14 @@ const Footer = () => {
 
           {/* Berlangganan */}
           <div>
-            <h3 className="text-2xl font-semibold mb-4">Berlangganan</h3>
+            <h3 className="text-2xl font-semibold mb-4">Contact us</h3>
             <p className="text-sm mb-4">
-              Dapatkan tips desain, penawaran, dan update terbaru langsung ke
-              inbox Anda.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum! Quod, cumque.
             </p>
             <div className="flex space-x-2">
               <Link to="/Pemesanan">
                 <button className="bg-[#6eacda] hover:bg-[#e2e2b6] text-black font-bold py-2 px-10 rounded-full transition duration-300">
-                  Mulai
+                  Get in Touch
                 </button>
               </Link>
             </div>
@@ -95,22 +91,22 @@ const Footer = () => {
           </p>
 
           {/* Social Media */}
-          <ul className="flex space-x-6">
+          <ul className="flex space-x-6 items-center">
             {[
               {
                 name: "Facebook",
-                icon: "/path/to/facebook-icon.svg",
+                icon: facebookLogo,
                 url: "https://facebook.com",
               },
               {
                 name: "Instagram",
-                icon: "/path/to/instagram-icon.svg",
+                icon: instagramLogo,
                 url: "https://instagram.com",
               },
               {
-                name: "LinkedIn",
-                icon: "/path/to/linkedin-icon.svg",
-                url: "https://linkedin.com",
+                name: "Twitter",
+                icon: twitterLogo,
+                url: "https://twitter.com",
               },
             ].map((social, index) => (
               <li key={index}>
@@ -129,10 +125,6 @@ const Footer = () => {
               </li>
             ))}
           </ul>
-
-          <button className="bg-[#6eacda] hover:bg-[#e2e2b6] text-black font-bold py-2 px-6 rounded-full transition duration-300">
-            Konsultasi Gratis
-          </button>
         </div>
       </div>
     </footer>

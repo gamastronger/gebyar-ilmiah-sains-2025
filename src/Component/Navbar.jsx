@@ -21,8 +21,8 @@ const Navbar = () => {
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium font-[Arial Sans]">
           <a href="/" className="hover:text-[#4FA3D1] transition duration-300">Home</a>
-          <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Tentang KTI</a>
-          <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Tentang CBT</a>
+          <a href="layanan" className="hover:text-[#4FA3D1] transition duration-300">Tentang KTI</a>
+          <a href="pemesanan" className="hover:text-[#4FA3D1] transition duration-300">Tentang CBT</a>
           <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Contact</a>
           <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Twibbon</a>
           <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Buku Panduan</a>
