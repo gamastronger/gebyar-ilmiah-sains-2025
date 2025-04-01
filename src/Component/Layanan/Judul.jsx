@@ -14,7 +14,7 @@ const DeskripsiLomba = () => {
                           alt="Grafistix Hero"
                           className="w-80 h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:rotate-3"
                       />
-                      <p className="text-white text-lg font-semibold mt-5 bg-[#512DA8] px-4 py-2 rounded-lg shadow-md">Rp.100.000 per team</p>
+                      <p className="text-white text-lg font-semibold mt-5 bg-[#512DA8] px-4 py-2 rounded-lg shadow-md">Rp.100.000/team</p>
                   </div>
 
                     {/* Teks di sebelah kiri */}

@@ -1,3 +1,4 @@
+import * as motion from "motion/react-client";
 import foto4 from "../../assets/gimage.jpeg";
 // import poster from "../../assets/poster bawah.png";
 import facebookLogo from "../../assets/facebooklogo.png";
@@ -8,22 +9,22 @@ import kegiatan2 from "../../assets/gimage.jpeg";
 import kegiatan3 from "../../assets/gimage.jpeg";
 import kegiatan4 from "../../assets/gimage.jpeg";
 import kegiatan5 from "../../assets/gimage.jpeg";
-import backgroundImage from "../../assets/bgsementara2.jpg";
-import sponsor1 from "../../assets/corel.png";
-import sponsor2 from "../../assets/corel.png";
-import sponsor3 from "../../assets/corel.png";
-import sponsor4 from "../../assets/corel.png";
-import sponsor5 from "../../assets/corel.png";// Ganti dengan path gambar yang sesuai
-import mediaPartner1 from "../../assets/corel.png";
-import mediaPartner2 from "../../assets/corel.png"; // Ganti dengan path gambar yang sesuai
-import mediaPartner3 from "../../assets/corel.png";
-import mediaPartner4 from "../../assets/corel.png"; // Ganti dengan path gambar yang sesuai
-import mediaPartner5 from "../../assets/corel.png";
-import mediaPartner6 from "../../assets/corel.png";
-import mediaPartner7 from "../../assets/corel.png";
-import mediaPartner8 from "../../assets/corel.png";
-import mediaPartner9 from "../../assets/corel.png";
-import mediaPartner10 from "../../assets/corel.png"; // Ganti dengan path gambar yang sesuai
+import backgroundImage from "../../assets/bgsementara2.jpg"; // Ganti dengan path gambar yang sesuai
+import sponsor1 from "../../assets/gimage.jpeg";
+import sponsor2 from "../../assets/gimage.jpeg";
+import sponsor3 from "../../assets/gimage.jpeg";
+import sponsor4 from "../../assets/gimage.jpeg";
+import sponsor5 from "../../assets/gimage.jpeg"; // Ganti dengan path gambar yang sesuai
+import mediaPartner1 from "../../assets/gimage.jpeg";
+import mediaPartner2 from "../../assets/gimage.jpeg"; // Ganti dengan path gambar yang sesuai
+import mediaPartner3 from "../../assets/gimage.jpeg";
+import mediaPartner4 from "../../assets/gimage.jpeg"; // Ganti dengan path gambar yang sesuai
+import mediaPartner5 from "../../assets/gimage.jpeg";
+import mediaPartner6 from "../../assets/gimage.jpeg";
+import mediaPartner7 from "../../assets/gimage.jpeg";
+import mediaPartner8 from "../../assets/gimage.jpeg";
+import mediaPartner9 from "../../assets/gimage.jpeg";
+import mediaPartner10 from "../../assets/gimage.jpeg"; // Ganti dengan path gambar yang sesuai
 
 
 const Deskripsi = () => {
@@ -45,10 +46,13 @@ const Deskripsi = () => {
             Poster
           </h1>
           <div className="lg:w-[350px]">
-            <img
+            <motion.img
               src={foto4}
               alt="Grafistix Hero"
               className="w-full h-auto rounded-lg shadow-xl hover:scale-105 transition-transform"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
             />
           </div>
 
@@ -139,10 +143,13 @@ const Deskripsi = () => {
 
           {/* Gambar di sebelah kanan */}
           <div className="lg:w-[400px] w-full lg:ml-19">
-            <img
+            <motion.img
               src={foto4}
               alt="Grafistix Hero"
               className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:rotate-3"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
             />
           </div>
         </div>
@@ -153,10 +160,13 @@ const Deskripsi = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
           {/* Gambar di sebelah kanan */}
           <div className="lg:w-[400px] w-full lg:ml-9">
-            <img
+            <motion.img
               src={foto4}
               alt="Grafistix Hero"
               className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:rotate-3"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
             />
           </div>
           
@@ -188,58 +198,7 @@ const Deskripsi = () => {
           Contact Person
         </h2>
         <div className="px-8 grid grid-cols-1 md:grid-cols-2 gap-9">
-          {[
-            {
-              title: "KTI",
-              contacts: [
-                { name: "Gama", role: "CP1", phone: "+6281234567890" },
-                { name: "Angel", role: "CP2", phone: "+6281345678901" },
-              ],
-              color: "bg-purple-300",
-              textColor: "text-[#1E0038]", // Warna teks untuk KTI
-            },
-            {
-              title: "CBT",
-              contacts: [
-                { name: "Raka", role: "CP1", phone: "+6281298765432" },
-                { name: "Nina", role: "CP2", phone: "+6281387654321" },
-              ],
-              color: "bg-purple-300",
-              textColor: "text-[#1E0038]", // Warna teks untuk CBT
-            },
-          ].map((section, index) => (
-            <div
-              key={index}
-              className={`p-6 rounded-lg shadow-lg ${section.color}`}
-            >
-              <h3
-                className={`text-2xl font-bold text-center mb-4 ${section.textColor}`}
-              >
-                {section.title}
-              </h3>
-              <div className="space-y-4">
-                {section.contacts.map((contact, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between bg-white text-black p-4 rounded-lg shadow-md"
-                  >
-                    <div>
-                      <p className="text-lg font-semibold">{contact.name}</p>
-                      <p className="text-sm text-gray-500">{contact.role}</p>
-                    </div>
-                    <a
-                      href={`https://wa.me/${contact.phone.replace(/\+/g, "")}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-green-500 text-white px-2 py-2 rounded-lg font-semibold hover:bg-green-600 transition"
-                    >
-                      WhatsApp
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+          {[ /* Contact sections */ ]}
         </div>
       </div>
   
@@ -252,20 +211,16 @@ const Deskripsi = () => {
           {/* Kontainer Scroll */}
           <div
             className="flex flex-row space-x-4 py-4 overflow-x-auto scrollbar-hide"
-            style={{
-              scrollbarWidth: "none", // Untuk browser modern
-              msOverflowStyle: "none", // Untuk Internet Explorer
-            }}
           >
             {[kegiatan1, kegiatan2, kegiatan3, kegiatan4, kegiatan5].map((imgSrc, index) => (
-              <div
-                key={index}
-                className="flex-shrink-0 w-[250px] h-[150px] sm:w-[300px] sm:h-[200px] relative group transition-transform duration-300"
-              >
-                <img
+              <div key={index} className="flex-shrink-0 w-[250px] h-[150px] sm:w-[300px] sm:h-[200px] relative group transition-transform duration-300">
+                <motion.img
                   src={imgSrc}
                   alt={`Kegiatan ${index + 1}`}
                   className="w-full h-full object-cover rounded-lg shadow-lg group-hover:scale-105 group-hover:shadow-2xl transition-all duration-300"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1 }}
                 />
               </div>
             ))}
@@ -281,15 +236,8 @@ const Deskripsi = () => {
         <div className="flex justify-center">
           <div className="grid grid-cols-2 mt-4 sm:grid-cols-5 gap-14">
             {[sponsor1, sponsor2, sponsor3, sponsor4, sponsor5].map((sponsor, index) => (
-              <div 
-                key={index} 
-                className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl"
-              >
-                <img 
-                  src={sponsor} 
-                  alt={`Sponsor ${index + 1}`} 
-                  className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain"
-                />
+              <div key={index} className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl">
+                <img src={sponsor} alt={`Sponsor ${index + 1}`} className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain" />
               </div>
             ))}
           </div>
@@ -302,22 +250,13 @@ const Deskripsi = () => {
         <div className="flex justify-center">
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-14 mt-4">
             {[mediaPartner1, mediaPartner2, mediaPartner3, mediaPartner4, mediaPartner5, mediaPartner6, mediaPartner7, mediaPartner8, mediaPartner9, mediaPartner10].map((partner, index) => (
-              <div 
-                key={index} 
-                className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl"
-              >
-                <img 
-                  src={partner} 
-                  alt={`Media Partner ${index + 1}`} 
-                  className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain"
-                />
+              <div key={index} className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl">
+                <img src={partner} alt={`Media Partner ${index + 1}`} className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain" />
               </div>
             ))}
           </div>
         </div>
       </div>
-
-
 
     </div>
   );
