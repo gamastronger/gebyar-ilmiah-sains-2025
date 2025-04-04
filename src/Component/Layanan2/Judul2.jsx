@@ -1,9 +1,9 @@
-import React from 'react';
+
 import foto4 from '../../assets/gimage.jpeg'; // Ganti dengan path gambar yang sesuai
 
 const DeskripsiLomba = () => {
     return (
-        <div className="w-full bg-[#18334F] py-16">
+        <div className="w-full bg-[#210034] py-16">
             <div className="max-w-screen-xl mx-auto px-2 lg:px-20"> {/* Kurangi padding di sini */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-2">
 

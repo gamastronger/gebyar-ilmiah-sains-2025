@@ -24,7 +24,7 @@ const Navbar = () => {
           <a href="layanan" className="hover:text-[#4FA3D1] transition duration-300">Tentang KTI</a>
           <a href="layanan2" className="hover:text-[#4FA3D1] transition duration-300">Tentang CBT</a>
           <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Contact</a>
-          <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Twibbon</a>
+          <a href="portofolio" className="hover:text-[#4FA3D1] transition duration-300">Twibbon</a>
           <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Buku Panduan</a>
         </div>
 

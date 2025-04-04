@@ -76,7 +76,7 @@ const TiltCard = ({ children }) => {
         }}
         className="absolute inset-4 grid place-content-center rounded-xl bg-white shadow-lg"
       >
-        {children}
+        {children || <p>No content provided</p>}
       </div>
     </motion.div>
   );
@@ -241,21 +241,23 @@ const Deskripsi = () => {
         <h2 className="text-4xl font-bold text-center mb-12 text-white">
           Contact Person
         </h2>
-        <div className="px-8 grid grid-cols-1 md:grid-cols-2 gap-9 text-white]">
-          {[{
-            title: "KTI",
-            contacts : [
-              { name: "Gama", role: "CP1", phone: "+6281234567890" },
-              { name: "Angel", role: "CP2", phone: "+6281345678901" },
-            ],
-          },
-          {
-            title: "CBT",
-            contacts: [
-              { name: "Raka", role: "CP1", phone: "+6281298765432" },
-              { name: "Nina", role: "CP2", phone: "+6281387654321" },
-            ],
-          }].map((section, index) => (
+        <div className="px-8 grid grid-cols-1 md:grid-cols-2 gap-9 text-white">
+          {[
+            {
+              title: "KTI",
+              contacts: [
+                { name: "Gama", role: "CP1", phone: "+6281234567890" },
+                { name: "Angel", role: "CP2", phone: "+6281345678901" },
+              ],
+            },
+            {
+              title: "CBT",
+              contacts: [
+                { name: "Raka", role: "CP1", phone: "+6281298765432" },
+                { name: "Nina", role: "CP2", phone: "+6281387654321" },
+              ],
+            },
+          ].map((section, index) => (
             <motion.div
               key={index}
               className="p-6 rounded-lg shadow-lg bg-[#31004d]"
@@ -268,23 +270,25 @@ const Deskripsi = () => {
               </h3>
               <div className="space-y-4">
                 {section.contacts.map((contact, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between bg-[#420066] text-white p-4 rounded-lg shadow-md"
-                  >
-                    <div>
-                      <p className="text-lg font-semibold">{contact.name}</p>
-                      <p className="text-sm text-gray-500">{contact.role}</p>
-                    </div>
-                    <a
-                      href={`https://wa.me/${contact.phone.replace(/\+/g, "")}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-green-500 text-white px-2 py-2 rounded-lg font-semibold hover:bg-green-600 hover:scale-105 transition-transform transition"
+                  contact.name && contact.role && contact.phone ? (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between bg-[#420066] text-white p-4 rounded-lg shadow-md"
                     >
-                      WhatsApp
-                    </a>
-                  </div>
+                      <div>
+                        <p className="text-lg font-semibold">{contact.name}</p>
+                        <p className="text-sm text-gray-500">{contact.role}</p>
+                      </div>
+                      <a
+                        href={`https://wa.me/${contact.phone.replace(/\+/g, "")}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-2 py-2 rounded-lg font-semibold hover:bg-green-600 hover:scale-105 transition-transform transition"
+                      >
+                        WhatsApp
+                      </a>
+                    </div>
+                  ) : null
                 ))}
               </div>
             </motion.div>
