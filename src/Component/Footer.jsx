@@ -84,13 +84,8 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 my-8"></div>
 
-        {/* Tombol */}
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <p className="text-sm text-center md:text-left">
-            © {new Date().getFullYear()} Grafistix. All rights reserved.
-          </p>
-
-          {/* Social Media */}
+        {/* Sosial Media Paling Bawah - Center */}
+        <div className="w-full flex justify-center mt-4">
           <ul className="flex space-x-6 items-center">
             {[
               {

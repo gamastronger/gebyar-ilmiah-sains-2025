@@ -15,7 +15,7 @@ import sponsor2 from "../../assets/gimage.jpeg";
 import sponsor3 from "../../assets/gimage.jpeg";
 import sponsor4 from "../../assets/gimage.jpeg";
 import sponsor5 from "../../assets/gimage.jpeg";
-import mediaPartner1 from "../../assets/gimage.jpeg";
+import mediaPartner1 from "../../assets/imglogo/postlog5.png";
 import mediaPartner2 from "../../assets/gimage.jpeg";
 import mediaPartner3 from "../../assets/gimage.jpeg";
 import mediaPartner4 from "../../assets/gimage.jpeg";
@@ -96,15 +96,32 @@ const Deskripsi = () => {
       {/* POSTER */}
       <motion.div
         className="max-w-screen-xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        viewport={{ once: true, amount: 0.2 }} // muncul saat 20% elemennya terlihat
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <div className="flex flex-col items-center gap-8">
-          <h1 className="font-bold text-4xl lg:text-5xl leading-tight mb-2 text-white font-[Arial Sans]">
+
+          {/* Judul */}
+          <motion.h1
+            className="font-bold text-4xl lg:text-5xl leading-tight mb-2 text-white font-[Arial Sans]"
+            initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          >
             Poster
-          </h1>
-          <div className="bg-whitelg:w-[290px]">
+          </motion.h1>
+
+          {/* Gambar Poster */}
+          <motion.div
+            className="bg-whitelg:w-[290px]"
+            initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          >
             <TiltCard>
               <img
                 src={jajal}
@@ -112,7 +129,7 @@ const Deskripsi = () => {
                 className="w-full h-auto rounded-lg shadow-xl"
               />
             </TiltCard>
-          </div>
+          </motion.div>
 
           {/* Sosial Media */}
           <div className="grid grid-cols-3 gap-8 justify-center mt-0">
@@ -124,9 +141,14 @@ const Deskripsi = () => {
               <motion.div
                 key={index}
                 className="flex flex-col items-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.6 + index * 0.2,
+                  ease: "easeOut",
+                }}
               >
                 <a
                   href="#"
@@ -148,97 +170,107 @@ const Deskripsi = () => {
         </div>
       </motion.div>
 
-      {/* Deskripsi Lomba */}
-      <motion.div
-        className="max-w-screen-xl mt-20 mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
-          {/* Teks di sebelah kiri */}
-          <div className="w-full lg:pr-9 lg:ml-6">
-            <h1 className="font-bold text-5xl leading-tight mb-4 text-white">
-              Karya Tulis Ilmiah
-            </h1>
-            <p className="text-lg mb-5 text-justify text-white">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-              eget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
-            </p>
-            <div className="flex flex-row gap-4 w-full">
-              <button className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#18334F] hover:text-[#0089C4] transition text-center">
-                Daftar
-              </button>
-              <button className="bg-[#4FA3D1] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] hover:text-[#FFFFFF] transition text-center">
-                Login
-              </button>
-            </div>
-          </div>
-
-          {/* Gambar di sebelah kanan */}
-          <div className="hover:scale-105 transition-transform lg:w-[400px] w-full lg:ml-19">
-            <motion.img
-              src={foto4}
-              alt="Grafistix Hero"
-              className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:rotate-3"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-            />
-          </div>
-        </div>
-      </motion.div>
 
       {/* Deskripsi Lomba */}
       <motion.div
-        className="max-w-screen-xl mt-20 mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
-          {/* Gambar di sebelah kanan */}
-          <div className="hover:scale-105 transition-transform lg:w-[400px] w-full lg:ml-9">
-            <motion.img
-              src={foto4}
-              alt="Grafistix Hero"
-              className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:rotate-3"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-            />
-          </div>
-          
-          {/* Teks di sebelah kiri */}
-          <div className="w-full lg:pr-9 lg:-ml-9">
-            <h1 className="font-bold text-5xl lg:text-5xl leading-tight mb-4 lg:mb-6 text-white">
-              Olimpiade CBT
-            </ h1>
-            <p className="text-lg lg:text-l mb-5 lg:mb-8 text-justify text-white">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-              eget felis eget nunc lacinia lacinia. Nullam nec nunc nec
-              nunceget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
-            </p>
-            <div className="flex flex-row gap-4 w-full">
-              <button className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#18334F] hover:text-[#0089C4] transition text-center">
-                Daftar
-              </button>
-              <button className="bg-[#4FA3D1] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] hover:text-[#FFFFFF] transition text-center">
-                Login
-              </button>
-            </div>
-          </div>          
-        </div>
-      </motion.div>
+  className="max-w-screen-xl mt-20 mx-auto"
+  initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+>
+  <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+    {/* Teks */}
+    <div className="w-full lg:pr-9 lg:ml-6">
+      <h1 className="font-bold text-5xl leading-tight mb-4 text-white">
+        Karya Tulis Ilmiah
+      </h1>
+      <p className="text-lg mb-5 text-justify text-white">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+        eget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
+      </p>
+      <div className="flex flex-row gap-4 w-full">
+        <button className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#18334F] hover:text-[#0089C4] transition text-center">
+          Daftar
+        </button>
+        <button className="bg-[#4FA3D1] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] hover:text-[#FFFFFF] transition text-center">
+          Login
+        </button>
+      </div>
+    </div>
+
+    {/* Gambar */}
+    <motion.div
+      className="hover:scale-105 transition-transform lg:w-[400px] w-full lg:ml-19"
+      initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <img
+        src={foto4}
+        alt="Grafistix Hero"
+        className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:rotate-3"
+      />
+    </motion.div>
+  </div>
+</motion.div>
+
+      {/* Deskripsi Lomba */}
+      <motion.div
+  className="max-w-screen-xl mt-20 mx-auto"
+  initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+>
+  <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+    {/* Gambar */}
+    <motion.div
+      className="hover:scale-105 transition-transform lg:w-[400px] w-full lg:ml-9"
+      initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <img
+        src={foto4}
+        alt="Grafistix Hero"
+        className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:rotate-3"
+      />
+    </motion.div>
+
+    {/* Teks */}
+    <div className="w-full lg:pr-9 lg:-ml-9">
+      <h1 className="font-bold text-5xl lg:text-5xl leading-tight mb-4 lg:mb-6 text-white">
+        Olimpiade CBT
+      </h1>
+      <p className="text-lg lg:text-l mb-5 lg:mb-8 text-justify text-white">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+        eget felis eget nunc lacinia lacinia. Nullam nec nunc nec
+        nunceget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
+      </p>
+      <div className="flex flex-row gap-4 w-full">
+        <button className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#18334F] hover:text-[#0089C4] transition text-center">
+          Daftar
+        </button>
+        <button className="bg-[#4FA3D1] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] hover:text-[#FFFFFF] transition text-center">
+          Login
+        </button>
+      </div>
+    </div>
+  </div>
+</motion.div>
 
       {/* Contact Person Section */}
       <motion.div
-        id="contact-person" // Tambahkan ID di sini
-        className="mt-20 max-w-screen-xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+  id="contact-person"
+  className="mt-20 max-w-screen-xl mx-auto"
+  initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+>
         <h2 className="text-4xl font-bold text-center mb-12 text-white">
           Contact Person
         </h2>
@@ -299,94 +331,87 @@ const Deskripsi = () => {
   
       {/* Dokumentasi Kegiatan */}
       <motion.div
-        className="mt-20 max-w-screen-xl mx-auto px-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h2 className="text-4xl font-bold text-center mb-8 text-white">
-          Dokumentasi Kegiatan
-        </h2>
-        <div className="relative">
-          {/* Tombol Navigasi Kiri */}
-          <button
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 z-10"
-            onClick={() => {
-              const container = document.getElementById("scroll-container");
-              if (container) {
-                container.scrollBy({ left: -300, behavior: "smooth" });
-              }
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
+  className="mt-20 max-w-screen-xl mx-auto px-6"
+  initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+>
+  <h2 className="text-4xl font-bold text-center mb-8 text-white">Dokumentasi Kegiatan</h2>
 
-          {/* Tombol Navigasi Kanan */}
-          <button
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 z-10"
-            onClick={() => {
-              const container = document.getElementById("scroll-container");
-              if (container) {
-                container.scrollBy({ left: 300, behavior: "smooth" });
-              }
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+  {/* Scroll Container Ref */}
+  {(() => {
+    const scrollRef = useRef(null);
+    const itemWidth = 295 + 16; // Gambar (295px) + gap (16px)
 
-          {/* Kontainer Scroll */}
-          <div
-            id="scroll-container"
-            className="flex flex-row space-x-4 py-4 overflow-x-auto scrollbar-hide"
-            style={{
-              scrollbarWidth: "none", // Untuk browser modern
-              msOverflowStyle: "none", // Untuk Internet Explorer
-              scrollBehavior: "smooth", // Transisi smooth
-            }}
-          >
-            {[kegiatan1, kegiatan2, kegiatan3, kegiatan4, kegiatan5].map((imgSrc, index) => (
-              <motion.div
-                key={index}
-                className="flex-shrink-0 w-[250px] h-[150px] sm:w-[300px] sm:h-[200px] relative group transition-transform duration-300"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              >
-                <img
-                  src={imgSrc}
-                  alt={`Kegiatan ${index + 1}`}
-                  className="w-full h-full object-cover rounded-lg shadow-lg group-hover:scale-105 group-hover:shadow-2xl transition-all duration-300"
-                />
-              </motion.div>
-            ))}
-          </div>
+    return (
+      <div className="relative">
+        {/* Tombol Navigasi Kiri */}
+        <button
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 z-10"
+          onClick={() => {
+            if (scrollRef.current) {
+              scrollRef.current.scrollBy({ left: -itemWidth, behavior: "smooth" });
+            }
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        {/* Tombol Navigasi Kanan */}
+        <button
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 z-10"
+          onClick={() => {
+            if (scrollRef.current) {
+              scrollRef.current.scrollBy({ left: itemWidth, behavior: "smooth" });
+            }
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        {/* Kontainer Scroll */}
+        <div
+          ref={scrollRef}
+          className="mx-auto w-[920px] max-w-full flex space-x-4 py-4 overflow-x-auto scrollbar-hide scroll-smooth"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {[kegiatan1, kegiatan2, kegiatan3, kegiatan4, kegiatan5].map((imgSrc, index) => (
+            <motion.div
+              key={index}
+              className="flex-shrink-0 w-[295px] h-[200px] relative group transition-transform duration-300"
+              initial={{ opacity: 0, scale: 1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+            >
+              <img
+                src={imgSrc}
+                alt={`Kegiatan ${index + 1}`}
+                className="w-full h-full object-cover rounded-lg shadow-lg group-hover:scale-105 group-hover:shadow-2xl transition-all duration-300"
+              />
+            </motion.div>
+          ))}
         </div>
-      </motion.div>
+      </div>
+    );
+  })()}
+</motion.div>
+
 
       {/* Sponsor Section */}
       <motion.div
-        className="mt-20 max-w-screen-xl mx-auto px-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+         className="mt-20 max-w-screen-xl mx-auto px-6"
+         initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+         viewport={{ once: true, amount: 0.2 }}
+         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <h2 className="text-4xl font-bold text-center mb-8 text-white">
           Sponsor
@@ -413,33 +438,41 @@ const Deskripsi = () => {
       </motion.div>
 
       {/* Media Partner Section */}
-      <motion.div
-        className="mt-20 max-w-screen-xl mx-auto px-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h2 className="text-4xl font-bold text-center mb-8 text-white">Media Partner</h2>
-        <div className="flex justify-center">
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-14 mt-4">
-            {[mediaPartner1, mediaPartner2, mediaPartner3, mediaPartner4, mediaPartner5, mediaPartner6, mediaPartner7, mediaPartner8, mediaPartner9, mediaPartner10].map((partner, index) => (
-              <motion.div 
-                key={index} 
-                className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              >
-                <img 
-                  src={partner} 
-                  alt={`Media Partner ${index + 1}`} 
-                  className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain"
-                />
-              </motion.div>
-            ))}
+<div className="mt-20 max-w-screen-xl mx-auto px-6 overflow-hidden">
+  <h2 className="text-4xl font-bold text-center mb-8 text-white">Media Partner</h2>
+
+  <div className="relative w-full overflow-hidden">
+    <motion.div
+      className="flex gap-14 w-max"
+      animate={{ x: ["0%", "-50%"] }}
+      transition={{
+        repeat: Infinity,
+        duration: 20, // Ubah durasi sesuai kecepatan yang diinginkan
+        ease: "linear",
+      }}
+    >
+      {/* Duplikasi isi agar bisa seamless */}
+      {[...Array(2)].flatMap((_, i) =>
+        [
+          mediaPartner1, mediaPartner2, mediaPartner3, mediaPartner4, mediaPartner5,
+          mediaPartner6, mediaPartner7, mediaPartner8, mediaPartner9, mediaPartner10
+        ].map((partner, index) => (
+          <div
+            key={`${i}-${index}`}
+            className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl shrink-0"
+          >
+            <img
+              src={partner}
+              alt={`Media Partner ${index + 1}`}
+              className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain"
+            />
           </div>
-        </div>
-      </motion.div>
+        ))
+      )}
+    </motion.div>
+  </div>
+</div>
+
     </div>
   );
 };

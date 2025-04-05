@@ -1,12 +1,25 @@
 import logo from "../assets/unesaputih.png";
 import { useState } from "react";
-import { Link } from "react-scroll";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
+  };
+
+  const handleScrollToContact = () => {
+    if (location.pathname === "/") {
+      const element = document.getElementById("contact-person");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate("/#contact-person");
+    }
   };
 
   return (
@@ -22,23 +35,16 @@ const Navbar = () => {
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium font-[Arial Sans]">
           <a href="/" className="hover:text-[#4FA3D1] transition duration-300">Home</a>
-          <a href="layanan" className="hover:text-[#4FA3D1] transition duration-300">Tentang KTI</a>
-          <a href="layanan2" className="hover:text-[#4FA3D1] transition duration-300">Tentang CBT</a>
-          <Link
-            to="contact-person" // ID yang ditargetkan
-            smooth={true} // Animasi scroll halus
-            duration={800} // Durasi scroll dalam milidetik
-            className="hover:text-[#4FA3D1] transition duration-300 cursor-pointer"
-          >
-            Contact
-          </Link>
-          <a href="twibbon" className="hover:text-[#4FA3D1] transition duration-300">Twibbon</a>
-          <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Buku Panduan</a>
+          <a href="/layanan" className="hover:text-[#4FA3D1] transition duration-300">Tentang KTI</a>
+          <a href="/layanan2" className="hover:text-[#4FA3D1] transition duration-300">Tentang CBT</a>
+          <span onClick={handleScrollToContact} className="hover:text-[#4FA3D1] transition duration-300 cursor-pointer">Contact</span>
+          <a href="/twibbon" className="hover:text-[#4FA3D1] transition duration-300">Twibbon</a>
+          
         </div>
 
         {/* Hamburger Icon for Mobile */}
         <button className="block md:hidden" onClick={handleSidebar}>
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
@@ -50,7 +56,7 @@ const Navbar = () => {
           <div className="absolute top-0 right-0 w-72 h-full bg-[#1E293B] bg-opacity-90 shadow-lg p-6 rounded-l-2xl backdrop-blur-lg transition-transform duration-300 ease-in-out">
             {/* Close Button */}
             <button className="flex justify-end mb-4" onClick={handleSidebar}>
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </button>
@@ -61,6 +67,7 @@ const Navbar = () => {
               <li><a href="/klien" onClick={handleSidebar} className="hover:text-[#4FA3D1] transition duration-300">Klien</a></li>
               <li><a href="/layanan" onClick={handleSidebar} className="hover:text-[#4FA3D1] transition duration-300">Layanan</a></li>
               <li><a href="/pemesanan" onClick={handleSidebar} className="hover:text-[#4FA3D1] transition duration-300">Pemesanan</a></li>
+              <li><span onClick={() => { handleSidebar(); handleScrollToContact(); }} className="cursor-pointer hover:text-[#4FA3D1] transition duration-300">Contact</span></li>
             </ul>
           </div>
         </aside>

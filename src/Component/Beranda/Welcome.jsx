@@ -3,19 +3,74 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import bgwelcome from "../../assets/bgsementara.jpg";
 
+// Efek Glitch
+const GlitchEffect = () => (
+  <motion.div
+    className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+    animate={{ y: ["-10%", "10%"] }}
+    transition={{
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    <motion.div
+      className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/30 to-transparent"
+      animate={{ opacity: [0.1, 0.3, 0.1] }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+    />
+  </motion.div>
+);
+
+// Variants animasi teks
+const wordContainer = {
+  hidden: { opacity: 0 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.5 * i },
+  }),
+};
+
+const wordItem = {
+  hidden: { opacity: 0, y: 20, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      ease: "easeOut",
+      duration: 0.4,
+    },
+  },
+};
+
 const Welcome = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [textAnimFinished, setTextAnimFinished] = useState(false);
+  const [shineActive, setShineActive] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
+    const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Trigger shine setelah animasi teks selesai
+  useEffect(() => {
+    if (textAnimFinished) {
+      setTimeout(() => {
+        setShineActive(true);
+      }, 300); // jeda kecil setelah animasi selesai
+    }
+  }, [textAnimFinished]);
+
+  const title = "Gebyar Ilmiah Sains";
+  const paragraph =
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum odio ex quo dolore sunt labore eligendi repellendus ducimus accusamus?";
 
   return (
     <div>
@@ -29,7 +84,9 @@ const Welcome = () => {
         }}
         className="relative px-6 py-16 lg:py-24 flex flex-col items-center justify-center overflow-hidden"
       >
-        {/* Efek Angin Keunguan Tipis */}
+        <GlitchEffect />
+
+        {/* Angin Keunguan Tipis */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <motion.div
             className="absolute top-[-50%] left-0 w-full h-full bg-gradient-to-b from-purple-400/10 via-purple-300/10 to-purple-400/10 blur-2xl"
@@ -43,34 +100,75 @@ const Welcome = () => {
         </div>
 
         {/* Konten Teks */}
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="mt-8 container mx-auto flex flex-col items-center justify-center text-center relative z-10"
-        >
+        <motion.div className="mt-8 container mx-auto flex flex-col items-center justify-center text-center relative z-10">
           <motion.h1
-            className="text-5xl lg:text-8xl text-white font-bold mb-8 leading-tight"
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
+            className="text-5xl lg:text-8xl text-white font-bold mb-8 leading-tight flex flex-wrap justify-center"
+            variants={wordContainer}
+            initial="hidden"
+            animate="visible"
+            onAnimationComplete={() => setTextAnimFinished(true)}
           >
-            Gebyar Ilmiah Sains
+            {title.split(" ").map((word, index) => (
+              <motion.span
+                key={index}
+                variants={wordItem}
+                className="relative mx-1 inline-block"
+              >
+                {word}
+
+                {/* Shine hanya setelah animasi selesai & hanya di kata pertama */}
+                {shineActive && index === 0 && (
+  <motion.span
+    initial={{ 
+      left: "-20%", 
+      opacity: 0, 
+      filter: "blur(6px)" 
+    }}
+    animate={{ 
+      left: "150%", 
+      opacity: [0, 1, 0], 
+      filter: ["blur(6px)", "blur(0px)", "blur(6px)"] 
+    }}
+    transition={{
+      delay: 1.8, // 🔥 delay sebelum animasi mulai
+      duration: 1.8,
+      ease: "easeInOut",
+    }}
+    className="absolute top-0 left-0 w-[180%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] pointer-events-none"
+    style={{ zIndex: 10 }}
+  />
+)}
+
+
+              </motion.span>
+            ))}
           </motion.h1>
+
+          {/* Animasi paragraf per kata */}
           <motion.p
-            className="text-lg lg:text-xl mb-4 lg:mb-8 text-justify text-white px-4 lg:px-8 max-w-3xl"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.2, delay: 0.8 }}
+            className="text-lg lg:text-xl mb-4 lg:mb-8 text-justify text-white px-4 lg:px-8 max-w-3xl flex flex-wrap justify-center"
+            variants={wordContainer}
+            initial="hidden"
+            animate="visible"
+            custom={2}
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum odio ex quo dolore sunt labore eligendi repellendus ducimus accusamus?
+            {paragraph.split(" ").map((word, index) => (
+              <motion.span
+                key={index}
+                variants={wordItem}
+                className="mx-[2px] inline-block"
+              >
+                {word}
+              </motion.span>
+            ))}
           </motion.p>
         </motion.div>
 
         {/* Scroll Down Button */}
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          initial={{ y: -30, opacity: 0, filter: "blur(4px)" }}
+          animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1, delay: 3.5, ease: "easeOut" }}
           className="relative z-10"
         >
           <Link
