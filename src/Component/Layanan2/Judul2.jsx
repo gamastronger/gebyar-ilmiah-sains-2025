@@ -31,7 +31,7 @@ const DeskripsiLomba = () => {
                             <button className="bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#512DA8] transition">
                                 Daftar
                             </button>
-                            <button className="bg-[#4FA3D1] text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] transition">
+                            <button className="bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] transition">
                                 Login
                             </button>
                         </div>

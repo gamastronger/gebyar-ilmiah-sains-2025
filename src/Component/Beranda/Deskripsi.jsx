@@ -233,6 +233,7 @@ const Deskripsi = () => {
 
       {/* Contact Person Section */}
       <motion.div
+        id="contact-person" // Tambahkan ID di sini
         className="mt-20 max-w-screen-xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -307,18 +308,64 @@ const Deskripsi = () => {
           Dokumentasi Kegiatan
         </h2>
         <div className="relative">
+          {/* Tombol Navigasi Kiri */}
+          <button
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 z-10"
+            onClick={() => {
+              const container = document.getElementById("scroll-container");
+              if (container) {
+                container.scrollBy({ left: -300, behavior: "smooth" });
+              }
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Tombol Navigasi Kanan */}
+          <button
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 z-10"
+            onClick={() => {
+              const container = document.getElementById("scroll-container");
+              if (container) {
+                container.scrollBy({ left: 300, behavior: "smooth" });
+              }
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
           {/* Kontainer Scroll */}
           <div
+            id="scroll-container"
             className="flex flex-row space-x-4 py-4 overflow-x-auto scrollbar-hide"
             style={{
               scrollbarWidth: "none", // Untuk browser modern
               msOverflowStyle: "none", // Untuk Internet Explorer
+              scrollBehavior: "smooth", // Transisi smooth
             }}
           >
             {[kegiatan1, kegiatan2, kegiatan3, kegiatan4, kegiatan5].map((imgSrc, index) => (
               <motion.div
                 key={index}
-                className="flex-shrink-0 w-[250px] h-[150px] sm:w-[300px] sm:h-[200px] relative group transition -transform duration-300"
+                className="flex-shrink-0 w-[250px] h-[150px] sm:w-[300px] sm:h-[200px] relative group transition-transform duration-300"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}

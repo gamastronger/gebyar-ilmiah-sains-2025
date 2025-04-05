@@ -1,5 +1,6 @@
 import logo from "../assets/unesaputih.png";
 import { useState } from "react";
+import { Link } from "react-scroll";
 
 const Navbar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -23,8 +24,15 @@ const Navbar = () => {
           <a href="/" className="hover:text-[#4FA3D1] transition duration-300">Home</a>
           <a href="layanan" className="hover:text-[#4FA3D1] transition duration-300">Tentang KTI</a>
           <a href="layanan2" className="hover:text-[#4FA3D1] transition duration-300">Tentang CBT</a>
-          <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Contact</a>
-          <a href="portofolio" className="hover:text-[#4FA3D1] transition duration-300">Twibbon</a>
+          <Link
+            to="contact-person" // ID yang ditargetkan
+            smooth={true} // Animasi scroll halus
+            duration={800} // Durasi scroll dalam milidetik
+            className="hover:text-[#4FA3D1] transition duration-300 cursor-pointer"
+          >
+            Contact
+          </Link>
+          <a href="twibbon" className="hover:text-[#4FA3D1] transition duration-300">Twibbon</a>
           <a href="#" className="hover:text-[#4FA3D1] transition duration-300">Buku Panduan</a>
         </div>
 

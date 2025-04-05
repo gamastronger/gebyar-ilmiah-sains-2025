@@ -27,9 +27,22 @@ const Welcome = () => {
           backgroundRepeat: "no-repeat",
           height: "100vh",
         }}
-        className="px-6 py-16 lg:py-24 flex flex-col items-center justify-center overflow-hidden relative"
+        className="relative px-6 py-16 lg:py-24 flex flex-col items-center justify-center overflow-hidden"
       >
-        {/* Konten */}
+        {/* Efek Angin Keunguan Tipis */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <motion.div
+            className="absolute top-[-50%] left-0 w-full h-full bg-gradient-to-b from-purple-400/10 via-purple-300/10 to-purple-400/10 blur-2xl"
+            animate={{ y: ["-100%", "100%"] }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
+
+        {/* Konten Teks */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -83,47 +96,6 @@ const Welcome = () => {
             </svg>
           </Link>
         </motion.div>
-
-        {/* Efek Animasi Real-Time */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* Lingkaran Cahaya Bergerak */}
-          <motion.div
-            className="absolute w-48 h-48 bg-purple-500 rounded-full opacity-50 blur-2xl"
-            animate={{
-              x: [0, 200, -200, 0],
-              y: [0, -100, 100, 0],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute w-32 h-32 bg-blue-500 rounded-full opacity-40 blur-2xl"
-            animate={{
-              x: [100, -150, 150, -100],
-              y: [-50, 100, -100, 50],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute w-64 h-64 bg-indigo-500 rounded-full opacity-30 blur-3xl"
-            animate={{
-              x: [-200, 200, -200],
-              y: [100, -100, 100],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        </div>
       </motion.section>
     </div>
   );
