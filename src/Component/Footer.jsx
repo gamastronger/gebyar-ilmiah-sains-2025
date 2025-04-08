@@ -44,10 +44,10 @@ const Footer = () => {
               <li className="flex items-center">
                 <span className="text-lg">✉</span>
                 <a
-                  href="mailto:info@grafistix.com"
+                  href="mailto:gis@gmail.com"
                   className="ml-3 hover:text-[#6eacda] transition duration-300"
                 >
-                  info@grafistix.com
+                  gis@gmail.com
                 </a>
               </li>
               <li className="flex items-center">
@@ -74,7 +74,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-2">
               <Link to="/Pemesanan">
-                <button className="bg-[#6eacda] hover:bg-[#e2e2b6] text-black font-bold py-2 px-10 rounded-full transition duration-300">
+                <button className="bg-[#512DA8] hover:bg-[#e2e2b6] text-white font-bold py-2 px-10 rounded-full transition duration-300">
                   Get in Touch
                 </button>
               </Link>

@@ -190,10 +190,10 @@ const Deskripsi = () => {
         eget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
       </p>
       <div className="flex flex-row gap-4 w-full">
-        <button className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#18334F] hover:text-[#0089C4] transition text-center">
+        <button className="bg-[#480079] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#9800ff] hover:text-[#FFFFFF] transition text-center">
           Daftar
         </button>
-        <button className="bg-[#4FA3D1] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] hover:text-[#FFFFFF] transition text-center">
+        <button className="bg-[#480079] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#9800ff] hover:text-[#FFFFFF] transition text-center">
           Login
         </button>
       </div>
@@ -251,10 +251,10 @@ const Deskripsi = () => {
         nunceget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
       </p>
       <div className="flex flex-row gap-4 w-full">
-        <button className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#18334F] hover:text-[#0089C4] transition text-center">
+        <button className="bg-[#480079] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#9800ff] hover:text-[#FFFFFF] transition text-center">
           Daftar
         </button>
-        <button className="bg-[#4FA3D1] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] hover:text-[#FFFFFF] transition text-center">
+        <button className="bg-[#480079] text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#9800ff] hover:text-[#FFFFFF] transition text-center">
           Login
         </button>
       </div>
@@ -348,7 +348,7 @@ const Deskripsi = () => {
       <div className="relative">
         {/* Tombol Navigasi Kiri */}
         <button
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 z-10"
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:bg-[#5a0098] hover:shadow-xl transition-all duration-300 z-10"
           onClick={() => {
             if (scrollRef.current) {
               scrollRef.current.scrollBy({ left: -itemWidth, behavior: "smooth" });
@@ -362,7 +362,7 @@ const Deskripsi = () => {
 
         {/* Tombol Navigasi Kanan */}
         <button
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 z-10"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#31004d] text-white px-1 py-6 rounded-l-lg rounded-r-lg shadow-lg hover:scale-105 hover:bg-[#5a0098] hover:shadow-xl transition-all duration-300 z-10"
           onClick={() => {
             if (scrollRef.current) {
               scrollRef.current.scrollBy({ left: itemWidth, behavior: "smooth" });
@@ -406,36 +406,45 @@ const Deskripsi = () => {
 
 
       {/* Sponsor Section */}
-      <motion.div
-         className="mt-20 max-w-screen-xl mx-auto px-6"
-         initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
-         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-         viewport={{ once: true, amount: 0.2 }}
-         transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <h2 className="text-4xl font-bold text-center mb-8 text-white">
-          Sponsor
-        </h2>
-        <div className="flex justify-center">
-          <div className="grid grid-cols-2 mt-4 sm:grid-cols-5 gap-14">
-            {[sponsor1, sponsor2, sponsor3, sponsor4, sponsor5].map((sponsor, index) => (
-              <motion.div 
-                key={index} 
-                className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              >
-                <img 
-                  src={sponsor} 
-                  alt={`Sponsor ${index + 1}`} 
-                  className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain"
-                />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
+<motion.div
+  className="mt-20 max-w-screen-xl mx-auto px-6"
+  initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+>
+  <h2 className="text-4xl font-bold text-center mb-8 text-white">
+    Sponsor
+  </h2>
+  <div className="flex justify-center">
+    <div className="grid grid-cols-2 mt-4 sm:grid-cols-5 gap-14">
+      {[sponsor1, sponsor2, sponsor3, sponsor4, sponsor5].map((sponsor, index) => (
+        <motion.div
+          key={index}
+          className="flex items-center justify-center bg-white rounded-lg shadow-lg w-[130px] h-[90px] md:w-[150px] md:h-[110px] transition-transform duration-300 hover:scale-110 hover:shadow-xl"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileHover={{ scale: 1.1, opacity: 1 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.1)";
+            e.currentTarget.style.boxShadow = "0px 10px 20px rgba(0, 0, 0, 0.2)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.1)";
+          }}
+        >
+          <img
+            src={sponsor}
+            alt={`Sponsor ${index + 1}`}
+            className="max-w-[70px] md:max-w-[90px] w-auto h-auto object-contain"
+          />
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</motion.div>
 
       {/* Media Partner Section */}
 <div className="mt-20 max-w-screen-xl mx-auto px-6 overflow-hidden">
