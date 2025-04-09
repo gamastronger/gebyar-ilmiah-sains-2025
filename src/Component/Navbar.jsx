@@ -35,8 +35,8 @@ const Navbar = () => {
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium font-[Arial Sans]">
           <a href="/" className="hover:text-[#4FA3D1] transition duration-300">Home</a>
-          <a href="/layanan" className="hover:text-[#4FA3D1] transition duration-300">Tentang KTI</a>
-          <a href="/layanan2" className="hover:text-[#4FA3D1] transition duration-300">Tentang CBT</a>
+          <a href="/kti" className="hover:text-[#4FA3D1] transition duration-300">Tentang KTI</a>
+          <a href="/cbt" className="hover:text-[#4FA3D1] transition duration-300">Tentang CBT</a>
           <span onClick={handleScrollToContact} className="hover:text-[#4FA3D1] transition duration-300 cursor-pointer">Contact</span>
           <a href="/twibbon" className="hover:text-[#4FA3D1] transition duration-300">Twibbon</a>
           

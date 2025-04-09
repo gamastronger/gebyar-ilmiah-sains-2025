@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Beranda from "./Views/Beranda";
-import Layanan from "./Views/Kti";
-import Layanan2 from "./Views/Cbt";
+import Kti from "./Views/Kti";
+import Cbt from "./Views/Cbt";
 import Twibbon from "./Views/Twibbon";
 
 // Komponen pembungkus untuk menangani scroll ke hash seperti #contact-person
@@ -29,8 +29,8 @@ function App() {
       <ScrollToHashWrapper>
         <Routes>
           <Route path="/" element={<Beranda />} />
-          <Route path="/layanan" element={<Layanan />} />
-          <Route path="/layanan2" element={<Layanan2 />} />
+          <Route path="/kti" element={<Kti />} />
+          <Route path="/cbt" element={<Cbt />} />
           <Route path="/twibbon" element={<Twibbon />} />
         </Routes>
       </ScrollToHashWrapper>
