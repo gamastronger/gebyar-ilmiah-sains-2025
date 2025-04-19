@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import foto4 from '../../assets/gimage.jpeg'; // Ganti dengan path gambar yang sesuai
 
 const DeskripsiLomba = () => {
@@ -46,7 +47,7 @@ const DeskripsiLomba = () => {
             transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
           >
             <h1 className="font-bold text-4xl lg:text-5xl leading-tight mb-6 text-white">
-              Karya Tulis Ilmiaha
+              Karya Tulis Ilmiah
             </h1>
             <p className="text-lg lg:text-xl mb-6 text-justify text-white">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -54,12 +55,15 @@ const DeskripsiLomba = () => {
               nunc eget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
             </p>
             <div className="flex flex-row gap-6">
-              <button className="bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#512DA8] transition">
+              <Link
+                to="/register"
+                className="bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#512DA8] transition"
+              >
                 Daftar
-              </button>
-              <button className="bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#3A8BB5] transition">
+              </Link>
+              <Link to="/login" className="bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#512DA8] transition">
                 Login
-              </button>
+              </Link>
             </div>
           </motion.div>
 

@@ -4,6 +4,9 @@ import Beranda from "./Views/Beranda";
 import Kti from "./Views/Kti";
 import Cbt from "./Views/Cbt";
 import Twibbon from "./Views/Twibbon";
+import Login from "./Views/Login";
+import RegisterPage from "./Component/Register/Register";
+import Forgot from "./Component/Login/Forgot";
 
 // Komponen pembungkus untuk menangani scroll ke hash seperti #contact-person
 function ScrollToHashWrapper({ children }) {
@@ -32,6 +35,10 @@ function App() {
           <Route path="/kti" element={<Kti />} />
           <Route path="/cbt" element={<Cbt />} />
           <Route path="/twibbon" element={<Twibbon />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot" element={<Forgot />} />
+          {/* Tambahkan route lain sesuai kebutuhan */}
         </Routes>
       </ScrollToHashWrapper>
     </BrowserRouter>
