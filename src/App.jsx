@@ -16,7 +16,7 @@ import Twibbon from "./Views/Twibbon";
 import Login from "./Views/Login";
 import RegisterPage from "./Views/Register";
 import Forgot from "./Component/Login/Forgot";
-import Portofolio from "./pages/dashboard/Portofolio";
+
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
 
 
@@ -46,7 +46,7 @@ function App() {
       <Route path="/kti" element={<Kti />} />
       <Route path="/cbt" element={<Cbt />} />
       <Route path="/twibbon" element={<Twibbon />} />
-      <Route path="/portofolio" element={<Portofolio />} />
+      
       <Route path="/portofolio/:id" element={<ParticipantDetail />} />
     </Routes>
   );

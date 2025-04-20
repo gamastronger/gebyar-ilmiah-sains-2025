@@ -14,7 +14,7 @@ export function Admin() {
   const { sidenavType } = controller;
 
   return (
-    <div className="flex min-h-screen bg-blue-gray-50/50">
+    <div className="flex min-h-screen bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
       {/* Sidebar */}
       <Sidenav
         routes={routes}
@@ -24,9 +24,9 @@ export function Admin() {
         className="h-screen overflow-y-auto fixed top-0 left-0 xl:w-80 w-64 bg-white shadow-lg"
       />
       {/* Main Content */}
-      <div className="flex-1 xl:ml-80 ml-64 p-4">
+      <div className="flex-1 rounded xl:ml-80 ml-64 p-4">
         <DashboardNavbar />
-        <div className="mt-6">
+        <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
           <Routes>
             {/* Redirect /admin to /admin/beranda */}
             <Route path="/" element={<Navigate to="/admin/profil" replace />} />
