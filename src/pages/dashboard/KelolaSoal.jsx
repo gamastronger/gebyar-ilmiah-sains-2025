@@ -1,351 +1,360 @@
-import { Card, CardBody, Typography, Button, Input, Switch } from "@material-tailwind/react";
+import {
+  Card,
+  CardBody,
+  Typography,
+  Button,
+  Input,
+  Textarea,
+  Switch,
+  Radio,
+} from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 
 export function Paket() {
-  const [categories, setCategories] = useState([]);
-  const [options, setOptions] = useState([]);
+  const [soalList, setSoalList] = useState([]);
+  const [kategoriList, setKategoriList] = useState([]);
+  const [previewItem, setPreviewItem] = useState(null); // Untuk preview soal
 
-  const [formDataCategory, setFormDataCategory] = useState({
-    name: "",
-    price: "",
+  const [formData, setFormData] = useState({
+    question: "",
+    question_image: null, // Gambar untuk soal
+    option_a: "",
+    option_a_image: null, // Gambar untuk opsi A
+    option_b: "",
+    option_b_image: null, // Gambar untuk opsi B
+    option_c: "",
+    option_c_image: null, // Gambar untuk opsi C
+    option_d: "",
+    option_d_image: null, // Gambar untuk opsi D
+    correct_answer: "",
+    category_id: "",
+    is_active: true,
+    question_type: "multiple_choice", // Default: pilihan ganda
   });
-  const [formDataOption, setFormDataOption] = useState({
-    name: "",
-    status: false,
-    package_id: "",
-  });
-  const [isEditingCategory, setIsEditingCategory] = useState(false);
-  const [isEditingOption, setIsEditingOption] = useState(false);
 
-  // Fetch categories
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/package-categories`);
-      setCategories(response.data.data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
-  // Fetch options
-  const fetchOptions = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/option-packages`);
-      setOptions(response.data.data);
-    } catch (error) {
-      console.error("Error fetching options:", error);
-    }
-  };
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    fetchCategories();
-    fetchOptions();
+    fetchKategori();
+    fetchSoal();
   }, []);
 
-  // Handle category form changes
-  const handleChangeCategory = (e) => {
-    const { name, value } = e.target;
-    setFormDataCategory({
-      ...formDataCategory,
-      [name]: value,
+  const fetchSoal = () => {
+    const dummySoal = [
+      {
+        id: 1,
+        question: "Apa ibu kota Indonesia?",
+        question_image: null,
+        option_a: "Jakarta",
+        option_a_image: null,
+        option_b: "Bandung",
+        option_b_image: null,
+        option_c: "Surabaya",
+        option_c_image: null,
+        option_d: "Medan",
+        option_d_image: null,
+        correct_answer: "A",
+        category_id: 1,
+        category: { name: "Geografi" },
+        is_active: true,
+        question_type: "multiple_choice",
+      },
+      {
+        id: 2,
+        question: "Jelaskan proses fotosintesis!",
+        correct_answer: "Proses fotosintesis adalah ...",
+        category_id: 2,
+        category: { name: "Biologi" },
+        is_active: true,
+        question_type: "essay",
+      },
+    ];
+    setSoalList(dummySoal);
+  };
+
+  const fetchKategori = () => {
+    const dummyKategori = [
+      { id: 1, name: "Geografi" },
+      { id: 2, name: "Biologi" },
+      { id: 3, name: "Matematika" },
+    ];
+    setKategoriList(dummyKategori);
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : files ? files[0] : value,
     });
   };
 
-  // Handle option form changes
-  const handleChangeOption = (e) => {
-    const { name, value } = e.target;
-    setFormDataOption({
-      ...formDataOption,
-      [name]: name === "status" ? e.target.checked : value,
-    });
-  };
+  const handleSubmit = () => {
+    const requiredFields = ["question", "category_id", "question_type"];
+    if (formData.question_type === "multiple_choice") {
+      requiredFields.push("option_a", "option_b", "option_c", "option_d", "correct_answer");
+    } else if (formData.question_type === "essay") {
+      requiredFields.push("correct_answer");
+    }
 
-  // Submit category
-  const handleSubmitCategory = async () => {
-    if (!formDataCategory.name || !formDataCategory.price) {
-      alert("Harap lengkapi semua kolom.");
+    if (requiredFields.some((field) => !formData[field])) {
+      Swal.fire("Error", "Harap lengkapi semua kolom.", "error");
       return;
     }
-    try {
-      if (isEditingCategory) {
-        await axios.put(
-          `${import.meta.env.VITE_API_URL}/package-categories/${formDataCategory.id}`,
-          formDataCategory
-        );
-        Swal.fire("Sukses", "Kategori berhasil diperbarui!", "success");
-      } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/package-categories`, formDataCategory);
-        Swal.fire("Sukses", "Kategori berhasil ditambahkan!", "success");
-      }
-      fetchCategories();
-      resetFormCategory();
-    } catch (error) {
-      console.error("Error submitting kategori:", error);
+
+    if (isEditing) {
+      setSoalList((prev) =>
+        prev.map((soal) =>
+          soal.id === formData.id
+            ? {
+                ...soal,
+                ...formData,
+                category: kategoriList.find(
+                  (kat) => kat.id === parseInt(formData.category_id)
+                ),
+              }
+            : soal
+        )
+      );
+      Swal.fire("Sukses", "Soal berhasil diperbarui!", "success");
+    } else {
+      const newSoal = {
+        ...formData,
+        id: soalList.length + 1,
+        category: kategoriList.find(
+          (kat) => kat.id === parseInt(formData.category_id)
+        ),
+      };
+      setSoalList((prev) => [...prev, newSoal]);
+      Swal.fire("Sukses", "Soal berhasil ditambahkan!", "success");
     }
+
+    resetForm();
   };
 
-  // Submit option
-  const handleSubmitOption = async () => {
-    if (!formDataOption.name || !formDataOption.package_id) {
-      alert("Harap lengkapi semua kolom.");
-      return;
-    }
-    try {
-      if (isEditingOption) {
-        await axios.put(
-          `${import.meta.env.VITE_API_URL}/option-packages/${formDataOption.id}`,
-          formDataOption
-        );
-        Swal.fire("Sukses", "Opsi berhasil diperbarui!", "success");
-      } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/option-packages`, formDataOption);
-        Swal.fire("Sukses", "Opsi berhasil ditambahkan!", "success");
-      }
-      fetchOptions();
-      resetFormOption();
-    } catch (error) {
-      console.error("Error submitting opsi:", error);
-    }
+  const handlePreview = (item) => {
+    setPreviewItem(item); // Set soal untuk preview
   };
 
-  // Edit category
-  const handleEditCategory = (item) => {
-    setFormDataCategory(item);
-    setIsEditingCategory(true);
-  };
-
-  // Edit option
-  const handleEditOption = (item) => {
-    setFormDataOption({
-      ...item,
-      status: !!item.status,
+  const resetForm = () => {
+    setFormData({
+      question: "",
+      question_image: null,
+      option_a: "",
+      option_a_image: null,
+      option_b: "",
+      option_b_image: null,
+      option_c: "",
+      option_c_image: null,
+      option_d: "",
+      option_d_image: null,
+      correct_answer: "",
+      category_id: "",
+      is_active: true,
+      question_type: "multiple_choice",
     });
-    setIsEditingOption(true);
-  };
-
-  // Delete category
-  const handleDeleteCategory = async (id) => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus kategori ini?")) {
-      try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/package-categories/${id}`);
-        fetchCategories();
-        Swal.fire("Sukses", "Kategori berhasil dihapus!", "success");
-      } catch (error) {
-        console.error("Error deleting kategori:", error);
-        Swal.fire("Error", "Terjadi kesalahan saat menghapus kategori.", "error");
-      }
-    }
-  };
-
-  // Delete option
-  const handleDeleteOption = async (id) => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus opsi ini?")) {
-      try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/option-packages/${id}`);
-        fetchOptions();
-        Swal.fire("Sukses", "Opsi berhasil dihapus!", "success");
-      } catch (error) {
-        console.error("Error deleting opsi:", error);
-        Swal.fire("Error", "Terjadi kesalahan saat menghapus opsi.", "error");
-      }
-    }
-  };
-
-  // Reset forms
-  const resetFormCategory = () => {
-    setFormDataCategory({ name: "", price: "" });
-    setIsEditingCategory(false);
-  };
-
-  const resetFormOption = () => {
-    setFormDataOption({ name: "", status: false, package_id: "" });
-    setIsEditingOption(false);
+    setIsEditing(false);
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      {/* Kategori Form */}
-      <Card className="mb-6">
+    <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
+      <Card className="mb-6 shadow-lg">
         <CardBody>
-          <Typography variant="h5" className="font-bold mb-4">
-            {isEditingCategory ? "Edit Kategori" : "Tambah Kategori"}
+          <Typography variant="h5" className="mb-4 font-bold text-blue-800 text-center">
+            {isEditing ? "Edit Soal" : "Tambah Soal"}
           </Typography>
-          <div className="grid grid-cols-1 gap-4">
-            <Input
-              label="Nama Kategori"
-              name="name"
-              value={formDataCategory.name}
-              onChange={handleChangeCategory}
-            />
-            <Input
-              label="Harga Kategori"
-              name="price"
-              type="number"
-              value={formDataCategory.price}
-              onChange={handleChangeCategory}
-            />
-            <div className="flex justify-end gap-4">
-              <Button
-                color={isEditingCategory ? "blue" : "black"}
-                onClick={handleSubmitCategory}
-                className="w-auto max-w-xs px-6"
-              >
-                {isEditingCategory ? "Update" : "Tambah"}
-              </Button>
-              {isEditingCategory && (
-                <Button color="red" onClick={resetFormCategory} className="w-auto max-w-xs px-6">
-                  Batal
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardBody>
-      </Card>
-
-      {/* Kategori List */}
-      <Card className="mb-6">
-        <CardBody>
-          <Typography variant="h5" className="font-bold mb-4">
-            Daftar Kategori
-          </Typography>
-          <table className="w-full border-collapse text-left">
-            <thead>
-              <tr>
-                <th className="border-b py-3 px-5">Nama</th>
-                <th className="border-b py-3 px-5">Harga</th>
-                <th className="border-b py-3 px-5">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map((cat) => (
-                <tr key={cat.id} className="hover:bg-gray-100">
-                  <td className="border-b py-3 px-5">{cat.name}</td>
-                  <td className="border-b py-3 px-5">{cat.price}</td>
-                  <td className="border-b py-3 px-5">
-                    <Button
-                      size="sm"
-                      color="green"
-                      onClick={() => handleEditCategory(cat)}
-                      className="mr-2"
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      color="red"
-                      onClick={() => handleDeleteCategory(cat.id)}
-                    >
-                      Hapus
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </CardBody>
-      </Card>
-
-      {/* Opsi Form */}
-      <Card className="mb-6">
-        <CardBody>
-          <Typography variant="h5" className="font-bold mb-4">
-            {isEditingOption ? "Edit Opsi" : "Tambah Opsi"}
-          </Typography>
-          <div className="grid grid-cols-1 gap-4">
-            <Input
-              label="Nama Opsi"
-              name="name"
-              value={formDataOption.name}
-              onChange={handleChangeOption}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Textarea
+              label="Pertanyaan"
+              name="question"
+              value={formData.question}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-md"
             />
             <div>
-              <label className="block text-gray-700 mb-2">Kategori</label>
+              <label className="block mb-1 text-sm text-gray-700">Gambar Soal</label>
+              <input
+                type="file"
+                name="question_image"
+                accept="image/*"
+                onChange={handleChange}
+                className="w-full border border-gray-300 px-3 py-2 rounded-md"
+              />
+            </div>
+            <div>
+              <label className="block mb-1 text-sm text-gray-700">Jenis Soal</label>
               <select
-                name="package_id"
-                value={formDataOption.package_id}
-                onChange={handleChangeOption}
-                className="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-500"
+                name="question_type"
+                value={formData.question_type}
+                onChange={handleChange}
+                className="w-full border border-gray-300 px-3 py-2 rounded-md"
+              >
+                <option value="multiple_choice">Pilihan Ganda</option>
+                <option value="essay">Esai</option>
+              </select>
+            </div>
+            {formData.question_type === "multiple_choice" && (
+              <>
+                {["option_a", "option_b", "option_c", "option_d"].map((opt, index) => (
+                  <div key={opt}>
+                    <Input
+                      label={`Pilihan ${String.fromCharCode(65 + index)}`}
+                      name={opt}
+                      value={formData[opt]}
+                      onChange={handleChange}
+                      className="border border-gray-300 rounded-md"
+                    />
+                    <label className="block mb-1 text-sm text-gray-700">Gambar Pilihan</label>
+                    <input
+                      type="file"
+                      name={`${opt}_image`}
+                      accept="image/*"
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 px-3 py-2 rounded-md"
+                    />
+                    <label className="flex items-center gap-2 mt-1">
+                      <Radio
+                        name="correct_answer"
+                        value={String.fromCharCode(65 + index)}
+                        checked={formData.correct_answer === String.fromCharCode(65 + index)}
+                        onChange={handleChange}
+                        color="blue"
+                      />
+                      <Typography>Pilih sebagai jawaban benar</Typography>
+                    </label>
+                  </div>
+                ))}
+              </>
+            )}
+            {formData.question_type === "essay" && (
+              <Textarea
+                label="Jawaban Benar"
+                name="correct_answer"
+                value={formData.correct_answer}
+                onChange={handleChange}
+                className="border border-gray-300 rounded-md"
+              />
+            )}
+            <div>
+              <label className="block mb-1 text-sm text-gray-700">Kategori Soal</label>
+              <select
+                name="category_id"
+                value={formData.category_id}
+                onChange={handleChange}
+                className="w-full border border-gray-300 px-3 py-2 rounded-md"
               >
                 <option value="">Pilih Kategori</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.name}
+                {kategoriList.map((kat) => (
+                  <option key={kat.id} value={kat.id}>
+                    {kat.name}
                   </option>
                 ))}
               </select>
             </div>
-            <Switch
-              label="Status"
-              checked={formDataOption.status}
-              name="status"
-              onChange={handleChangeOption}
-            />
-            <div className="flex justify-end gap-4">
-              <Button
-                color={isEditingOption ? "blue" : "black"}
-                onClick={handleSubmitOption}
-                className="w-auto max-w-xs px-6"
-              >
-                {isEditingOption ? "Update" : "Tambah"}
-              </Button>
-              {isEditingOption && (
-                <Button color="red" onClick={resetFormOption} className="w-auto max-w-xs px-6">
-                  Batal
-                </Button>
-              )}
+            <div className="flex items-center">
+              <Switch
+                label="Aktif"
+                checked={formData.is_active}
+                name="is_active"
+                onChange={handleChange}
+              />
             </div>
+          </div>
+          <div className="flex justify-end gap-4 mt-4">
+            <Button
+              onClick={handleSubmit}
+              color={isEditing ? "blue" : "green"}
+              className="rounded-md"
+            >
+              {isEditing ? "Update" : "Tambah"}
+            </Button>
+            {isEditing && (
+              <Button onClick={resetForm} color="red" className="rounded-md">
+                Batal
+              </Button>
+            )}
           </div>
         </CardBody>
       </Card>
 
-      {/* Opsi List */}
-      <Card>
+      {/* Daftar Soal */}
+      <Card className="shadow-lg">
         <CardBody>
-          <Typography variant="h5" className="font-bold mb-4">
-            Daftar Opsi
+          <Typography variant="h5" className="mb-4 font-bold text-blue-800 text-center">
+            Daftar Soal
           </Typography>
-          <table className="w-full border-collapse text-left">
-            <thead>
-              <tr>
-                <th className="border-b py-3 px-5">Nama</th>
-                <th className="border-b py-3 px-5">Kategori</th>
-                <th className="border-b py-3 px-5">Status</th>
-                <th className="border-b py-3 px-5">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {options.map((opt) => (
-                <tr key={opt.id} className="hover:bg-gray-100">
-                  <td className="border-b py-3 px-5">{opt.name}</td>
-                  <td className="border-b py-3 px-5">{opt.category?.name || "-"}</td>
-                  <td className="border-b py-3 px-5">
-                    {opt.status ? "Aktif" : "Nonaktif"}
-                  </td>
-                  <td className="border-b py-3 px-5">
-                    <Button
-                      size="sm"
-                      color="green"
-                      onClick={() => handleEditOption(opt)}
-                      className="mr-2"
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      color="red"
-                      onClick={() => handleDeleteOption(opt.id)}
-                    >
-                      Hapus
-                    </Button>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-left border border-gray-300">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-3 px-4 border">Pertanyaan</th>
+                  <th className="py-3 px-4 border">Kategori</th>
+                  <th className="py-3 px-4 border">Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {soalList.map((soal) => (
+                  <tr
+                    key={soal.id}
+                    className="hover:bg-blue-50 transition duration-150"
+                  >
+                    <td className="py-3 px-4 border max-w-xs overflow-hidden text-ellipsis whitespace-nowrap">
+                      {soal.question}
+                    </td>
+                    <td className="py-3 px-4 border">
+                      {soal.category?.name || "-"}
+                    </td>
+                    <td className="py-3 px-4 border">
+                      <Button
+                        size="sm"
+                        color="blue"
+                        onClick={() => handlePreview(soal)}
+                        className="mr-2 rounded-md"
+                      >
+                        Preview
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </CardBody>
       </Card>
+
+      {/* Preview Soal */}
+      {previewItem && (
+        <Card className="mt-6 shadow-lg">
+          <CardBody>
+            <Typography variant="h5" className="mb-4 font-bold text-blue-800 text-center">
+              Preview Soal
+            </Typography>
+            <Typography className="text-gray-800">{previewItem.question}</Typography>
+            {previewItem.question_image && (
+              <img
+                src={URL.createObjectURL(previewItem.question_image)}
+                alt="Gambar Soal"
+                className="mt-4 max-w-full h-auto"
+              />
+            )}
+            {previewItem.question_type === "multiple_choice" && (
+              <div className="mt-4">
+                {["A", "B", "C", "D"].map((opt) => (
+                  <Typography key={opt} className="text-gray-700">
+                    {opt}. {previewItem[`option_${opt.toLowerCase()}`]}
+                  </Typography>
+                ))}
+              </div>
+            )}
+            {previewItem.question_type === "essay" && (
+              <Typography className="mt-4 text-gray-700">
+                Jawaban: {previewItem.correct_answer}
+              </Typography>
+            )}
+          </CardBody>
+        </Card>
+      )}
     </div>
   );
 }

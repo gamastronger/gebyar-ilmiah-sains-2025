@@ -46,7 +46,6 @@ function App() {
       <Route path="/kti" element={<Kti />} />
       <Route path="/cbt" element={<Cbt />} />
       <Route path="/twibbon" element={<Twibbon />} />
-      
       <Route path="/portofolio/:id" element={<ParticipantDetail />} />
     </Routes>
   );

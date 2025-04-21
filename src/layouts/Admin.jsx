@@ -29,7 +29,7 @@ export function Admin() {
         <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
           <Routes>
             {/* Redirect /admin to /admin/beranda */}
-            <Route path="/" element={<Navigate to="/admin/profil" replace />} />
+            <Route path="/" element={<Navigate to="/admin/Dash-Admin" replace />} />
             {routes.map(
               ({ layout, pages }) =>
                 layout === "admin" &&

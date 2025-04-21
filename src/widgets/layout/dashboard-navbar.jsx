@@ -45,17 +45,17 @@ export function DashboardNavbar() {
           <Breadcrumbs className="bg-transparent p-0 text-sm">
             <Link to={`/${layout}`}>
               <Typography
-                color="blue-gray"
-                className="opacity-60 hover:opacity-100 hover:text-blue-600 transition"
+                color="white"
+                className="opacity-60 hover:opacity-100 hover:text-pink-200 transition"
               >
                 {layout}
               </Typography>
             </Link>
-            <Typography color="blue-gray" className="font-medium capitalize">
+            <Typography color="white" className="font-medium capitalize">
               {page}
             </Typography>
           </Breadcrumbs>
-          <Typography variant="h5" color="blue-gray" className="capitalize">
+          <Typography variant="h5" color="white" className="capitalize">
             {page}
           </Typography>
         </div>
@@ -65,32 +65,32 @@ export function DashboardNavbar() {
           {/* Sidebar toggle button (mobile only) */}
           <IconButton
             variant="text"
-            color="blue-gray"
+            color="white"
             className="xl:hidden"
             onClick={() => setOpenSidenav(dispatch, !openSidenav)}
           >
-            <Bars3Icon className="h-6 w-6 text-blue-gray-500" />
+            <Bars3Icon className="h-6 w-6 text-white" />
           </IconButton>
 
           {/* Logout button */}
           <Button
             variant="text"
-            color="blue-gray"
+            color="white"
             className="hidden xl:flex items-center gap-2 normal-case"
             onClick={handleLogout}
           >
-            <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+            <UserCircleIcon className="h-5 w-5 text-white" />
             Logout
           </Button>
 
           {/* Mobile logout icon */}
           <IconButton
             variant="text"
-            color="blue-gray"
+            color="white"
             className="xl:hidden"
             onClick={handleLogout}
           >
-            <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+            <UserCircleIcon className="h-5 w-5 text-white" />
           </IconButton>
         </div>
       </div>
