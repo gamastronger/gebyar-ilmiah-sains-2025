@@ -13,13 +13,17 @@ import {
 } from "@heroicons/react/24/solid";
 import { Beranda, Profil, Tabel, Portofolio, Layanan, Paket, Pesanan, Testimoni, Faq } from "@/pages/dashboard";
 import { Daftar, Masuk } from "@/pages/auth";
+import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
 
+
+
 export const routes = [
   {
+    
     layout: "admin",
     pages: [
       // {
@@ -46,6 +50,7 @@ export const routes = [
         path: "/CBT-Admin",
         element: <Layanan />,
       },
+      
       {
         icon: <DocumentIcon {...icon} />,
         name: "Kelola Soal",
@@ -55,9 +60,10 @@ export const routes = [
       {
         icon: <ShoppingCartIcon {...icon} />,
         name: "Admin",
-        path: "/Admin",
+        path: "/AdminUser",
         element: <Pesanan />,
       },
+     
     ],
   },
   {
@@ -70,9 +76,17 @@ export const routes = [
         path: "/masuk",
         element: <Masuk />,
       },
+      {
+        icon: <ServerStackIcon {...icon} />,
+        name: "daftar",
+        path: "/daftar",
+        element: <Daftar />,
+      },
     ],
   },
 ];
+
+
 
 export default routes;
 

@@ -56,12 +56,12 @@ const DeskripsiLomba = () => {
             </p>
             <div className="flex flex-row gap-6">
               <Link
-                to="/register"
+                to="/daftar"
                 className="bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#512DA8] transition"
               >
                 Daftar
               </Link>
-              <Link to="/login" className="bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#512DA8] transition">
+              <Link to="/masuk" className="bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 hover:bg-[#512DA8] transition">
                 Login
               </Link>
             </div>

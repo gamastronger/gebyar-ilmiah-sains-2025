@@ -16,8 +16,9 @@ import Twibbon from "./Views/Twibbon";
 import Login from "./Views/Login";
 import RegisterPage from "./Views/Register";
 import Forgot from "./Component/Login/Forgot";
-
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
+import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
+import Daftar from "./pages/auth/Daftar";
 
 
 function App() {
@@ -47,6 +48,8 @@ function App() {
       <Route path="/cbt" element={<Cbt />} />
       <Route path="/twibbon" element={<Twibbon />} />
       <Route path="/portofolio/:id" element={<ParticipantDetail />} />
+      <Route path="/cbt-admin/detail/:id" element={<ParticipantDetail2 />} />
+      <Route path="/daftar" element={<Daftar />} />
     </Routes>
   );
 }

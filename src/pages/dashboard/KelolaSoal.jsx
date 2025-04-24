@@ -14,23 +14,23 @@ import Swal from "sweetalert2";
 export function Paket() {
   const [soalList, setSoalList] = useState([]);
   const [kategoriList, setKategoriList] = useState([]);
-  const [previewItem, setPreviewItem] = useState(null); // Untuk preview soal
+  const [previewItem, setPreviewItem] = useState(null);
 
   const [formData, setFormData] = useState({
     question: "",
-    question_image: null, // Gambar untuk soal
+    question_image: null,
     option_a: "",
-    option_a_image: null, // Gambar untuk opsi A
+    option_a_image: null,
     option_b: "",
-    option_b_image: null, // Gambar untuk opsi B
+    option_b_image: null,
     option_c: "",
-    option_c_image: null, // Gambar untuk opsi C
+    option_c_image: null,
     option_d: "",
-    option_d_image: null, // Gambar untuk opsi D
+    option_d_image: null,
     correct_answer: "",
     category_id: "",
     is_active: true,
-    question_type: "multiple_choice", // Default: pilihan ganda
+    question_type: "multiple_choice",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -134,7 +134,7 @@ export function Paket() {
   };
 
   const handlePreview = (item) => {
-    setPreviewItem(item); // Set soal untuk preview
+    setPreviewItem(item);
   };
 
   const resetForm = () => {
@@ -159,6 +159,7 @@ export function Paket() {
 
   return (
     <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
+      {/* Form Tambah/Edit Soal */}
       <Card className="mb-6 shadow-lg">
         <CardBody>
           <Typography variant="h5" className="mb-4 font-bold text-blue-800 text-center">
@@ -335,7 +336,7 @@ export function Paket() {
               <img
                 src={URL.createObjectURL(previewItem.question_image)}
                 alt="Gambar Soal"
-                className="mt-4 max-w-full h-auto"
+                className="mt-4 max-w-xs h-auto rounded-md"
               />
             )}
             {previewItem.question_type === "multiple_choice" && (

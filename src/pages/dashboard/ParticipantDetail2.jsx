@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Input } from "@material-tailwind/react";
 import Sidenav from "../../widgets/layout/sidenav";
 import routes from "../../routes";
 
@@ -28,7 +27,7 @@ const participantsData = [
   },
 ];
 
-export default function ParticipantDetail() {
+export default function ParticipantDetail2() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
@@ -59,7 +58,7 @@ export default function ParticipantDetail() {
         confirmButtonText: "Kembali ke Dashboard",
         confirmButtonColor: "#6B46C1",
       }).then(() => {
-        navigate("/admin/KTI-Admin");
+        navigate("/cbt-admin");
       });
     }
   };
@@ -72,7 +71,7 @@ export default function ParticipantDetail() {
       {/* Main Content */}
       <main className="flex-1 xl:ml-80 ml-64 p-6">
         <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Edit Data Peserta</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Edit Data Peserta CBT</h2>
           <p className="text-gray-600 mb-6">
             Lengkapi data peserta di bawah ini. Pastikan semua informasi sudah benar sebelum menyimpan.
           </p>

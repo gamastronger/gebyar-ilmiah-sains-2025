@@ -1,2 +1,2 @@
-export * from "@/pages/auth/Masuk";
-export * from "@/pages/auth/Daftar";
+export { default as Masuk } from "./Masuk";
+export { default as Daftar } from "./Daftar";

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -7,159 +8,199 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import Swal from "sweetalert2";
 
 export function Pesanan() {
-  const [order, setOrder] = useState([]);
+  const [admins, setAdmins] = useState([]);
   const [formData, setFormData] = useState({
     id: null,
     full_name: "",
     email: "",
-    address: "",
-    city: "",
-    payment_method: "OVO", // Default to "OVO"
-    package_id: "",
-    order_date: new Date().toISOString().split("T")[0], // Set default to today's date
+    role: "Admin",
+    status: "Active",
   });
   const [isEditing, setIsEditing] = useState(false);
 
-  // Fetch data from API
-  const fetchAllOrder = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/orders`);
-      setOrder(response.data.data);
-    } catch (error) {
-      console.error("Error fetching order:", error);
-    }
+  // Dummy data untuk testing
+  const dummyData = [
+    {
+      id: 1,
+      full_name: "Budi Santoso",
+      email: "budi@example.com",
+      role: "Admin",
+      status: "Active",
+    },
+    {
+      id: 2,
+      full_name: "Siti Aminah",
+      email: "siti@example.com",
+      role: "Super Admin",
+      status: "Inactive",
+    },
+  ];
+
+  // Simulasi fetch data dummy
+  const fetchAllAdmins = () => {
+    setAdmins(dummyData);
   };
 
-  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle add or update data
-  const handleSubmit = async () => {
-    // Filter out empty fields (only submit changed data)
-    const dataToSubmit = {};
-    for (const [key, value] of Object.entries(formData)) {
-      if (value && value !== "") {
-        dataToSubmit[key] = value;
-      }
-    }
-
-    if (Object.keys(dataToSubmit).length === 0) {
-      alert("Harap lengkapi setidaknya satu kolom.");
+  const handleSubmit = () => {
+    if (!formData.full_name || !formData.email) {
+      Swal.fire({
+        title: "Gagal!",
+        text: "Nama dan Email wajib diisi.",
+        icon: "error",
+        confirmButtonText: "OK",
+        buttonsStyling: false,
+        customClass: {
+          confirmButton: "bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600",
+        },
+      });
       return;
     }
 
-    try {
-      if (isEditing) {
-        // Use PUT request for update
-        await axios.put(
-          `${import.meta.env.VITE_API_URL}/orders/${formData.id}`,
-          dataToSubmit
-        );
-      } else {
-        // Use POST request for creating new order
-        await axios.post(`${import.meta.env.VITE_API_URL}/orders`, dataToSubmit);
-      }
-      // Refetch data after successful submit
-      fetchAllOrder();
-      setFormData({
-        id: null,
-        full_name: "",
-        email: "",
-        address: "",
-        city: "",
-        payment_method: "", 
-        package_id: "",
-        order_date: new Date().toISOString().split("T")[0], 
+    if (isEditing) {
+      setAdmins((prev) =>
+        prev.map((admin) =>
+          admin.id === formData.id ? { ...admin, ...formData } : admin
+        )
+      );
+      Swal.fire({
+        title: "Berhasil!",
+        text: "Data admin berhasil diperbarui.",
+        icon: "success",
+        confirmButtonText: "OK",
+        buttonsStyling: false,
+        customClass: {
+          confirmButton: "bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600",
+        },
       });
-      setIsEditing(false);
-    } catch (error) {
-      console.error("Error submitting order:", error);
+    } else {
+      const newAdmin = {
+        ...formData,
+        id: Date.now(),
+      };
+      setAdmins((prev) => [...prev, newAdmin]);
+      Swal.fire({
+        title: "Berhasil!",
+        text: "Data admin berhasil ditambahkan.",
+        icon: "success",
+        confirmButtonText: "OK",
+        buttonsStyling: false,
+        customClass: {
+          confirmButton: "bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600",
+        },
+      });
     }
+    resetForm();
   };
 
-  // Handle edit data
+  const resetForm = () => {
+    setFormData({
+      id: null,
+      full_name: "",
+      email: "",
+      role: "Admin",
+      status: "Active",
+    });
+    setIsEditing(false);
+  };
+
   const handleEdit = (data) => {
     setFormData(data);
     setIsEditing(true);
   };
 
-  // Handle delete data
-  const handleDelete = async (id) => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-      try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/orders/${id}`);
-        fetchAllOrder();
-      } catch (error) {
-        console.error("Error deleting order:", error);
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Konfirmasi Hapus",
+      text: "Apakah Anda yakin ingin menghapus data ini? Data yang dihapus tidak dapat dikembalikan.",
+      icon: "warning",
+      showCancelButton: true,
+      buttonsStyling: false,
+      customClass: {
+        actions: "flex space-x-4", // ✅ Tambahkan ini untuk memberi spasi antar tombol
+        confirmButton: "bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600",
+        cancelButton: "bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400",
+      },
+      confirmButtonText: "Hapus",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setAdmins((prev) => prev.filter((admin) => admin.id !== id));
+        Swal.fire({
+          title: "Berhasil!",
+          text: "Data admin berhasil dihapus.",
+          icon: "success",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600",
+          },
+        });
       }
-    }
+    });
   };
 
   useEffect(() => {
-    fetchAllOrder();
+    fetchAllAdmins();
   }, []);
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      {/* Form untuk tambah/edit pesanan */}
-      <Card className="mb-6">
+    <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
+      <Card className="mb-6 shadow-lg">
         <CardBody>
-          <Typography variant="h5" className="font-bold mb-4">
-            {isEditing ? "Edit Pesanan" : "Tambah Pesanan"}
+          <Typography variant="h5" className="font-bold text-blue-800 mb-4">
+            {isEditing ? "Edit Admin" : "Tambah Admin"}
           </Typography>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
-              label="Nama"
+              label="Nama Lengkap"
               name="full_name"
               value={formData.full_name}
               onChange={handleChange}
+              className="border border-gray-300 rounded-md"
             />
             <Input
               label="Email"
               name="email"
               value={formData.email}
               onChange={handleChange}
+              className="border border-gray-300 rounded-md"
             />
-            <Input
-              label="Alamat"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-            />
-            <Input
-              label="Kota"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            />
-            {/* Payment Method Select */}
             <Select
-              label="Metode Pembayaran"
-              name="payment_method"
-              value={formData.payment_method}
-              onChange={handleChange}
+              label="Role"
+              name="role"
+              value={formData.role}
+              onChange={(value) =>
+                handleChange({ target: { name: "role", value } })
+              }
+              className="border border-gray-300 rounded-md"
             >
-              <Option value="OVO">OVO</Option>
-              <Option value="DANA">DANA</Option>
-              <Option value="ShopeePay">ShopeePay</Option>
+              <Option value="Admin">Admin</Option>
+              <Option value="Super Admin">Super Admin</Option>
             </Select>
-            <Input
-              label="Paket"
-              name="package_id"
-              value={formData.package_id}
-              onChange={handleChange}
-            />
+            <Select
+              label="Status"
+              name="status"
+              value={formData.status}
+              onChange={(value) =>
+                handleChange({ target: { name: "status", value } })
+              }
+              className="border border-gray-300 rounded-md"
+            >
+              <Option value="Active">Active</Option>
+              <Option value="Inactive">Inactive</Option>
+            </Select>
           </div>
           <div className="flex justify-end gap-4 mt-4">
             <Button
-              color={isEditing ? "blue" : "black"}
+              color={isEditing ? "blue" : "green"}
               onClick={handleSubmit}
               className="rounded-md"
             >
@@ -168,19 +209,7 @@ export function Pesanan() {
             {isEditing && (
               <Button
                 color="red"
-                onClick={() => {
-                  setIsEditing(false);
-                  setFormData({
-                    id: null,
-                    full_name: "",
-                    email: "",
-                    address: "",
-                    city: "",
-                    payment_method: "OVO",
-                    package_id: "",
-                    order_date: new Date().toISOString().split("T")[0],
-                  });
-                }}
+                onClick={resetForm}
                 className="rounded-md"
               >
                 Batal
@@ -190,28 +219,19 @@ export function Pesanan() {
         </CardBody>
       </Card>
 
-      {/* Daftar Pesanan */}
-      <Card>
+      <Card className="shadow-lg">
         <CardBody>
-          <Typography variant="h5" className="font-bold mb-4">
-            Daftar Pesanan
+          <Typography variant="h5" className="font-bold text-blue-800 mb-4">
+            Daftar Admin
           </Typography>
           <div className="overflow-x-auto">
-            <table className="w-full table-auto border-collapse">
-              <thead>
+            <table className="w-full text-left border border-gray-300">
+              <thead className="bg-blue-100">
                 <tr>
-                  {[
-                    "Nama",
-                    "Email",
-                    "Alamat",
-                    "Kota",
-                    "Metode Pembayaran",
-                    "Paket",
-                    "Aksi",
-                  ].map((el) => (
+                  {["Nama", "Email", "Role", "Status", "Aksi"].map((el) => (
                     <th
                       key={el}
-                      className="border-b border-gray-300 py-3 px-5 text-left text-gray-600 font-semibold text-sm"
+                      className="py-3 px-4 border text-blue-800 font-semibold text-sm"
                     >
                       {el}
                     </th>
@@ -219,20 +239,21 @@ export function Pesanan() {
                 </tr>
               </thead>
               <tbody>
-                {order.map((item) => (
-                  <tr key={item.id} className="hover:bg-gray-100">
-                    <td className="border-b border-gray-300 py-3 px-5">{item.full_name}</td>
-                    <td className="border-b border-gray-300 py-3 px-5">{item.email}</td>
-                    <td className="border-b border-gray-300 py-3 px-5">{item.address}</td>
-                    <td className="border-b border-gray-300 py-3 px-5">{item.city}</td>
-                    <td className="border-b border-gray-300 py-3 px-5">{item.payment_method}</td>
-                    <td className="border-b border-gray-300 py-3 px-5">{item.package_id}</td>
-                    <td className="border-b border-gray-300 py-3 px-5">
+                {admins.map((admin) => (
+                  <tr
+                    key={admin.id}
+                    className="hover:bg-blue-50 transition duration-150"
+                  >
+                    <td className="py-3 px-4 border">{admin.full_name}</td>
+                    <td className="py-3 px-4 border">{admin.email}</td>
+                    <td className="py-3 px-4 border">{admin.role}</td>
+                    <td className="py-3 px-4 border">{admin.status}</td>
+                    <td className="py-3 px-4 border">
                       <div className="flex gap-2">
                         <Button
                           size="sm"
                           color="green"
-                          onClick={() => handleEdit(item)}
+                          onClick={() => handleEdit(admin)}
                           className="rounded-md"
                         >
                           Edit
@@ -240,7 +261,7 @@ export function Pesanan() {
                         <Button
                           size="sm"
                           color="red"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => handleDelete(admin.id)}
                           className="rounded-md"
                         >
                           Hapus

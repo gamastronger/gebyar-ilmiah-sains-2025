@@ -1,15 +1,13 @@
-import {
-  Card,
-  Input,
-  Button,
-  Typography,
-} from "@material-tailwind/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import Navbar from "../../Component/Navbar"; // Pastikan path ini benar
+import illustrationImg from "../../assets/bgsementararegister.jpg"; // Gambar bisa disesuaikan
 
 export function Masuk() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State untuk fitur lihat password
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -18,7 +16,7 @@ export function Masuk() {
 
     try {
       // Login dummy untuk testing tanpa backend
-      if (email === "12341234" && password === "12341234") {
+      if (email === "admin@gmail.com" && password === "12341234") {
         localStorage.setItem("token", "dummy_token");
         navigate("/admin", { replace: true });
         return;
@@ -45,81 +43,106 @@ export function Masuk() {
     }
   };
 
+  const fadeIn = {
+    initial: { opacity: 0, y: 30, filter: "blur(8px)" },
+    animate: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 0.7, ease: "easeOut" },
+    },
+    exit: { opacity: 0, y: 30, filter: "blur(8px)", transition: { duration: 0.5 } },
+  };
+
   return (
-    <section className="m-8 flex gap-4">
-      <div className="w-full lg:w-3/5 mt-24">
-        <div className="text-center">
-          <Typography variant="h2" className="font-bold mb-4">Masuk</Typography>
-          <Typography
-            variant="paragraph"
-            color="blue-gray"
-            className="text-lg font-normal"
-          >
-            Masukkan email dan kata sandi Anda untuk masuk.
-          </Typography>
-        </div>
-        <form
-          className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2"
-          onSubmit={handleLogin}
-        >
-          <div className="mb-1 flex flex-col gap-6">
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="-mb-3 font-medium"
-            >
-              Email Anda
-            </Typography>
-            <Input
-              size="lg"
-              placeholder="nama@mail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="-mb-3 font-medium"
-            >
-              Kata Sandi
-            </Typography>
-            <Input
-              type="password"
-              size="lg"
-              placeholder="********"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
+    <>
+      {/* Navbar */}
+      <Navbar />
+
+      {/* Form Login */}
+      <motion.div
+        className="min-h-screen bg-[#210034] flex items-center justify-center px-4 py-12 pt-20" // Tambahkan padding top untuk menghindari overlap dengan navbar
+        variants={fadeIn}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+      >
+        <div className="w-full max-w-6xl h-[80vh] lg:h-[70vh] bg-white rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
+          {/* Gambar di sisi kiri */}
+          <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ddd6f3] to-[#f3e7e9]">
+            <img src={illustrationImg} alt="Illustration" className="max-h-[80%] object-contain" />
           </div>
-          {error && (
-            <Typography
-              variant="small"
-              color="red"
-              className="mt-2 text-center"
-            >
-              {error}
-            </Typography>
-          )}
-          <Button className="mt-6" fullWidth type="submit">
-            Masuk
-          </Button>
-        </form>
-      </div>
-      <div className="w-2/5 hidden lg:block">
-        <img
-          src="/img/pattern.png"
-          className="w-full object-cover rounded-3xl"
-        />
-      </div>
-    </section>
+
+          {/* Form Login */}
+          <div className="p-6 sm:p-8 flex flex-col justify-center">
+            <h1 className="text-3xl font-bold text-center text-gray-900 mb-3">Login</h1>
+            <h1 className="text-xl font-semibold text-center text-gray-900 mb-1">Welcome Back</h1>
+            <p className="text-sm text-center text-gray-600 mb-4">Enter your email and password</p>
+
+            <form className="space-y-3" onSubmit={handleLogin}>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"} // Ubah tipe input berdasarkan state
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)} // Toggle state showPassword
+                    className="absolute inset-y-0 right-3 flex items-center text-sm text-gray-600 hover:text-purple-600"
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+
+              {error && (
+                <p className="text-center text-sm text-red-600 mt-2">{error}</p>
+              )}
+
+              <div className="flex items-center justify-between text-xs">
+                <label className="text-purple-700 flex items-center gap-2">
+                  <input type="checkbox" className="form-checkbox text-purple-200" />
+                  Remember me
+                </label>
+                <a href="/forgot" className="text-purple-600 hover:underline">
+                  Forgot?
+                </a>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-semibold text-sm shadow-md transition"
+              >
+                Login
+              </button>
+
+              <p className="text-center text-sm text-gray-600 mt-3">
+                Belum punya akun?{" "}
+                <a href="/daftar" className="text-purple-600 font-medium hover:underline">
+                  Daftar di sini
+                </a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </motion.div>
+    </>
   );
 }
 

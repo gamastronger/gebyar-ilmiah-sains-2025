@@ -27,7 +27,7 @@ export function Layanan() {
   const navigate = useNavigate();
 
   const handleDetail = (id) => {
-    navigate(`/cbt-admin/${id}`);
+    navigate(`/cbt-admin/detail/${id}`); // Pastikan rute sesuai dengan konfigurasi di App.jsx
   };
 
   // Fungsi untuk menangani pencarian
