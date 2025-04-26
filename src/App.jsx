@@ -19,7 +19,7 @@ import Forgot from "./Component/Login/Forgot";
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
 import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
 import Daftar from "./pages/auth/Daftar";
-
+import KTIAdmin from "./pages/dashboard/KTI-Admin";
 
 function App() {
   const isAuthenticated = localStorage.getItem('token') !== null;
@@ -50,6 +50,8 @@ function App() {
       <Route path="/portofolio/:id" element={<ParticipantDetail />} />
       <Route path="/cbt-admin/detail/:id" element={<ParticipantDetail2 />} />
       <Route path="/daftar" element={<Daftar />} />
+      <Route path="/dashboard/kti-admin" element={<KTIAdmin />} />
+      <Route path="/dashboard/participant-detail/:id" element={<ParticipantDetail />} />
     </Routes>
   );
 }
