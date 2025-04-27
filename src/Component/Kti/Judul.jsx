@@ -18,14 +18,6 @@ const DeskripsiLomba = () => {
     }
   };
 
-  const timelineItems = [
-    { id: 1, date: '1 Juni 2025', title: 'Pendaftaran Dibuka' },
-    { id: 2, date: '20 Juni 2025', title: 'Batas Pendaftaran' },
-    { id: 3, date: '30 Juni 2025', title: 'Pengumpulan Karya' },
-    { id: 4, date: '15 Juli 2025', title: 'Pengumuman Finalis' },
-    { id: 5, date: '30 Juli 2025', title: 'Presentasi Final & Awarding' }
-  ];
-
   const benefits = [
     { icon: <FiAward className="text-yellow-300 text-2xl" />, title: 'Juara 1', description: 'Rp. 3.000.000 + Sertifikat + Trophy' },
     { icon: <FiAward className="text-gray-300 text-2xl" />, title: 'Juara 2', description: 'Rp. 2.000.000 + Sertifikat + Trophy' },
@@ -43,7 +35,7 @@ const DeskripsiLomba = () => {
         animate="animate"
         exit="exit"
       >
-        <div className="max-w-screen-xl mx-auto px-4 lg:px-8">
+        <div className="mt-6 max-w-screen-xl mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
             
             {/* Text Content */}
@@ -161,61 +153,6 @@ const DeskripsiLomba = () => {
           </div>
         </div>
       </motion.div>
-      
-      {/* Timeline Section */}
-      <motion.section 
-        className="py-16 bg-purple-900 bg-opacity-20"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="max-w-screen-xl mx-auto px-4 lg:px-8">
-          <motion.h2 
-            className="text-3xl font-bold text-center text-white mb-12"
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Timeline Kegiatan
-          </motion.h2>
-          
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-purple-700 opacity-50 hidden md:block"></div>
-            
-            <motion.div 
-              className="grid grid-cols-1 gap-8 md:gap-12"
-              variants={staggerContainer}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-            >
-              {timelineItems.map((item, index) => (
-                <motion.div 
-                  key={item.id} 
-                  className={`flex flex-col md:flex-row items-center ${index % 2 === 0 ? 'md:justify-end' : ''}`}
-                  variants={fadeUp}
-                >
-                  <div className={`relative flex items-center flex-col-reverse md:flex-row ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} w-full md:w-1/2 md:pr-12 md:pl-0 ${index % 2 === 0 ? 'md:pl-12 md:pr-0' : ''}`}>
-                    <motion.div 
-                      className="bg-purple-800 rounded-xl p-6 shadow-lg border border-purple-700 w-full"
-                      whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(124, 58, 237, 0.5)' }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <p className="text-purple-300 font-semibold">{item.date}</p>
-                      <h3 className="text-xl font-bold text-white mt-1">{item.title}</h3>
-                    </motion.div>
-                    
-                    <div className="hidden md:flex w-6 h-6 bg-purple-500 rounded-full absolute left-1/2 transform -translate-x-1/2 z-10 shadow-lg border-2 border-purple-800"></div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
       
       {/* About Competition Section */}
       <motion.section 
