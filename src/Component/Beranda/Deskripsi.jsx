@@ -1,5 +1,6 @@
 import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import foto4 from "../../assets/gimage.jpeg";
 import facebookLogo from "../../assets/facebooklogo.png";
 import instagramLogo from "../../assets/instagramlogo.png";
@@ -214,6 +215,7 @@ const EnhancedPosterSection = () => {
 // Ganti bagian Poster Section di dalam Deskripsi dengan EnhancedPosterSection
 const Deskripsi = () => {
   const [activeTab, setActiveTab] = useState('kti'); // 'kti' or 'cbt'
+  const navigate = useNavigate(); // Tambahkan ini
 
   return (
     <div
@@ -347,7 +349,7 @@ const Deskripsi = () => {
                 </div>
                 
                 <div className="flex flex-wrap gap-4">
-                  <GradientButton primary={true}>
+                  <GradientButton primary={true} onClick={() => navigate('/kti/judul')}>
                     Daftar Sekarang
                   </GradientButton>
                   <GradientButton primary={false}>

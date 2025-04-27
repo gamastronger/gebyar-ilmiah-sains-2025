@@ -20,6 +20,7 @@ import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
 import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
 import Daftar from "./pages/auth/Daftar";
 import KTIAdmin from "./pages/dashboard/KTI-Admin";
+import Judul from "./Component/Kti/Judul";
 
 function App() {
   const isAuthenticated = localStorage.getItem('token') !== null;
@@ -52,6 +53,7 @@ function App() {
       <Route path="/daftar" element={<Daftar />} />
       <Route path="/dashboard/kti-admin" element={<KTIAdmin />} />
       <Route path="/dashboard/participant-detail/:id" element={<ParticipantDetail />} />
+      <Route path="/judul" element={<Judul />} />
     </Routes>
   );
 }
