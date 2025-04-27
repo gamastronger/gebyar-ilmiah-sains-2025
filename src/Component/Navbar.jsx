@@ -48,8 +48,8 @@ const Navbar = () => {
       <nav 
         className={`fixed top-0 left-0 w-full py-3 px-6 md:px-8 flex items-center justify-between text-white z-50 transition-all duration-300 ${
           scrolled 
-            ? "bg-[#0f172a]/95 shadow-lg backdrop-blur-md" 
-            : "bg-transparent backdrop-blur-sm"
+            ? "bg-[#A78BFA]/20 backdrop-blur-md" // Changed to purple transparent when scrolled
+            : "bg-transparent backdrop-blur-md" // Transparent at initial position
         }`}
       >
         {/* Logo Section */}
@@ -59,7 +59,7 @@ const Navbar = () => {
           </div>
           <span className="ml-3 text-xl font-bold font-[Poppins] tracking-wide text-white drop-shadow-sm">
             GIS
-            <span className="text-[#A78BFA] ml-1">Unesa</span> {/* Warna ungu muda */}
+            <span className="text-[#A78BFA] ml-1">Unesa</span>
           </span>
         </div>
 
@@ -113,7 +113,7 @@ const Navbar = () => {
         >
           {/* Sidebar Content */}
           <div 
-            className="absolute top-0 right-0 w-72 h-full bg-gradient-to-b from-[#1E293B] to-[#0f172a] shadow-2xl p-6 transform transition-transform duration-300 ease-out"
+            className="absolute top-0 right-0 w-72 h-full bg-gradient-to-b from-[#A78BFA]/30 to-[#0f172a] shadow-2xl p-6 transform transition-transform duration-300 ease-out"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header with Logo and Close Button */}
@@ -121,7 +121,7 @@ const Navbar = () => {
               <div className="flex items-center">
                 <img className="w-8 h-8 drop-shadow-md" src={logo} alt="Logo" />
                 <span className="ml-2 text-lg font-bold text-white">
-                  GIS<span className="text-[#A78BFA]">Unesa</span> {/* Warna ungu muda */}
+                  GIS<span className="text-[#A78BFA]">Unesa</span>
                 </span>
               </div>
               
