@@ -1,3 +1,11 @@
 {
+<<<<<<< HEAD
     "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
+=======
+    "rewrites": [
+      { "source": "/(.*)", "destination": "/" }
+    ]
+  }
+  
+>>>>>>> origin/syita
