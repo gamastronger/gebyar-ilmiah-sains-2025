@@ -13,6 +13,7 @@ const RegisterPage = () => {
     sekolah: '',
     nisn: '',
     kelas: '',
+    jenjang: '',
     password: '',
     konfirmasi: '',
   });
@@ -100,15 +101,19 @@ const RegisterPage = () => {
             <div>
               <label className="block font-medium text-gray-700 mb-1">Jenjang</label>
               <select
+                name="jenjang"
+                value={formData.jenjang}
+                onChange={handleChange}
                 className={`w-full px-3 py-2 border rounded-md text-sm ${
-                  jenisLomba === 'kti' ? 'bg-white text-gray-800' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  jenisLomba === 'cbt' ? 'bg-white text-gray-800' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 } focus:outline-none focus:ring-2 focus:ring-purple-600`}
-                disabled={jenisLomba !== 'kti'}
+                disabled={jenisLomba !== 'cbt'}
               >
                 <option value="">Pilih jenjang</option>
                 <option value="sd">SD</option>
                 <option value="smp">SMP</option>
               </select>
+              {errors.jenjang && <p className="text-red-500 text-xs mt-1">{errors.jenjang}</p>}
             </div>
 
             {/* Jenis Lomba */}
@@ -136,7 +141,6 @@ const RegisterPage = () => {
               </div>
             </div>
 
-            {/* Password */}
             <Input label="Password" type="password" name="password" value={formData.password} onChange={handleChange} error={errors.password} />
             <Input label="Konfirmasi Password" type="password" name="konfirmasi" value={formData.konfirmasi} onChange={handleChange} error={errors.konfirmasi} />
 

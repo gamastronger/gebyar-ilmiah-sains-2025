@@ -16,9 +16,11 @@ import Twibbon from "./Views/Twibbon";
 import Login from "./Views/Login";
 import RegisterPage from "./Views/Register";
 import Forgot from "./Component/Login/Forgot";
-import Portofolio from "./pages/dashboard/Portofolio";
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
-
+import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
+import Daftar from "./pages/auth/Daftar";
+import KTIAdmin from "./pages/dashboard/KTI-Admin";
+import Judul from "./Component/Kti/Judul";
 
 function App() {
   const isAuthenticated = localStorage.getItem('token') !== null;
@@ -46,8 +48,12 @@ function App() {
       <Route path="/kti" element={<Kti />} />
       <Route path="/cbt" element={<Cbt />} />
       <Route path="/twibbon" element={<Twibbon />} />
-      <Route path="/portofolio" element={<Portofolio />} />
       <Route path="/portofolio/:id" element={<ParticipantDetail />} />
+      <Route path="/cbt-admin/detail/:id" element={<ParticipantDetail2 />} />
+      <Route path="/daftar" element={<Daftar />} />
+      <Route path="/dashboard/kti-admin" element={<KTIAdmin />} />
+      <Route path="/dashboard/participant-detail/:id" element={<ParticipantDetail />} />
+      <Route path="/judul" element={<Judul />} />
     </Routes>
   );
 }
