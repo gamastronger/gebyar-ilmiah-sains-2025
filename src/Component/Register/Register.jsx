@@ -13,10 +13,7 @@ const RegisterPage = () => {
     sekolah: '',
     nisn: '',
     kelas: '',
-<<<<<<< HEAD
     jenjang: '',
-=======
->>>>>>> origin/syita
     password: '',
     konfirmasi: '',
   });
@@ -43,25 +40,14 @@ const RegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-<<<<<<< HEAD
     const newErrors = {};
 
-=======
-
-    const newErrors = {};
-
-    // Cek apakah semua field terisi
->>>>>>> origin/syita
     Object.keys(formData).forEach((key) => {
       if (!formData[key]) {
         newErrors[key] = `${key} harus diisi`;
       }
     });
 
-<<<<<<< HEAD
-=======
-    // Validasi lainnya
->>>>>>> origin/syita
     if (!/^\d+$/.test(formData.whatsapp)) {
       newErrors.whatsapp = 'Nomor WhatsApp harus berupa angka';
     }
@@ -77,27 +63,18 @@ const RegisterPage = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-<<<<<<< HEAD
-=======
-      // Lanjutkan submit data ke backend atau proses selanjutnya
->>>>>>> origin/syita
       console.log('Form submitted:', formData);
     }
   };
 
   return (
     <motion.div
-<<<<<<< HEAD
       className="min-h-screen bg-[#210034] flex items-center justify-center px-4 py-12"
-=======
-      className="min-h-screen bg-[#210034] flex items-center justify-center px-4"
->>>>>>> origin/syita
       variants={fadeIn}
       initial="initial"
       animate="animate"
       exit="exit"
     >
-<<<<<<< HEAD
       <div className="w-full max-w-6xl h-full bg-white rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
         {/* Left Side Image */}
         <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ddd6f3] to-[#f3e7e9]">
@@ -112,18 +89,6 @@ const RegisterPage = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-=======
-      <div className="w-full max-w-6xl h-[90vh] bg-white rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
-        <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ddd6f3] to-[#f3e7e9]">
-            <img src={illustrationImg} alt="Illustration" className="w-full h-full object-cover" />
-        </div>
-
-        <div className="p-6 sm:p-8 overflow-y-auto">
-          <h1 className="text-xl font-semibold text-center text-gray-900 mb-1">Daftar Akun</h1>
-          <p className="text-sm text-center text-gray-600 mb-4">Silakan isi data lengkap di bawah ini</p>
-
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
->>>>>>> origin/syita
             <Input label="Nama Lengkap" name="nama" value={formData.nama} onChange={handleChange} error={errors.nama} />
             <Input label="Email" type="email" name="email" value={formData.email} onChange={handleChange} error={errors.email} />
             <Input label="Nomor WhatsApp" name="whatsapp" value={formData.whatsapp} onChange={handleChange} error={errors.whatsapp} />
@@ -136,7 +101,6 @@ const RegisterPage = () => {
             <div>
               <label className="block font-medium text-gray-700 mb-1">Jenjang</label>
               <select
-<<<<<<< HEAD
                 name="jenjang"
                 value={formData.jenjang}
                 onChange={handleChange}
@@ -144,21 +108,12 @@ const RegisterPage = () => {
                   jenisLomba === 'cbt' ? 'bg-white text-gray-800' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 } focus:outline-none focus:ring-2 focus:ring-purple-600`}
                 disabled={jenisLomba !== 'cbt'}
-=======
-                className={`w-full px-3 py-2 border rounded-md mt-1 text-sm ${
-                  jenisLomba === 'kti' ? 'bg-white text-gray-800' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                } focus:outline-none focus:ring-2 focus:ring-purple-600`}
-                disabled={jenisLomba !== 'kti'}
->>>>>>> origin/syita
               >
                 <option value="">Pilih jenjang</option>
                 <option value="sd">SD</option>
                 <option value="smp">SMP</option>
               </select>
-<<<<<<< HEAD
               {errors.jenjang && <p className="text-red-500 text-xs mt-1">{errors.jenjang}</p>}
-=======
->>>>>>> origin/syita
             </div>
 
             {/* Jenis Lomba */}
@@ -167,15 +122,8 @@ const RegisterPage = () => {
               <div className="flex gap-2 flex-wrap">
                 <button
                   type="button"
-<<<<<<< HEAD
                   className={`px-3 py-1.5 rounded-md font-medium text-sm shadow-sm transition ${
                     jenisLomba === 'kti' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-=======
-                  className={`px-3 py-1.5 rounded-md font-medium transition shadow-sm text-sm ${
-                    jenisLomba === 'kti'
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
->>>>>>> origin/syita
                   }`}
                   onClick={() => setJenisLomba('kti')}
                 >
@@ -183,15 +131,8 @@ const RegisterPage = () => {
                 </button>
                 <button
                   type="button"
-<<<<<<< HEAD
                   className={`px-3 py-1.5 rounded-md font-medium text-sm shadow-sm transition ${
                     jenisLomba === 'cbt' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-=======
-                  className={`px-3 py-1.5 rounded-md font-medium transition shadow-sm text-sm ${
-                    jenisLomba === 'cbt'
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
->>>>>>> origin/syita
                   }`}
                   onClick={() => setJenisLomba('cbt')}
                 >
@@ -200,10 +141,6 @@ const RegisterPage = () => {
               </div>
             </div>
 
-<<<<<<< HEAD
-=======
-            {/* Password */}
->>>>>>> origin/syita
             <Input label="Password" type="password" name="password" value={formData.password} onChange={handleChange} error={errors.password} />
             <Input label="Konfirmasi Password" type="password" name="konfirmasi" value={formData.konfirmasi} onChange={handleChange} error={errors.konfirmasi} />
 

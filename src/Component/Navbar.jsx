@@ -1,14 +1,9 @@
 import logo from "../assets/unesaputih.png";
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
-=======
-import { useState } from "react";
->>>>>>> origin/syita
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
-<<<<<<< HEAD
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,13 +29,6 @@ const Navbar = () => {
     } else {
       document.body.style.overflow = "auto";
     }
-=======
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
->>>>>>> origin/syita
   };
 
   const handleScrollToContact = () => {
@@ -57,7 +45,6 @@ const Navbar = () => {
   return (
     <div>
       {/* Navbar */}
-<<<<<<< HEAD
       <nav 
         className={`fixed top-0 left-0 w-full py-3 px-6 md:px-8 flex items-center justify-between text-white z-50 transition-all duration-300 ${
           scrolled 
@@ -113,34 +100,11 @@ const Navbar = () => {
           aria-label="Menu"
         >
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-=======
-      <nav className="fixed top-0 left-0 w-full py-2 px-8 flex items-center justify-between text-white shadow-md bg-transparent backdrop-blur-md z-50">
-        {/* Logo Section */}
-        <div className="flex items-center">
-          <img className="w-[40px]" src={logo} alt="Logo" />
-          <span className="ml-3 text-2l font-semibold font-[Poppins]">GIS</span>
-        </div>
-
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium font-[Arial Sans]">
-          <a href="/" className="hover:text-[#4FA3D1] transition duration-300">Home</a>
-          <a href="/kti" className="hover:text-[#4FA3D1] transition duration-300">Tentang KTI</a>
-          <a href="/cbt" className="hover:text-[#4FA3D1] transition duration-300">Tentang CBT</a>
-          <span onClick={handleScrollToContact} className="hover:text-[#4FA3D1] transition duration-300 cursor-pointer">Contact</span>
-          <a href="/twibbon" className="hover:text-[#4FA3D1] transition duration-300">Twibbon</a>
-          
-        </div>
-
-        {/* Hamburger Icon for Mobile */}
-        <button className="block md:hidden" onClick={handleSidebar}>
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
->>>>>>> origin/syita
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
       </nav>
 
-<<<<<<< HEAD
       {/* Mobile Sidebar Overlay */}
       {sidebarVisible && (
         <div 
@@ -240,36 +204,9 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-=======
-      {/* Sidebar for Mobile */}
-      {sidebarVisible && (
-        <aside className="fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ease-in-out" onClick={handleSidebar}>
-          <div className="absolute top-0 right-0 w-72 h-full bg-[#1E293B] bg-opacity-90 shadow-lg p-6 rounded-l-2xl backdrop-blur-lg transition-transform duration-300 ease-in-out">
-            {/* Close Button */}
-            <button className="flex justify-end mb-4" onClick={handleSidebar}>
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-
-            {/* Mobile Links */}
-            <ul className="flex flex-col text-white gap-6 font-[Poppins] text-lg">
-              <li><a href="/" onClick={handleSidebar} className="hover:text-[#4FA3D1] transition duration-300">Beranda</a></li>
-              <li><a href="/klien" onClick={handleSidebar} className="hover:text-[#4FA3D1] transition duration-300">Klien</a></li>
-              <li><a href="/layanan" onClick={handleSidebar} className="hover:text-[#4FA3D1] transition duration-300">Layanan</a></li>
-              <li><a href="/pemesanan" onClick={handleSidebar} className="hover:text-[#4FA3D1] transition duration-300">Pemesanan</a></li>
-              <li><span onClick={() => { handleSidebar(); handleScrollToContact(); }} className="cursor-pointer hover:text-[#4FA3D1] transition duration-300">Contact</span></li>
-            </ul>
-          </div>
-        </aside>
->>>>>>> origin/syita
       )}
     </div>
   );
 };
 
-<<<<<<< HEAD
 export default Navbar;
-=======
-export default Navbar;
->>>>>>> origin/syita
