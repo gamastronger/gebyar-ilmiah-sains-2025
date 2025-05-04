@@ -14,7 +14,7 @@ import Kti from "./Views/Kti";
 import Cbt from "./Views/Cbt";
 import Twibbon from "./Views/Twibbon";
 // import Login from "./Views/Login";
-import RegisterPage from "./Views/Register";
+// import RegisterPage from "./Views/Register";
 import Forgot from "./Component/Login/Forgot";
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
 import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
@@ -45,7 +45,7 @@ function App() {
         <Route path="/add-faq" element={<AddFAQ />} />
         <Route path="/add-banner" element={<AddBanner />} />
         {/* <Route path="/login" element={<Login />} /> */}
-        <Route path="/register" element={<RegisterPage />} />
+        {/* <Route path="/register" element={<RegisterPage />} /> */}
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/kti" element={<Kti />} />
         <Route path="/cbt" element={<Cbt />} />
