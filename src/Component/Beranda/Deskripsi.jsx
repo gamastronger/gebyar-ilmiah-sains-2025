@@ -1,10 +1,10 @@
 import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import foto4 from "../../assets/sc.jpg";
-import facebookLogo from "../../assets/facebooklogo.png";
-import instagramLogo from "../../assets/instagramlogo.png";
-import twitterLogo from "../../assets/linkedlogo.png";
+// import foto4 from "../../assets/sc.jpg";
+// import facebookLogo from "../../assets/facebooklogo.png";
+// import instagramLogo from "../../assets/instagramlogo.png";
+// import twitterLogo from "../../assets/linkedlogo.png";
 import kegiatan1 from "../../assets/doc2.jpg";
 import kegiatan2 from "../../assets/doc1.jpg";
 import kegiatan3 from "../../assets/docfotbar1.jpg";
@@ -321,9 +321,8 @@ const Deskripsi = () => {
                 Science <span className="text-[#A78BFA]">Writing</span> Competition
                 </h1>
                 <p className="text-lg mb-8 text-white/90 leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                  eget felis eget nunc lacinia lacinia. Nullam nec nunc nec
-                  nunceget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
+                Merupakan Lomba Karya Tulis Ilmiah yang dapat diikuti oleh tingkat SMA/SMK/Sederajat dan Mahasiswa/i. Yang bertujuan untuk untuk meningkatkan kemampuan bersaing siswa dan mahasiswa dalam Ilmu Pengetahuan dan Teknologi (IPTEK) dan melatih siswa dan mahasiswa  dalam bersaing inovasi di bidang Pendidikan, Bioteknologi, Energi Terbarukan, dan Lingkungan.
+
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 mb-8">
@@ -385,9 +384,7 @@ const Deskripsi = () => {
                   Science Competition
                 </h1>
                 <p className="text-lg mb-8 text-white/90 leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                  eget felis eget nunc lacinia lacinia. Nullam nec nunc nec
-                  nunceget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
+                  -
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 mb-8">

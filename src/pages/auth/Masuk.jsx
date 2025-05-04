@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../Component/Navbar"; // Pastikan path ini benar
 import illustrationImg from "../../assets/bgsementararegister.jpg"; // Gambar bisa disesuaikan
+import api from "@/configs/api";
 
 export function Masuk() {
   const [email, setEmail] = useState("");
@@ -16,14 +17,10 @@ export function Masuk() {
 
     try {
       // Login dummy untuk testing tanpa backend
-      if (email === "admin@gmail.com" && password === "12341234") {
-        localStorage.setItem("token", "dummy_token");
-        navigate("/admin", { replace: true });
-        return;
-      }
+  
 
       // Jika bukan login dummy, lakukan login ke backend
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+      const response = await fetch(`${api.URL_API}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
