@@ -13,12 +13,12 @@ import Beranda from "./Views/Beranda";
 import Kti from "./Views/Kti";
 import Cbt from "./Views/Cbt";
 import Twibbon from "./Views/Twibbon";
-import Login from "./Views/Login";
+// import Login from "./Views/Login";
 import RegisterPage from "./Views/Register";
 import Forgot from "./Component/Login/Forgot";
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
 import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
-import Daftar from "./pages/auth/Daftar";
+// import Daftar from "./pages/auth/Daftar";
 import KTIAdmin from "./pages/dashboard/KTI-Admin";
 import Judul from "./Component/Kti/Judul";
 import ScrollToTop from "./ScrollToTop";
@@ -44,7 +44,7 @@ function App() {
         <Route path="/add-tentang-kami" element={<AddTentangKami />} />
         <Route path="/add-faq" element={<AddFAQ />} />
         <Route path="/add-banner" element={<AddBanner />} />
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/kti" element={<Kti />} />
@@ -52,7 +52,7 @@ function App() {
         <Route path="/twibbon" element={<Twibbon />} />
         <Route path="/portofolio/:id" element={<ParticipantDetail />} />
         <Route path="/cbt-admin/detail/:id" element={<ParticipantDetail2 />} />
-        <Route path="/daftar" element={<Daftar />} />
+        {/* <Route path="/daftar" element={<Daftar />} /> */}
         <Route path="/dashboard/kti-admin" element={<KTIAdmin />} />
         <Route path="/dashboard/participant-detail/:id" element={<ParticipantDetail />} />
         <Route path="/judul" element={<Judul />} />
