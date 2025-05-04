@@ -1,19 +1,34 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import illustrationImg from "../../assets/bgsementararegister.jpg"; // Gambar bisa disesuaikan
+import illustrationImg from "../../assets/bgsementararegister.jpg";
 import { motion } from "framer-motion";
-import Navbar from "../../Component/Navbar"; // Pastikan path ini benar
+import Navbar from "../../Component/Navbar";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// Input Component
+const Input = ({ label, type = "text", name, value, onChange, error }) => (
+  <div>
+    <label className="block font-medium text-gray-700 mb-2">{label}</label>
+    <input
+      type={type}
+      name={name}
+      placeholder={label}
+      value={value}
+      onChange={onChange}
+      className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm ${
+        error ? "border-red-500" : "border-gray-300"
+      }`}
+    />
+    {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+  </div>
+);
 
 const Daftar = () => {
   const [jenisLomba, setJenisLomba] = useState("");
   const [formData, setFormData] = useState({
     nama: "",
     email: "",
-    whatsapp: "",
-    alamat: "",
-    sekolah: "",
-    nisn: "",
-    kelas: "",
     jenjang: "",
     password: "",
     konfirmasi: "",
@@ -33,30 +48,62 @@ const Daftar = () => {
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleLombaChange = (type) => {
+    setJenisLomba(type);
+    setFormData(prev => ({
+      ...prev,
+      jenjang: ""
+    }));
+    // Clear jenis lomba error when user selects an option
+    if (errors.jenisLomba) {
+      setErrors(prev => ({
+        ...prev,
+        jenisLomba: "",
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
-    Object.keys(formData).forEach((key) => {
+    // Validate required fields
+    ["nama", "email", "password", "konfirmasi"].forEach((key) => {
       if (!formData[key]) {
-        newErrors[key] = `${key} harus diisi`;
+        newErrors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} harus diisi`;
       }
     });
 
-    if (!/^\d+$/.test(formData.whatsapp)) {
-      newErrors.whatsapp = "Nomor WhatsApp harus berupa angka";
+    // Validate email format
+    if (formData.email && !/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = "Format email tidak valid";
     }
 
-    if (!/^\d+$/.test(formData.nisn)) {
-      newErrors.nisn = "NISN harus berupa angka";
+    // Check if jenis lomba is selected
+    if (!jenisLomba) {
+      newErrors.jenisLomba = "Pilih jenis lomba";
     }
 
+    // Check if jenjang is selected
+    if (!formData.jenjang) {
+      newErrors.jenjang = "Pilih jenjang";
+    }
+
+    // Check password match
     if (formData.password !== formData.konfirmasi) {
       newErrors.konfirmasi = "Konfirmasi password tidak cocok";
     }
@@ -64,94 +111,195 @@ const Daftar = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Form submitted:", formData);
+      try {
+        // Show success toast with animation
+        toast.success('Pendaftaran berhasil! Silakan cek email Anda.', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+
+        // Reset form after successful submission
+        setFormData({
+          nama: "",
+          email: "",
+          jenjang: "",
+          password: "",
+          konfirmasi: "",
+        });
+        setJenisLomba("");
+      } catch (error) {
+        toast.error('Terjadi kesalahan. Silakan coba lagi.', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } else {
+      toast.error('Mohon periksa kembali form pendaftaran Anda.', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
   return (
-    <>
-      {/* Navbar */}
-      <Navbar />
+    <div className="min-h-screen bg-[#210034] flex flex-col">
+      <ToastContainer 
+        position="top-center"
+        autoClose={3000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      
+      <div className="bg-[#210034] text-white py-4 shadow-md fixed w-full z-50">
+        <Navbar darkMode={true} />
+      </div>
 
-      {/* Form Pendaftaran */}
       <motion.div
-        className="min-h-screen bg-[#210034] flex items-center justify-center px-4 py-12 pt-20" // Tambahkan padding top untuk menghindari overlap dengan navbar
+        className="flex-grow flex items-center justify-center px-4 py-12 mt-16"
         variants={fadeIn}
         initial="initial"
         animate="animate"
         exit="exit"
       >
-        <div className="w-full max-w-6xl h-full bg-white rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
-          {/* Left Side Image */}
+        <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
           <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ddd6f3] to-[#f3e7e9]">
             <img src={illustrationImg} alt="Illustration" className="w-full h-full object-cover" />
           </div>
 
-          {/* Right Side Form */}
           <div className="p-6 sm:p-10 flex flex-col justify-center">
             <div>
               <h1 className="text-2xl font-bold text-center text-gray-900 mb-1">Daftar Akun</h1>
               <p className="text-sm text-center text-gray-600 mb-6">Silakan isi data lengkap di bawah ini</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              <Input label="Nama Lengkap" name="nama" value={formData.nama} onChange={handleChange} error={errors.nama} />
-              <Input label="Email" type="email" name="email" value={formData.email} onChange={handleChange} error={errors.email} />
-              <Input label="Nomor WhatsApp" name="whatsapp" value={formData.whatsapp} onChange={handleChange} error={errors.whatsapp} />
-              <Input label="Alamat" name="alamat" value={formData.alamat} onChange={handleChange} error={errors.alamat} />
-              <Input label="Asal Sekolah" name="sekolah" value={formData.sekolah} onChange={handleChange} error={errors.sekolah} />
-              <Input label="NISN" name="nisn" value={formData.nisn} onChange={handleChange} error={errors.nisn} />
-              <Input label="Kelas" name="kelas" value={formData.kelas} onChange={handleChange} error={errors.kelas} />
-
-              {/* Jenjang */}
-              <div>
-                <label className="block font-medium text-gray-700 mb-1">Jenjang</label>
-                <select
-                  name="jenjang"
-                  value={formData.jenjang}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md text-sm ${
-                    jenisLomba === "cbt" ? "bg-white text-gray-800" : "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  } focus:outline-none focus:ring-2 focus:ring-purple-600`}
-                  disabled={jenisLomba !== "cbt"}
-                >
-                  <option value="">Pilih jenjang</option>
-                  <option value="sd">SD</option>
-                  <option value="smp">SMP</option>
-                </select>
-                {errors.jenjang && <p className="text-red-500 text-xs mt-1">{errors.jenjang}</p>}
+            <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Input 
+                  label="Nama Lengkap" 
+                  name="nama" 
+                  value={formData.nama} 
+                  onChange={handleChange} 
+                  error={errors.nama} 
+                />
+                <Input 
+                  label="Email" 
+                  type="email" 
+                  name="email" 
+                  value={formData.email} 
+                  onChange={handleChange} 
+                  error={errors.email} 
+                />
               </div>
 
-              {/* Jenis Lomba */}
-              <div className="sm:col-span-2">
-                <label className="block font-medium text-gray-700 mb-1">Jenis Lomba</label>
-                <div className="flex gap-2 flex-wrap">
-                  <button
-                    type="button"
-                    className={`px-3 py-1.5 rounded-md font-medium text-sm shadow-sm transition ${
-                      jenisLomba === "kti" ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                    onClick={() => setJenisLomba("kti")}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block font-medium text-gray-700 mb-2">Jenis Lomba</label>
+                  <div className="flex flex-col gap-2">
+                    <button
+                      type="button"
+                      className={`px-3 py-2 rounded-md font-medium text-sm shadow-sm transition ${
+                        jenisLomba === "science-competition" 
+                          ? "bg-purple-600 text-white" 
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                      onClick={() => handleLombaChange("science-competition")}
+                    >
+                      Science Competition
+                    </button>
+                    <button
+                      type="button"
+                      className={`px-3 py-2 rounded-md font-medium text-sm shadow-sm transition ${
+                        jenisLomba === "science-writing" 
+                          ? "bg-purple-600 text-white" 
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                      onClick={() => handleLombaChange("science-writing")}
+                    >
+                      Science Writing Competition
+                    </button>
+                  </div>
+                  {errors.jenisLomba && (
+                    <p className="text-red-500 text-xs mt-1">{errors.jenisLomba}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block font-medium text-gray-700 mb-2">Jenjang</label>
+                  <select
+                    name="jenjang"
+                    value={formData.jenjang}
+                    onChange={handleChange}
+                    className={`w-full px-3 py-2 border rounded-md text-sm ${
+                      !jenisLomba 
+                        ? "bg-gray-100 text-gray-400 cursor-not-allowed" 
+                        : "bg-white text-gray-800"
+                    } focus:outline-none focus:ring-2 focus:ring-purple-600`}
+                    disabled={!jenisLomba}
                   >
-                    Lomba KTI
-                  </button>
-                  <button
-                    type="button"
-                    className={`px-3 py-1.5 rounded-md font-medium text-sm shadow-sm transition ${
-                      jenisLomba === "cbt" ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                    onClick={() => setJenisLomba("cbt")}
-                  >
-                    Lomba CBT
-                  </button>
+                    <option value="">Pilih jenjang</option>
+                    {jenisLomba === "science-competition" ? (
+                      <>
+                        <option value="sd">SD</option>
+                        <option value="smp">SMP</option>
+                      </>
+                    ) : jenisLomba === "science-writing" ? (
+                      <>
+                        <option value="sma">SMA</option>
+                        <option value="mahasiswa">Mahasiswa/i</option>
+                      </>
+                    ) : null}
+                  </select>
+                  {errors.jenjang && (
+                    <p className="text-red-500 text-xs mt-1">{errors.jenjang}</p>
+                  )}
                 </div>
               </div>
 
-              <Input label="Password" type="password" name="password" value={formData.password} onChange={handleChange} error={errors.password} />
-              <Input label="Konfirmasi Password" type="password" name="konfirmasi" value={formData.konfirmasi} onChange={handleChange} error={errors.konfirmasi} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Input 
+                  label="Password" 
+                  type="password" 
+                  name="password" 
+                  value={formData.password} 
+                  onChange={handleChange} 
+                  error={errors.password} 
+                />
+                <Input 
+                  label="Konfirmasi Password" 
+                  type="password" 
+                  name="konfirmasi" 
+                  value={formData.konfirmasi} 
+                  onChange={handleChange} 
+                  error={errors.konfirmasi} 
+                />
+              </div>
 
-              {/* Persetujuan */}
-              <div className="sm:col-span-2 flex items-start gap-2 text-xs">
+              <div className="flex items-start gap-2 text-xs">
                 <input type="checkbox" className="mt-1" required />
                 <span className="text-gray-600">
                   Saya setuju dengan{" "}
@@ -161,18 +309,14 @@ const Daftar = () => {
                 </span>
               </div>
 
-              {/* Tombol daftar */}
-              <div className="sm:col-span-2">
-                <button
-                  type="submit"
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-semibold text-sm shadow-md transition"
-                >
-                  Daftar
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold text-sm shadow-md transition duration-300 transform hover:-translate-y-0.5"
+              >
+                Daftar
+              </button>
 
-              {/* Link login */}
-              <div className="sm:col-span-2 text-center text-sm text-gray-600">
+              <div className="text-center text-sm text-gray-600">
                 Sudah punya akun?{" "}
                 <Link to="/masuk" className="text-purple-600 font-medium hover:underline">
                   Masuk
@@ -182,25 +326,8 @@ const Daftar = () => {
           </div>
         </div>
       </motion.div>
-    </>
+    </div>
   );
 };
-
-const Input = ({ label, type = "text", name, value, onChange, error }) => (
-  <div>
-    <label className="block font-medium text-gray-700">{label}</label>
-    <input
-      type={type}
-      name={name}
-      placeholder={label}
-      value={value}
-      onChange={onChange}
-      className={`w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm ${
-        error ? "border-red-500" : ""
-      }`}
-    />
-    {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
-  </div>
-);
 
 export default Daftar;

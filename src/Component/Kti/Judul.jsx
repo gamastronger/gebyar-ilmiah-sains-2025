@@ -19,9 +19,9 @@ const DeskripsiLomba = () => {
   };
 
   const benefits = [
-    { icon: <FiAward className="text-yellow-300 text-2xl" />, title: 'Juara 1', description: 'Rp. 3.000.000 + Sertifikat + Trophy' },
-    { icon: <FiAward className="text-gray-300 text-2xl" />, title: 'Juara 2', description: 'Rp. 2.000.000 + Sertifikat + Trophy' },
-    { icon: <FiAward className="text-amber-600 text-2xl" />, title: 'Juara 3', description: 'Rp. 1.000.000 + Sertifikat + Trophy' },
+    { icon: <FiAward className="text-yellow-300 text-2xl" />, title: 'Juara 1', description: 'Uang Pembinaan + Sertifikat + Trophy' },
+    { icon: <FiAward className="text-gray-300 text-2xl" />, title: 'Juara 2', description: 'Uang Pembinaan + Sertifikat + Trophy' },
+    { icon: <FiAward className="text-amber-600 text-2xl" />, title: 'Juara 3', description: 'Uang Pembinaan + Sertifikat + Trophy' },
     { icon: <FiFileText className="text-purple-300 text-2xl" />, title: 'E-Certificate', description: 'Untuk semua peserta' },
   ];
 
@@ -35,7 +35,7 @@ const DeskripsiLomba = () => {
         animate="animate"
         exit="exit"
       >
-        <div className="mt-6 max-w-screen-xl mx-auto px-4 lg:px-8">
+        <div className="container max-w-6xl mx-auto px-6 sm:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
             
             {/* Text Content */}
@@ -55,7 +55,7 @@ const DeskripsiLomba = () => {
               </motion.div>
               
               <h1 className="font-bold text-4xl lg:text-5xl xl:text-6xl leading-tight mb-6 text-white">
-                Karya Tulis Ilmiah <span className="text-purple-400">2025</span>
+                Science <span className="text-purple-400">Writing</span> Competition 
               </h1>
               
               <motion.p 
@@ -79,20 +79,19 @@ const DeskripsiLomba = () => {
                     transition={{ repeat: Infinity, duration: 1.5 }}
                   >→</motion.span>
                 </Link>
-                <Link 
-                  to="/guidebook" 
+                <a
+                  href="https://drive.google.com/your-guidebook-link" // Ganti dengan link Google Drive Guidebook Anda
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-transparent border-2 border-purple-400 text-purple-200 px-8 py-3 rounded-lg font-semibold hover:bg-purple-900 hover:bg-opacity-30 transition-colors duration-300 flex items-center justify-center gap-2"
                 >
                   <FiFileText />
                   <span>Download Guidebook</span>
-                </Link>
+                </a>
               </div>
               
               <div className="flex flex-wrap gap-6 text-purple-200">
-                <div className="flex items-center gap-2">
-                  <FiCalendar className="text-purple-400" />
-                  <span>Deadline: 20 Juni 2025</span>
-                </div>
+                
                 <div className="flex items-center gap-2">
                   <FiUsers className="text-purple-400" />
                   <span>2-3 mahasiswa/tim</span>
@@ -133,7 +132,7 @@ const DeskripsiLomba = () => {
                 >
                   <img
                     src={foto4}
-                    alt="Lomba Karya Tulis Ilmiah"
+                    alt="Lomba Science Writing Competition"
                     className="w-80 h-auto rounded-xl shadow-2xl border-2 border-purple-400 border-opacity-40"
                   />
                   
@@ -154,7 +153,7 @@ const DeskripsiLomba = () => {
         </div>
       </motion.div>
       
-      {/* About Competition Section */}
+      {/* About Competition Section
       <motion.section 
         className="py-16"
         initial={{ opacity: 0 }}
@@ -162,7 +161,7 @@ const DeskripsiLomba = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-w-screen-xl mx-auto px-4 lg:px-8">
+        <div className="container max-w-6xl mx-auto px-6 sm:px-8">
           <motion.h2 
             className="text-3xl font-bold text-center text-white mb-12"
             initial={{ y: 20, opacity: 0 }}
@@ -184,8 +183,8 @@ const DeskripsiLomba = () => {
               >
                 <h3 className="text-2xl font-bold text-purple-300 mb-4">Deskripsi</h3>
                 <p className="text-purple-100 mb-4 leading-relaxed">
-                  Kompetisi Karya Tulis Ilmiah merupakan ajang bergengsi bagi mahasiswa seluruh Indonesia untuk menuangkan ide 
-                  dan gagasan inovatif dalam bentuk karya tulis ilmiah. Dengan tema <span className="font-semibold">"Inovasi Teknologi untuk Pembangunan Berkelanjutan"</span>, 
+                  Kompetisi Science Writing Competition merupakan ajang bergengsi bagi mahasiswa seluruh Indonesia untuk menuangkan ide 
+                  dan gagasan inovatif dalam bentuk Science Writing Competition. Dengan tema <span className="font-semibold">"Inovasi Teknologi untuk Pembangunan Berkelanjutan"</span>, 
                   peserta didorong untuk mengembangkan solusi kreatif berbasis teknologi yang dapat mendukung pembangunan berkelanjutan di Indonesia.
                 </p>
                 <p className="text-purple-100 mb-4 leading-relaxed">
@@ -239,7 +238,7 @@ const DeskripsiLomba = () => {
             </div>
           </div>
         </div>
-      </motion.section>
+      </motion.section> */}
       
       {/* Benefits Section */}
       <motion.section 
@@ -249,7 +248,7 @@ const DeskripsiLomba = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-w-screen-xl mx-auto px-4 lg:px-8">
+        <div className="container max-w-6xl mx-auto px-6 sm:px-8">
           <motion.h2 
             className="text-3xl font-bold text-center text-white mb-4"
             initial={{ y: 20, opacity: 0 }}
@@ -306,7 +305,7 @@ const DeskripsiLomba = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-w-screen-xl mx-auto px-4 lg:px-8">
+        <div className="container max-w-6xl mx-auto px-6 sm:px-8">
           <motion.div 
             className="bg-gradient-to-r from-purple-800 to-purple-900 rounded-2xl p-8 lg:p-12 shadow-2xl border border-purple-700 text-center relative overflow-hidden"
             initial={{ y: 20, opacity: 0 }}
@@ -345,7 +344,7 @@ const DeskripsiLomba = () => {
             <div className="relative z-10">
               <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Siap Menunjukkan Inovasimu?</h2>
               <p className="text-lg text-purple-200 mb-8 max-w-2xl mx-auto">
-                Daftarkan timmu sekarang dan jadilah bagian dari kompetisi karya tulis ilmiah nasional. 
+                Daftarkan timmu sekarang dan jadilah bagian dari kompetisi Science Writing Competition nasional. 
                 Buktikan ide kreatifmu dalam memecahkan masalah aktual di Indonesia!
               </p>
               

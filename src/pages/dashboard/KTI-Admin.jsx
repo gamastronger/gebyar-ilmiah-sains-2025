@@ -11,10 +11,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import { participantsData } from "../../data/participantsData";
 
 export function Portofolio() {
-  const [participants, setParticipants] = useState(participantsData);
+  const [participants, setParticipants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -24,19 +23,43 @@ export function Portofolio() {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const itemsPerPage = 20; // Menampilkan 20 peserta per halaman
+  const itemsPerPage = 20;
   const navigate = useNavigate();
 
-  // Simulasi loading data
+  // Fetch data peserta dari API
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-  }, []);
-
-  // Perbarui data saat komponen dimuat ulang
-  useEffect(() => {
-    setParticipants([...participantsData]); // Sinkronkan data
+    const fetchParticipants = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch("https://gis-backend.karyavisual.com/api/users");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        // Pastikan data.data adalah array dan mapping field agar konsisten
+        if (data && Array.isArray(data.data)) {
+          // Normalisasi data agar field yang dipakai di table selalu ada
+          const normalized = data.data.map((item, idx) => ({
+            id: item.id || idx + 1,
+            name: item.name || "-",
+            email: item.email || "-",
+            status_verifikasi: item.status_verifikasi || item.status || "-",
+            jenjang_pendidikan: item.jenjang_pendidikan || item.jenjang || "-",
+            verified_at: item.verified_at || item.verifiedAt || "",
+            jurnal: item.jurnal || false,
+          }));
+          setParticipants(normalized);
+        } else {
+          setParticipants([]);
+        }
+      } catch (error) {
+        console.error("Error fetching participants:", error);
+        setParticipants([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchParticipants();
   }, []);
 
   const handleDetail = (id) => {
@@ -63,19 +86,21 @@ export function Portofolio() {
   // Filter peserta berdasarkan pencarian dan filter yang dipilih
   const filteredParticipants = participants.filter((participant) => {
     const matchesSearch =
-      participant.name.toLowerCase().includes(searchTerm) ||
-      participant.email.toLowerCase().includes(searchTerm);
+      (participant.name?.toLowerCase().includes(searchTerm) ||
+       participant.email?.toLowerCase().includes(searchTerm));
 
     const matchesJenjang =
-      selectedFilters.jenjang === "all" || participant.jenjang === selectedFilters.jenjang;
+      selectedFilters.jenjang === "all" || 
+      (participant.jenjang_pendidikan && participant.jenjang_pendidikan.toLowerCase() === selectedFilters.jenjang.toLowerCase());
 
     const matchesStatus =
-      selectedFilters.status === "all" || participant.status === selectedFilters.status;
+      selectedFilters.status === "all" || 
+      (participant.status_verifikasi && participant.status_verifikasi.toLowerCase() === selectedFilters.status.toLowerCase());
 
     const matchesWaktu =
       selectedFilters.waktu === "all" ||
-      (selectedFilters.waktu === "verified" && participant.verifiedAt) ||
-      (selectedFilters.waktu === "not_verified" && !participant.verifiedAt);
+      (selectedFilters.waktu === "verified" && participant.verified_at) ||
+      (selectedFilters.waktu === "not_verified" && !participant.verified_at);
 
     return matchesSearch && matchesJenjang && matchesStatus && matchesWaktu;
   });
@@ -111,6 +136,12 @@ export function Portofolio() {
       bgColor: "bg-red-100",
       textColor: "text-red-800",
       borderColor: "border-red-200",
+    },
+    "-": {
+      label: "-",
+      bgColor: "bg-gray-100",
+      textColor: "text-gray-800",
+      borderColor: "border-gray-200",
     },
   };
 
@@ -295,7 +326,7 @@ export function Portofolio() {
                         <th className="py-3 px-4 font-semibold">Status</th>
                         <th className="py-3 px-4 font-semibold">Jenjang</th>
                         <th className="py-3 px-4 font-semibold">Waktu Diverifikasi</th>
-                        <th className="py-3 px-4 font-semibold">Jurnal</th> {/* Tambahkan kolom Jurnal */}
+                        <th className="py-3 px-4 font-semibold">Jurnal</th>
                         <th className="py-3 px-4 font-semibold text-center">Aksi</th>
                       </tr>
                     </thead>
@@ -317,20 +348,20 @@ export function Portofolio() {
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span
                                 className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium 
-                                ${statusConfig[participant.status].bgColor} 
-                                ${statusConfig[participant.status].textColor} 
-                                border ${statusConfig[participant.status].borderColor}`}
+                                ${statusConfig[participant.status_verifikasi]?.bgColor || "bg-gray-100"} 
+                                ${statusConfig[participant.status_verifikasi]?.textColor || "text-gray-800"} 
+                                border ${statusConfig[participant.status_verifikasi]?.borderColor || "border-gray-200"}`}
                               >
-                                {statusConfig[participant.status].label}
+                                {statusConfig[participant.status_verifikasi]?.label || participant.status_verifikasi}
                               </span>
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">
-                                {participant.jenjang}
+                                {participant.jenjang_pendidikan || "—"}
                               </span>
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100 text-gray-500">
-                              {participant.verifiedAt || "—"}
+                              {participant.verified_at || "—"}
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span
@@ -340,7 +371,7 @@ export function Portofolio() {
                               >
                                 {participant.jurnal ? "Sudah" : "Kosong"}
                               </span>
-                            </td> {/* Kolom Jurnal */}
+                            </td>
                             <td className="py-3 px-4 border-b border-purple-100 text-center">
                               <Button
                                 color="purple"

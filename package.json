@@ -25,6 +25,7 @@
     "react-parallax-tilt": "^1.7.288",
     "react-router-dom": "^6.26.2",
     "react-scroll": "^1.9.3",
+    "react-toastify": "^11.0.5",
     "recharts": "^2.15.3",
     "sweetalert2": "^11.19.1"
   },
