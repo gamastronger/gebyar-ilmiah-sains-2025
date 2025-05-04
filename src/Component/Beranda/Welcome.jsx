@@ -155,7 +155,7 @@ const Welcome = () => {
   const title = "Gebyar Ilmiah Sains";
   const subtitle = "2025";
   const paragraph =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum odio ex quo dolore sunt labore eligendi repellendus ducimus accusamus? Tempora ea voluptas cum veritatis dignissimos.";
+    "13th Gebyar Ilmiah Sains Tingkat Nasional 2025 Jenjang SD/Sederajat, SMP/Sederajat, SMA/SMK/Sederajat, dan Mahasiswa/i yang terdiri dari Science Competition dan Science Writing Competition";
 
   return (
     <div ref={sectionRef}>
@@ -260,19 +260,22 @@ const Welcome = () => {
             />
             
             <motion.p
-              className="text-lg lg:text-xl text-gray-200 px-4 lg:px-8 leading-relaxed"
+              className="text-lg lg:text-xl text-gray-200 px-4 lg:px-8 leading-relaxed tracking-wide whitespace-pre-wrap"
               variants={wordContainer}
               initial="hidden"
-              animate="visible"
+              animate="visible" 
               custom={2}
             >
-              {paragraph.split(" ").map((word, index) => (
+              {paragraph.split(" ").map((word, index, arr) => (
                 <motion.span
                   key={index}
                   variants={wordItem}
-                  className="mx-[2px] inline-block"
+                  className="inline-block mx-[0.15rem]"
+                  style={{ whiteSpace: 'pre-wrap' }}
                 >
                   {word}
+                  {/* Add explicit space after each word except the last one */}
+                  {index < arr.length - 1 ? ' ' : ''}
                 </motion.span>
               ))}
             </motion.p>

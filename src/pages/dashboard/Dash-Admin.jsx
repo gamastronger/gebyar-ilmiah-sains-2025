@@ -24,6 +24,7 @@ export function Profil() {
     karyaMasuk: 0,
     terverifikasi: 0,
     skorTertinggi: 0,
+    pendapatan: 0,
   });
 
   const [karyaData, setKaryaData] = useState([]);
@@ -34,7 +35,15 @@ export function Profil() {
     karyaMasuk: 0,
     terverifikasi: 0,
     skorTertinggi: 0,
+    pendapatan: 0,
   });
+
+  // Data pendapatan per kategori dan gelombang
+  const [pendapatanKategori, setPendapatanKategori] = useState([
+    { kategori: "SMP", gelombang1: 1200000, gelombang2: 900000, total: 2100000 },
+    { kategori: "SMA", gelombang1: 1800000, gelombang2: 1500000, total: 3300000 },
+    { kategori: "Mahasiswa", gelombang1: 2000000, gelombang2: 1700000, total: 3700000 },
+  ]);
 
   // Data untuk animasi counter
   useEffect(() => {
@@ -44,6 +53,7 @@ export function Profil() {
       karyaMasuk: 385,
       terverifikasi: 310,
       skorTertinggi: 97,
+      pendapatan: 9100000, // total dari semua kategori dan gelombang
     };
     
     setSummary(finalData);
@@ -64,6 +74,7 @@ export function Profil() {
           karyaMasuk: Math.round(finalData.karyaMasuk * progress),
           terverifikasi: Math.round(finalData.terverifikasi * progress),
           skorTertinggi: Math.round(finalData.skorTertinggi * progress),
+          pendapatan: Math.round(finalData.pendapatan * progress),
         });
       } else {
         clearInterval(timer);
@@ -121,7 +132,7 @@ export function Profil() {
         </div>
 
         {/* Ringkasan Statistik dengan Animasi */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           {[
             {
               title: "Total Peserta",
@@ -151,6 +162,13 @@ export function Profil() {
               icon: <i className="fas fa-trophy text-xl"></i>,
               delay: "0.5s",
               suffix: "%"
+            },
+            {
+              title: "Total Pendapatan",
+              value: `Rp${animatedValues.pendapatan.toLocaleString()}`,
+              color: "amber",
+              icon: <i className="fas fa-coins text-xl"></i>,
+              delay: "0.6s"
             }
           ].map((item, index) => (
             <div 
@@ -299,6 +317,39 @@ export function Profil() {
                     Target: 100%
                   </Typography>
                 </div>
+              </div>
+            </CardBody>
+          </Card>
+        </div>
+
+        {/* Tabel Pendapatan per Kategori dan Gelombang */}
+        <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}>
+          <Card className="shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
+            <CardBody>
+              <Typography variant="h6" className="text-amber-800 font-semibold mb-4">
+                Pendapatan per Kategori & Gelombang
+              </Typography>
+              <div className="overflow-x-auto rounded-lg border border-gray-200">
+                <table className="w-full text-left table-auto border-collapse">
+                  <thead>
+                    <tr className="bg-amber-50">
+                      <th className="px-4 py-3 font-medium text-amber-900 border-b">Kategori</th>
+                      <th className="px-4 py-3 font-medium text-amber-900 border-b">Gelombang 1</th>
+                      <th className="px-4 py-3 font-medium text-amber-900 border-b">Gelombang 2</th>
+                      <th className="px-4 py-3 font-medium text-amber-900 border-b">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pendapatanKategori.map((row, idx) => (
+                      <tr key={idx} className="border-b hover:bg-amber-50 transition-colors duration-200">
+                        <td className="px-4 py-3 font-medium text-amber-900">{row.kategori}</td>
+                        <td className="px-4 py-3 text-amber-800">Rp{row.gelombang1.toLocaleString()}</td>
+                        <td className="px-4 py-3 text-amber-800">Rp{row.gelombang2.toLocaleString()}</td>
+                        <td className="px-4 py-3 font-bold text-amber-900">Rp{row.total.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </CardBody>
           </Card>

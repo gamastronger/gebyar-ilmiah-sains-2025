@@ -162,7 +162,7 @@ const EnhancedPosterSection = () => {
             whileHover={{ scale: 1.05 }}
           >
             <h3 className="text-lg font-bold text-white mb-2">Total Hadiah</h3>
-            <p className="text-[#A78BFA] text-xl font-bold">Rp 25.000.000</p>
+            <p className="text-[#A78BFA] text-xl font-bold">Rp 23.000.0000</p>
           </motion.div>
         </motion.div>
         
@@ -188,11 +188,11 @@ const EnhancedPosterSection = () => {
             <div className="space-y-2">
               <p className="text-white/80 text-sm flex items-center justify-center md:justify-start gap-2">
                 <span className="w-3 h-3 rounded-full bg-[#A78BFA]"></span>
-                <span>Pendaftaran: 15 April 2025</span>
+                <span>Gelombang 1: 17 Mei - 12 Juli 2025</span>
               </p>
               <p className="text-white/80 text-sm flex items-center justify-center md:justify-start gap-2">
                 <span className="w-3 h-3 rounded-full bg-[#A78BFA]"></span>
-                <span>Deadline: 30 Mei 2025</span>
+                <span>Gelombang 2: 13 Juli - 24 Agustus 2025</span>
               </p>
             </div>
           </div>
@@ -202,8 +202,8 @@ const EnhancedPosterSection = () => {
           >
             <h3 className="text-lg font-bold text-white mb-2">Kategori</h3>
             <div className="space-y-1">
-              <p className="text-white/80 text-sm">Karya Tulis Ilmiah</p>
-              <p className="text-white/80 text-sm">Olimpiade CBT</p>
+              <p className="text-white/80 text-sm">Science Competition </p>
+              <p className="text-white/80 text-sm">Science Writing Competition</p>
             </div>
           </motion.div>
         </motion.div>
@@ -246,10 +246,10 @@ const Deskripsi = () => {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
             <h1 className="font-bold text-4xl lg:text-6xl leading-tight mb-3 text-white font-[Arial Sans]">
-              GIS <span className="text-purple-300">Fmipa</span> 2025
+            <span className="text-purple-300">13th</span> Gebyar Ilmiah Sains 2025
             </h1>
             <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Gebyar Ilmiah Sains Universitas Negeri Surabaya
+            Diselenggarakan Oleh HMP Pendidikan IPA FMIPA Unesa
             </p>
           </motion.div>
 
@@ -275,7 +275,7 @@ const Deskripsi = () => {
                   : 'text-white/80 hover:text-white'
               }`}
             >
-              Karya Tulis Ilmiah
+              Science Writing Competition
             </button>
             <button
               onClick={() => setActiveTab('cbt')}
@@ -285,7 +285,7 @@ const Deskripsi = () => {
                   : 'text-white/80 hover:text-white'
               }`}
             >
-              Olimpiade CBT
+              Science Competition
             </button>
           </div>
         </div>
@@ -300,7 +300,7 @@ const Deskripsi = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-60"></div>
                 <img
                   src={foto4}
-                  alt="Karya Tulis Ilmiah"
+                  alt="Science Writing Competition"
                   className="w-full h-[300px] object-cover rounded-xl"
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -314,7 +314,7 @@ const Deskripsi = () => {
               {/* Teks KTI */}
               <div className="order-2">
                 <h1 className="font-bold text-4xl md:text-5xl leading-tight mb-4 text-white">
-                  Karya Tulis <span className="text-[#A78BFA]">Ilmiah</span>
+                Science <span className="text-[#A78BFA]">Writing</span> Competition
                 </h1>
                 <p className="text-lg mb-8 text-white/90 leading-relaxed">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -323,17 +323,15 @@ const Deskripsi = () => {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 mb-8">
-                  <div className="flex items-center gap-3">
+                  {/* <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#A78BFA]/20">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#A78BFA]" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-white/60">Deadline Pendaftaran</p>
-                      <p className="font-medium">30 Mei 2025</p>
                     </div>
-                  </div>
+                  </div> */}
                   
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#A78BFA]/20">
@@ -342,8 +340,8 @@ const Deskripsi = () => {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-white/60">Durasi</p>
-                      <p className="font-medium">2 Minggu</p>
+                      <p className="text-sm text-white/60">Jenjang</p>
+                      <p className="font-medium">SMA/MA/SMK Sederajat & Mahasiswa/i</p>
                     </div>
                   </div>
                 </div>
@@ -366,7 +364,7 @@ const Deskripsi = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-60"></div>
                 <img
                   src={foto4}
-                  alt="Olimpiade CBT"
+                  alt="Science Competition"
                   className="w-full h-[300px] object-cover rounded-xl"
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -380,7 +378,7 @@ const Deskripsi = () => {
               {/* Teks CBT */}
               <div className="order-2">
                 <h1 className="font-bold text-4xl md:text-5xl leading-tight mb-4 text-white">
-                  Olimpiade <span className="text-[#A78BFA]">CBT</span>
+                  Science Competition
                 </h1>
                 <p className="text-lg mb-8 text-white/90 leading-relaxed">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -389,7 +387,7 @@ const Deskripsi = () => {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 mb-8">
-                  <div className="flex items-center gap-3">
+                  {/* <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#A78BFA]/20">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#A78BFA]" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
@@ -399,7 +397,7 @@ const Deskripsi = () => {
                       <p className="text-sm text-white/60">Tanggal Pelaksanaan</p>
                       <p className="font-medium">10 Juni 2025</p>
                     </div>
-                  </div>
+                  </div> */}
                   
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#A78BFA]/20">
@@ -408,8 +406,8 @@ const Deskripsi = () => {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-white/60">Level</p>
-                      <p className="font-medium">Nasional</p>
+                      <p className="text-sm text-white/60">Jenjang</p>
+                      <p className="font-medium">SMA/MA/SMK Sederajat & Mahasiswa/i</p>
                     </div>
                   </div>
                 </div>
@@ -424,6 +422,109 @@ const Deskripsi = () => {
           </div>
         </div>
       </div>
+
+      {/* Timeline */}
+      <motion.div
+        id="timeline"
+        className="max-w-screen-xl mx-auto mb-32"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <SectionTitle subtitle="Jadwal kegiatan GIS Unesa 2025 dari awal hingga akhir">
+          Timeline Kegiatan
+        </SectionTitle>
+
+        <div className="relative">
+          {/* Vertical line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#31004d] to-[#A78BFA]"></div>
+
+          {/* Timeline items */}
+          {[
+            {
+              date: "17 Mei – 12 Juli 2025",
+              title: "Pendaftaran Gelombang 1 (SC & SWC)",
+              description: "Pendaftaran peserta SC dan pengumpulan karya SWC dimulai"
+            },
+            {
+              date: "13 Juli – 24 Agustus 2025",
+              title: "Pendaftaran Gelombang 2 (SC)",
+              description: "Pendaftaran SC gelombang 2 dan pengumpulan karya SWC masih dibuka"
+            },
+            {
+              date: "25 – 31 Agustus 2025",
+              title: "Perpanjangan Pendaftaran (SC & SWC)",
+              description: "Periode perpanjangan pendaftaran SC dan pengumpulan karya SWC"
+            },
+            {
+              date: "06 September 2025",
+              title: "Technical Meeting Penyisihan SC",
+              description: "Penjelasan teknis babak penyisihan SC kepada peserta"
+            },
+            {
+              date: "14 September 2025",
+              title: "Simulasi SC",
+              description: "Simulasi pelaksanaan SC bagi peserta"
+            },
+            {
+              date: "20 September 2025",
+              title: "Penyisihan SC",
+              description: "Babak penyisihan SC dilaksanakan secara online"
+            },
+            {
+              date: "01 – 14 September 2025",
+              title: "Penilaian Karya SWC",
+              description: "Karya peserta SWC dinilai oleh dewan juri"
+            },
+            {
+              date: "23 September 2025",
+              title: "Pengumuman 5 Besar (SC & SWC)",
+              description: "Pengumuman peserta yang lolos ke babak semi final SC dan 5 besar SWC"
+            },
+            {
+              date: "25 September 2025",
+              title: "Technical Meeting Semi Final & Final",
+              description: "Penjelasan teknis pelaksanaan semi final dan final untuk SC dan SWC"
+            },
+            {
+              date: "04 Oktober 2025",
+              title: "Final SC & SWC",
+              description: "Babak final SC dan presentasi karya terbaik SWC"
+            }
+          ].map((item, index) => (
+            <motion.div 
+              key={index}
+              className={`relative flex items-center mb-12 ${
+                index % 2 === 0 ? "flex-row-reverse" : ""
+              }`}
+              initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+            >
+              <div className="w-1/2"></div>
+          
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-[#31004d] to-[#A78BFA] border-4 border-[#31004d] z-10"></div>
+          
+              <div className={`w-1/2 ${index % 2 === 0 ? "pr-12" : "pl-12"}`}>
+                <motion.div
+                  className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/20 transition-all duration-300"
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="bg-[#A78BFA]/20 px-3 py-1 rounded-full">
+                      <p className="text-[#A78BFA] font-medium text-sm">{item.date}</p>
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                  <p className="text-white/70">{item.description}</p>
+                </motion.div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
 
       {/* Contact Person Section */}
       <motion.div
@@ -441,27 +542,27 @@ const Deskripsi = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {[
             {
-              title: "Karya Tulis Ilmiah (KTI)",
+              title: "Science Writing Competition ",
               icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                 </svg>
               ),
               contacts: [
-                { name: "Gama", role: "Koordinator", phone: "+6281234567890" },
-                { name: "Angel", role: "Wakil Koordinator", phone: "+6281345678901" },
+                { name: "Faudhotul", role: "Koordinator", phone: "+6285850817023" },
+                { name: "Gita", role: "Wakil Koordinator", phone: "+628887060380" },
               ],
             },
             {
-              title: "Olimpiade CBT",
+              title: "Science Competition",
               icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
                 </svg>
               ),
               contacts: [
-                { name: "Raka", role: "Koordinator", phone: "+6281298765432" },
-                { name: "Nina", role: "Wakil Koordinator", phone: "+6281387654321" },
+                { name: "Nisa", role: "Koordinator", phone: "+6287876440866" },
+                { name: "Farid", role: "Wakil Koordinator", phone: "+62087758375435" },
               ],
             },
           ].map((section, index) => (
@@ -701,92 +802,6 @@ const Deskripsi = () => {
             </div>
           </div>
         </motion.div>
-      </motion.div>
-
-      {/* Timeline */}
-      <motion.div
-        id="timeline"
-        className="max-w-screen-xl mx-auto mb-32"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <SectionTitle subtitle="Jadwal kegiatan GIS Unesa 2025 dari awal hingga akhir">
-          Timeline Kegiatan
-        </SectionTitle>
-
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#31004d] to-[#A78BFA]"></div>
-
-          {/* Timeline items */}
-          {[
-            {
-              date: "17 Mei",
-              title: "Pembukaan Pendaftaran",
-              description: "Pendaftaran untuk kedua lomba dibuka secara serentak"
-            },
-            {
-              date: "24 Agustus 2025",
-              title: "Penutupan Pendaftaran",
-              description: "Batas akhir pendaftaran untuk seluruh lomba"
-            },
-            {
-              date: "- - 2025",
-              title: "Technical Meeting",
-              description: "Penjelasan teknis pelaksanaan lomba kepada seluruh peserta"
-            },
-            {
-              date: "- - 2025",
-              title: "Olimpiade CBT",
-              description: "Pelaksanaan Olimpiade Computer Based Test"
-            },
-            {
-              date: "- - 2025",
-              title: "Pengumpulan Karya",
-              description: "Batas akhir pengumpulan karya untuk lomba KTI"
-            },
-            {
-              date: "- - 2025",
-              title: "Pengumuman Pemenang",
-              description: "Pengumuman pemenang untuk seluruh kategori lomba"
-            }
-          ].map((item, index) => (
-            <motion.div 
-              key={index}
-              className={`relative flex items-center mb-12 ${
-                index % 2 === 0 ? "flex-row-reverse" : ""
-              }`}
-              initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-            >
-              {/* Content */}
-              <div className="w-1/2"></div>
-              
-              {/* Circle */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-[#31004d] to-[#A78BFA] border-4 border-[#31004d] z-10"></div>
-              
-              {/* Content Box */}
-              <div className={`w-1/2 ${index % 2 === 0 ? "pr-12" : "pl-12"}`}>
-                <motion.div
-                  className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/20 transition-all duration-300"
-                  whileHover={{ y: -5 }}
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="bg-[#A78BFA]/20 px-3 py-1 rounded-full">
-                      <p className="text-[#A78BFA] font-medium text-sm">{item.date}</p>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-white/70">{item.description}</p>
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </motion.div>
 
       {/* FAQ Section */}

@@ -35,7 +35,7 @@ const DeskripsiLomba = () => {
         animate="animate"
         exit="exit"
       >
-        <div className="mt-6 max-w-screen-xl mx-auto px-4 lg:px-8">
+        <div className="container max-w-6xl mx-auto px-6 sm:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
             
             {/* Text Content */}
@@ -55,7 +55,7 @@ const DeskripsiLomba = () => {
               </motion.div>
               
               <h1 className="font-bold text-4xl lg:text-5xl xl:text-6xl leading-tight mb-6 text-white">
-                Tryout CBT <span className="text-purple-400">2025</span>
+                Karya Tulis Ilmiah <span className="text-purple-400">2025</span>
               </h1>
               
               <motion.p 
@@ -133,7 +133,7 @@ const DeskripsiLomba = () => {
                 >
                   <img
                     src={foto4}
-                    alt="Lomba Tryout CBT"
+                    alt="Lomba Karya Tulis Ilmiah"
                     className="w-80 h-auto rounded-xl shadow-2xl border-2 border-purple-400 border-opacity-40"
                   />
                   
@@ -162,7 +162,7 @@ const DeskripsiLomba = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-w-screen-xl mx-auto px-4 lg:px-8">
+        <div className="container max-w-6xl mx-auto px-6 sm:px-8">
           <motion.h2 
             className="text-3xl font-bold text-center text-white mb-12"
             initial={{ y: 20, opacity: 0 }}
@@ -184,8 +184,8 @@ const DeskripsiLomba = () => {
               >
                 <h3 className="text-2xl font-bold text-purple-300 mb-4">Deskripsi</h3>
                 <p className="text-purple-100 mb-4 leading-relaxed">
-                  Kompetisi Tryout CBT merupakan ajang bergengsi bagi mahasiswa seluruh Indonesia untuk menuangkan ide 
-                  dan gagasan inovatif dalam bentuk Tryout CBT. Dengan tema <span className="font-semibold">"Inovasi Teknologi untuk Pembangunan Berkelanjutan"</span>, 
+                  Kompetisi Karya Tulis Ilmiah merupakan ajang bergengsi bagi mahasiswa seluruh Indonesia untuk menuangkan ide 
+                  dan gagasan inovatif dalam bentuk karya tulis ilmiah. Dengan tema <span className="font-semibold">"Inovasi Teknologi untuk Pembangunan Berkelanjutan"</span>, 
                   peserta didorong untuk mengembangkan solusi kreatif berbasis teknologi yang dapat mendukung pembangunan berkelanjutan di Indonesia.
                 </p>
                 <p className="text-purple-100 mb-4 leading-relaxed">
@@ -249,7 +249,7 @@ const DeskripsiLomba = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-w-screen-xl mx-auto px-4 lg:px-8">
+        <div className="container max-w-6xl mx-auto px-6 sm:px-8">
           <motion.h2 
             className="text-3xl font-bold text-center text-white mb-4"
             initial={{ y: 20, opacity: 0 }}
@@ -306,7 +306,7 @@ const DeskripsiLomba = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-w-screen-xl mx-auto px-4 lg:px-8">
+        <div className="container max-w-6xl mx-auto px-6 sm:px-8">
           <motion.div 
             className="bg-gradient-to-r from-purple-800 to-purple-900 rounded-2xl p-8 lg:p-12 shadow-2xl border border-purple-700 text-center relative overflow-hidden"
             initial={{ y: 20, opacity: 0 }}
@@ -345,7 +345,7 @@ const DeskripsiLomba = () => {
             <div className="relative z-10">
               <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Siap Menunjukkan Inovasimu?</h2>
               <p className="text-lg text-purple-200 mb-8 max-w-2xl mx-auto">
-                Daftarkan timmu sekarang dan jadilah bagian dari kompetisi Tryout CBT nasional. 
+                Daftarkan timmu sekarang dan jadilah bagian dari kompetisi karya tulis ilmiah nasional. 
                 Buktikan ide kreatifmu dalam memecahkan masalah aktual di Indonesia!
               </p>
               
