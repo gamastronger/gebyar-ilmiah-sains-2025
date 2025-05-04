@@ -1,4 +1,4 @@
-import logo from "../assets/unesaputih.png";
+import logo from "../assets/logohmppendidikan.png";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
@@ -60,7 +60,7 @@ const Navbar = () => {
           </div>
           <span className="ml-3 text-xl font-bold font-[Poppins] tracking-wide text-white drop-shadow-sm">
             GIS
-            <span className="text-[#A78BFA] ml-1">Unesa</span>
+            <span className="text-[#A78BFA] ml-1">2025</span>
           </span>
         </div>
 
@@ -71,11 +71,11 @@ const Navbar = () => {
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
           <a href="/kti" className="hover:text-[#A78BFA] transition duration-300 relative group">
-            Tentang KTI
+            Tentang SWC
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
           <a href="/cbt" className="hover:text-[#A78BFA] transition duration-300 relative group">
-            Tentang CBT
+            Tentang SC
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
           <span 

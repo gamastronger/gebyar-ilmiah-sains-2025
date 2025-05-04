@@ -1,7 +1,7 @@
 import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import foto4 from "../../assets/gimage.jpeg";
+import foto4 from "../../assets/sc.jpg";
 import facebookLogo from "../../assets/facebooklogo.png";
 import instagramLogo from "../../assets/instagramlogo.png";
 import twitterLogo from "../../assets/linkedlogo.png";
@@ -29,6 +29,8 @@ import mediaPartner9 from "../../assets/gimage.jpeg";
 import mediaPartner10 from "../../assets/gimage.jpeg";
 import poster from "../../assets/Pamflet GIS 2024.png";
 import FAQ from '../FAQ/FAQ';
+import scienceCompetitionImg from "../../assets/sc.jpg"; // Image for Science Competition
+import scienceWritingImg from "../../assets/swc.jpg"; // Image for Science Writing Competition
 
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -174,6 +176,8 @@ const EnhancedPosterSection = () => {
             className="w-full h-[500px] object-contain rounded-lg"
           />
         </TiltCard>
+
+        
         
         {/* Right side info */}
         <motion.div 
@@ -299,16 +303,16 @@ const Deskripsi = () => {
               <div className="relative rounded-xl overflow-hidden group shadow-2xl">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-60"></div>
                 <img
-                  src={foto4}
+                  src={scienceWritingImg} // Changed this line
                   alt="Science Writing Competition"
                   className="w-full h-[300px] object-cover rounded-xl"
                 />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                {/* <div className="absolute bottom-0 left-0 right-0 p-6">
                   <div className="flex items-center space-x-2 mb-2">
                     <div className="w-2 h-2 rounded-full bg-[#A78BFA]"></div>
-                    <span className="text-sm font-medium text-[#A78BFA]">Pendaftaran Dibuka</span>
+                    <span className="text-sm font-medium text-[#eeccff]">Pendaftaran Dibuka</span>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Teks KTI */}
@@ -363,16 +367,16 @@ const Deskripsi = () => {
               <div className="relative rounded-xl overflow-hidden group shadow-2xl order-1">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-60"></div>
                 <img
-                  src={foto4}
+                  src={scienceCompetitionImg} // Changed this line
                   alt="Science Competition"
                   className="w-full h-[300px] object-cover rounded-xl"
                 />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                {/* <div className="absolute bottom-0 left-0 right-0 p-6">
                   <div className="flex items-center space-x-2 mb-2">
                     <div className="w-2 h-2 rounded-full bg-[#A78BFA]"></div>
                     <span className="text-sm font-medium text-[#A78BFA]">Pendaftaran Dibuka</span>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Teks CBT */}
