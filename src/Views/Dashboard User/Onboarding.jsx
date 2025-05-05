@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { data } from 'autoprefixer';
+import api from '../../configs/api';
+import Footer from '@/Component/Footer';
 
 function Onboarding() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [provinsi, setProvinsi] = useState([]);
+  const [kota, setKota] = useState([]);
+  const [data, setData] = useState({});
 
   const [dataPribadi, setDataPribadi] = useState({
     nama: '',
     email: '',
     nisn: '',
-    password: '',
     alamat: '',
     provinsi: '',
-    kotaKab: '',
+    kota: '',
     jenisLomba: ''
   });
 
@@ -22,7 +27,8 @@ function Onboarding() {
     asalSekolah: '',
     kelas: '',
     guru: '',
-    waGuru: ''  
+    waGuru: '',
+    emailGuru: ''
   });
   
   const steps = [
@@ -47,7 +53,34 @@ function Onboarding() {
     visible: { opacity: 1, y: 0 }
   };
 
+  const kirimData = async () => {
+    const response = await fetch(`${api.URL_API}/api/users/${data.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        name: dataPribadi.nama,
+        email: dataPribadi.email,
+        nisn: dataPribadi.nisn,
+        password: dataPribadi.password,
+        alamat: dataPribadi.alamat,
+        provinsi: dataPribadi.provinsi,
+        kota: dataPribadi.kota,
+        jenisLomba: dataPribadi.jenisLomba,
+        jenjang: dataSekolah.jenjang,
+        asalSekolah: dataSekolah.asalSekolah,
+        kelas: dataSekolah.kelas,
+        guru: dataSekolah.guru,
+        waGuru: dataSekolah.waGuru,
+        emailGuru: dataSekolah.emailGuru
+      })
+    });
+  }
+
   const renderForm = () => {
+    
     if (step === 1) {
       return (
         <motion.div 
@@ -95,17 +128,6 @@ function Onboarding() {
             </div>
 
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-              <input
-                type="password"
-                placeholder="Password"
-                value={dataPribadi.password}
-                onChange={(e) => setDataPribadi({ ...dataPribadi, password: e.target.value })}
-                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none"
-              />
-            </div>
-
-            <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
               <input
                 type="text"
@@ -119,28 +141,36 @@ function Onboarding() {
             <div className="col-span-1">
               <label className="block text-sm font-medium text-gray-700 mb-2">Provinsi</label>
               <select
-                value={dataPribadi.provinsi} 
+                value={dataPribadi.provinsi}
                 onChange={(e) => setDataPribadi({ ...dataPribadi, provinsi: e.target.value })}
-                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none">
-                  <option>Provinsi</option>
-                  <option>Jawa Barat</option>
-                  <option>Jawa Tengah</option>
-                  <option>Jawa Timur</option>
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none"
+              >
+                <option value="">Pilih Provinsi</option>
+                {provinsi.map((provinsi) => (
+                  <option key={provinsi.id} value={provinsi.name}>
+                    {provinsi.name}
+                  </option>
+                ))}
               </select>
             </div>
 
+
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Kota / Kab.</label>
-              <select 
-                value={dataPribadi.kotaKab}
-                onChange={(e) => setDataPribadi({ ...dataPribadi, kotaKab: e.target.value })}
-                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none">
-                  <option>Kota / Kab.</option>
-                  <option>Bandung</option>
-                  <option>Jakarta</option>
-                  <option>Surabaya</option>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Kota/Kabupaten</label>
+              <select
+                value={dataPribadi.kota}
+                onChange={(e) => setDataPribadi({ ...dataPribadi, kota: e.target.value })}
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none"
+              >
+                <option value="">Pilih Kota/Kabupaten</option>
+                {kota.map((item) => (
+                  <option key={item.id} value={item.name}>
+                  {item.name}
+                  </option>
+                ))}
               </select>
             </div>
+
 
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Pilih Jenis Lomba</label>
@@ -203,7 +233,7 @@ function Onboarding() {
               />
             </div>
             
-             <div className='col-span-2'>
+             <div className='col-span-1'>
               <label className='block text-sm font-medium text-gray-700 mb-2'>Asal Sekolah</label>
               <input
                 type='text'
@@ -235,6 +265,17 @@ function Onboarding() {
                 className='border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none'
               />
             </div> 
+
+            <div className='col-span-1'>
+              <label className='block text-sm font-medium text-gray-700 mb-2'>Email Guru Pendamping (Opsional)</label>
+              <input
+                type='email'
+                placeholder='Email Guru Pendamping'
+                value={dataSekolah.emailGuru}
+                onChange={(e) => setDataSekolah({ ...dataSekolah, emailGuru: e.target.value })}
+                className='border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none'
+              />
+            </div>
           </div>
           
           <div className="mt-8 flex justify-between">
@@ -386,7 +427,7 @@ function Onboarding() {
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Kota/Kab</span>
-                  <span className="col-span-2">{dataPribadi.kotaKab || ':'}</span>
+                  <span className="col-span-2">{dataPribadi.kota || ':'}</span>
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Jenis Lomba</span>
@@ -418,6 +459,10 @@ function Onboarding() {
                   <span className="font-medium">WhatsApp Guru</span>
                   <span className="col-span-2">{dataSekolah.waGuru || ':'}</span>
                 </div>
+                <div className='grid grid-cols-3'>
+                  <span className="font-medium">Email Guru</span>
+                  <span className="col-span-2">{dataSekolah.emailGuru || ':'}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -431,7 +476,7 @@ function Onboarding() {
             </button>
             
             <button
-              onClick={() => navigate('/dashboard/pending')}
+              onClick={() => kirimData()}
               className="bg-purple-700 hover:bg-purple-800 text-white py-3 px-10 rounded-lg font-semibold shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
             >
               Kirim Pendaftaran
@@ -442,19 +487,110 @@ function Onboarding() {
     }
   };
 
+  const getProvinsi = async () => {
+    const response = await fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')
+    const data = await response.json()
+    setProvinsi(data);
+    console.log('provinsi', data);
+  }
+
+  useEffect(() => {
+    getProvinsi();
+    console.log('provinsi', provinsi);
+  }, []);
+
+  const getKota = async (provinsiId) => {
+    const response = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`)
+    const data = await response.json()
+    setKota(data);
+    console.log('kota', data);
+  }
+
+  useEffect(() => {
+    const selectedProv = provinsi.find((item) => item.name === dataPribadi.provinsi);
+    if (selectedProv) {
+      getKota(selectedProv.id);
+    }
+  }, [dataPribadi.provinsi]);
+
+  const getUser = async () => {
+    const response = await fetch(`${api.URL_API}/api/users/byAuth`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      credentials: 'include'
+    });
+    const data = await response.json();
+    setData(data);
+
+    setDataPribadi({
+      ...dataPribadi,
+      nama: data.name,
+      email: data.email,
+      nisn: data.nisn,
+      password: data.password,
+      alamat: data.alamat,
+      provinsi: data.provinsi,
+      kota: data.kota,
+      jenisLomba: data.jenisLomba
+    });
+
+    setDataSekolah({
+      ...dataSekolah,
+      jenjang: data.jenjang,
+      asalSekolah: data.asalSekolah,
+      kelas: data.kelas,
+      guru: data.guru,
+      waGuru: data.waGuru,
+      emailGuru: data.emailGuru
+    });
+
+    const updateUser = async () => {
+      const response = await fetch(`${api.URL_API}/api/users/${data.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          name: dataPribadi.nama,
+          email: dataPribadi.email,
+          nisn: dataPribadi.nisn,
+          password: dataPribadi.password,
+          alamat: dataPribadi.alamat,
+          provinsi: dataPribadi.provinsi,
+          kota: dataPribadi.kota,
+          jenisLomba: dataPribadi.jenisLomba,
+          jenjang: dataSekolah.jenjang,
+          asalSekolah: dataSekolah.asalSekolah,
+          kelas: dataSekolah.kelas,
+          guru: dataSekolah.guru,
+          waGuru: dataSekolah.waGuru,
+          emailGuru: dataSekolah.emailGuru
+        })
+      });
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-purple-50 to-purple-100">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900">
       {/* Fixed Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white py-3 px-6 shadow-md z-50">
+      {/* <header className="fixed top-0 left-0 right-0 bg-white py-3 px-6 shadow-md z-50">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <img src='/src/assets/hmpti.png' alt="Logo" className="h-14 mr-6" />
           </div>
           <div className="flex-grow flex items-center justify-center">
-            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-700 to-purple-900">Registrasi Peserta</h1>
+            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-700 to-purple-900">Onboarding Peserta</h1>
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* Main Content with padding to account for fixed header */}
       <div className="flex flex-col md:flex-row flex-grow md:container mx-auto mt-24 mb-8">
@@ -519,11 +655,9 @@ function Onboarding() {
       </div>
       
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-4 text-center text-sm">
-        © {new Date().getFullYear()} Universitas Negeri Surabaya. All Rights Reserved.
-      </footer>
+     
     </div>
   );
 }
 
-export default Onboarding; 
+export default Onboarding;

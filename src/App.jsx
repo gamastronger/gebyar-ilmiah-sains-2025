@@ -31,6 +31,7 @@ import CbtUser from "./Views/Dashboard User/CbtUser";
 
 function App() {
   const isAuthenticated = localStorage.getItem('token') !== null;
+  const userRole = localStorage.getItem('role'); // Ambil data user dari localStorage
 
   return (
     <Routes>
