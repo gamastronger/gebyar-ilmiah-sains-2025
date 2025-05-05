@@ -1,5 +1,19 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
+
+  extend: {
+    keyframes: {
+      scrollRight: {
+        '0%': { transform: 'translateX(0)' },
+        '100%': { transform: 'translateX(-50%)' },
+      },
+    },
+    animation: {
+      scrollRight: 'scrollRight 30s linear infinite',
+    },
+  },
+  
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -13,14 +27,20 @@ export default {
         },
         scrollRight: {
           "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-50%)" },
         },
       },
       animation: {
         shine: "shine 3s ease-in-out infinite",
-        scrollRight: "scrollRight 40s linear infinite",
+        scrollRight: "scrollRight 8s linear infinite",
       },
     },
   },
   plugins: [],
 };
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiCalendar, FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
+import { FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
 import foto4 from '../../assets/gimage.jpeg';
 
 const DeskripsiLomba = () => {
@@ -64,7 +64,7 @@ const DeskripsiLomba = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
               >
-                Mengangkat tema <span className="font-semibold text-purple-300">"Inovasi Teknologi untuk Pembangunan Berkelanjutan"</span> yang 
+                Mengangkat tema <span className="font-semibold text-purple-300">Inovasi Teknologi untuk Pembangunan Berkelanjutan</span> yang 
                 mendorong mahasiswa untuk menuangkan ide dan solusi kreatif bagi permasalahan aktual di Indonesia.
               </motion.p>
               

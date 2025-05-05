@@ -28,7 +28,7 @@ import Panduan from "./Views/Dashboard User/Panduan";
 import Bantuan from "./Views/Dashboard User/Bantuan";
 import Invoice from "./Views/Dashboard User/Invoice";
 import CbtUser from "./Views/Dashboard User/CbtUser";
-
+import Kontak from "./Views/Kontak";
 function App() {
   const isAuthenticated = localStorage.getItem('token') !== null;
 
@@ -52,6 +52,7 @@ function App() {
       <Route path="/forgot" element={<Forgot />} />
       <Route path="/kti" element={<Kti />} />
       <Route path="/cbt" element={<Cbt />} />
+      <Route path="/kontak" element={<Kontak />} />
       <Route path="/twibbon" element={<Twibbon />} />
       <Route path="/portofolio/:id" element={<ParticipantDetail />} />
       <Route path="/cbt-admin/detail/:id" element={<ParticipantDetail2 />} />

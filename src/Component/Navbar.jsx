@@ -39,7 +39,7 @@ const Navbar = () => {
         element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
-      navigate("/#contact-person");
+      navigate("/kontak");
     }
   };
 
@@ -78,13 +78,10 @@ const Navbar = () => {
             Tentang SC
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <span 
-            onClick={handleScrollToContact} 
-            className="hover:text-[#A78BFA] transition duration-300 cursor-pointer relative group"
-          >
+          <a href="/kontak" className="hover:text-[#A78BFA] transition duration-300 relative group">
             Contact
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
-          </span>
+          </a>
           <a 
             href="/twibbon" 
             className="hover:text-[#A78BFA] transition duration-300 relative group"

@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useMotionTemplate} from "framer-motion";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import foto4 from "../../assets/sc.jpg";
@@ -17,18 +17,9 @@ import sponsor2 from "../../assets/gimage.jpeg";
 import sponsor3 from "../../assets/gimage.jpeg";
 import sponsor4 from "../../assets/gimage.jpeg";
 import sponsor5 from "../../assets/gimage.jpeg";
-import mediaPartner1 from "../../assets/gimage.jpeg";
-import mediaPartner2 from "../../assets/gimage.jpeg";
-import mediaPartner3 from "../../assets/gimage.jpeg";
-import mediaPartner4 from "../../assets/gimage.jpeg";
-import mediaPartner5 from "../../assets/gimage.jpeg";
-import mediaPartner6 from "../../assets/gimage.jpeg";
-import mediaPartner7 from "../../assets/gimage.jpeg";
-import mediaPartner8 from "../../assets/gimage.jpeg";
-import mediaPartner9 from "../../assets/gimage.jpeg";
-import mediaPartner10 from "../../assets/gimage.jpeg";
 import poster from "../../assets/Pamflet GIS 2024.png";
 import FAQ from '../FAQ/FAQ';
+import MediaPartner from "../FAQ/MediaPartner";
 import scienceCompetitionImg from "../../assets/sc.jpg"; // Image for Science Competition
 import scienceWritingImg from "../../assets/swc.jpg"; // Image for Science Writing Competition
 
@@ -109,7 +100,7 @@ const GradientButton = ({ children, onClick, primary = true }) => {
 // Section title component
 const SectionTitle = ({ children, subtitle }) => {
   return (
-    <div className="text-center mb-16">
+    <div className="text-center mb-10">
       <h2 className="text-4xl font-bold text-white mb-4 relative inline-block">
         {children}
         <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#A78BFA] to-[#31004d] transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
@@ -748,7 +739,7 @@ const Deskripsi = () => {
       {/* Sponsors */}
       <motion.div
         id="sponsors"
-        className="max-w-screen-xl mx-auto mb-32"
+        className="max-w-screen-xl mx-auto"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -758,8 +749,8 @@ const Deskripsi = () => {
           Sponsor & Media Partner
         </SectionTitle>
 
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-white mb-8 text-center">Sponsor Utama</h3>
+        <div className="mb-3">
+          <h3 className="text-3xl font-bold text-white mb-8 text-center">Sponsor</h3>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {[sponsor1, sponsor2, sponsor3, sponsor4, sponsor5].map((logo, index) => (
               <motion.div
@@ -776,34 +767,9 @@ const Deskripsi = () => {
             ))}
           </div>
         </div>
-
-        <motion.div
-          id="media-partner"
-          className="max-w-screen-xl mx-auto mb-32 overflow-hidden"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <SectionTitle subtitle="Media partner yang telah mendukung acara GIS Unesa 2025">
-            Media Partner
-          </SectionTitle>
-
-          <div className="relative w-full overflow-hidden">
-            <div className="flex gap-6 animate-scroll">
-              {[mediaPartner1, mediaPartner2, mediaPartner3, mediaPartner4, mediaPartner5, mediaPartner6, mediaPartner7, mediaPartner8, mediaPartner9, mediaPartner10].map((logo, index) => (
-                <motion.div
-                  key={index}
-                  className="flex-shrink-0 w-40 h-40 bg-white/10 backdrop-blur-sm rounded-lg p-3 flex items-center justify-center border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <img src={logo} alt={`Media Partner ${index + 1}`} className="max-h-20" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
       </motion.div>
+
+      <MediaPartner />
 
       {/* FAQ Section */}
       <FAQ />
