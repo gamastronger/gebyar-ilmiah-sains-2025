@@ -1,10 +1,11 @@
 import logo from "../assets/unesaputih.png";
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const Navbar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState(null); // You'll need to manage this with your auth system
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -63,7 +64,7 @@ const Navbar = () => {
           </span>
         </div>
 
-        {/* Desktop Links */}
+        {/* Desktop Links with Auth Buttons */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           <a href="/" className="hover:text-[#A78BFA] transition duration-300 relative group">
             Home
@@ -91,6 +92,41 @@ const Navbar = () => {
             Twibbon
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
+
+          {/* Add Auth Buttons/User Display */}
+          <div className="flex items-center gap-4 ml-4 border-l border-white/20 pl-4">
+            {user ? (
+              <div className="flex items-center gap-3">
+                <span className="text-white hover:text-[#A78BFA] transition duration-300">
+                  {user.nama}
+                </span>
+                <button
+                  onClick={() => {
+                    setUser(null);
+                    // Add your logout logic here
+                  }}
+                  className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg transition duration-300 text-white"
+                >
+                  Keluar
+                </button>
+              </div>
+            ) : (
+              <>
+                <Link
+                  to="/masuk"
+                  className="px-4 py-2 hover:bg-white/10 rounded-lg transition duration-300"
+                >
+                  Masuk
+                </Link>
+                <Link
+                  to="/daftar"
+                  className="px-4 py-2 bg-[#A78BFA] hover:bg-[#9061F9] rounded-lg transition duration-300"
+                >
+                  Daftar
+                </Link>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Hamburger Icon for Mobile */}
@@ -194,6 +230,44 @@ const Navbar = () => {
                 </svg>
                 <span>Twibbon</span>
               </a>
+            </div>
+
+            {/* Add Auth Buttons/User Display to Mobile Menu */}
+            <div className="mt-6 pt-6 border-t border-white/10">
+              {user ? (
+                <div className="space-y-3">
+                  <div className="text-white text-sm">
+                    Signed in as <span className="font-medium">{user.nama}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setUser(null);
+                      handleSidebar();
+                      // Add your logout logic here
+                    }}
+                    className="w-full px-4 py-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg transition duration-300 text-white text-sm"
+                  >
+                    Keluar
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  <Link
+                    to="/masuk"
+                    onClick={handleSidebar}
+                    className="w-full px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition duration-300 text-white text-center text-sm"
+                  >
+                    Masuk
+                  </Link>
+                  <Link
+                    to="/daftar"
+                    onClick={handleSidebar}
+                    className="w-full px-4 py-2 bg-[#A78BFA] hover:bg-[#9061F9] rounded-lg transition duration-300 text-white text-center text-sm"
+                  >
+                    Daftar
+                  </Link>
+                </div>
+              )}
             </div>
             
             {/* Footer */}
