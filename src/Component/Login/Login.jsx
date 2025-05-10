@@ -44,8 +44,13 @@ const LoginPage = () => {
 
       // Simpan token ke localStorage
       localStorage.setItem('token', data.token);
-      localStorage.setItem('user', data.role);
-      navigate('/admin');
+      localStorage.setItem('role', data.role); // Simpan data user ke localStorage
+      if (data.role === 'admin') {
+        navigate('/admin');
+      }
+      if (data.role === 'peserta') {
+        navigate('/onboarding');
+      }
     } catch (err) {
       setError(err.message);
     }
