@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import api from '@/configs/api';
 
 function Onboarding() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [user, setUser] = useState([]);
 
   const [dataPribadi, setDataPribadi] = useState({
     nama: '',
@@ -45,6 +47,28 @@ function Onboarding() {
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 }
+  };
+
+  kirimPendaftaran = async () => {
+    const response = await fetch(`${api.URL_API}/api/participants`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        ...dataPribadi,
+        ...dataSekolah
+      }),
+      credentials: 'include'
+    });
+    const data = await response.json();
+    if (response.ok) {
+      alert('Pendaftaran berhasil!');
+      navigate('/dashboard');
+    } else {
+      alert('Pendaftaran gagal! Silakan coba lagi.');
+    }
   };
 
   const renderForm = () => {
@@ -431,7 +455,7 @@ function Onboarding() {
             </button>
             
             <button
-              onClick={() => navigate('/dashboard/pending')}
+              onClick={() => kirimPendaftaran()}
               className="bg-purple-700 hover:bg-purple-800 text-white py-3 px-10 rounded-lg font-semibold shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
             >
               Kirim Pendaftaran
@@ -441,6 +465,45 @@ function Onboarding() {
       );
     }
   };
+
+  const getUserByAuth = async () => {
+    const response = await fetch(`${api.URL_API}/api/users/byAuth`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      credentials: 'include'
+    }); 
+    const data = await response.json();
+
+    setDataPribadi({
+      ...dataPribadi,
+      nama: data.name,
+      email: data.email,
+      nisn: data.nisn,
+      password: data.password,
+      alamat: data.alamat,
+      provinsi: data.provinsi,
+      kotaKab: data.kotaKab,
+      jenisLomba: data.jenisLomba
+    });
+    setDataSekolah({
+      ...dataSekolah,
+      jenjang: data.jenjang,
+      asalSekolah: data.asalSekolah,
+      kelas: data.kelas,
+      guru: data.guru,
+      waGuru: data.waGuru
+    });
+
+    // setUser(data);
+  }
+
+  useEffect(() => {
+    getUserByAuth();
+  }
+  , []);
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-purple-50 to-purple-100">

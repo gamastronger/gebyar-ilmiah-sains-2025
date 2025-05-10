@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { participantsData } from "../../data/participantsData";
+import api from "@/configs/api";
 
 export function Portofolio() {
   const [participants, setParticipants] = useState(participantsData);
@@ -36,7 +37,25 @@ export function Portofolio() {
 
   // Perbarui data saat komponen dimuat ulang
   useEffect(() => {
-    setParticipants([...participantsData]); // Sinkronkan data
+    const getUsers = async () => {
+      const response = await fetch(`${api.URL_API}/api/users?jenis_lomba=kti`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setParticipants(data);
+        setIsLoading(false);
+      } else {
+        console.error("Error fetching participants:", data);
+        setIsLoading(false);
+      }
+    };
+    getUsers();
+    // setParticipants([...participantsData]);
   }, []);
 
   const handleDetail = (id) => {
