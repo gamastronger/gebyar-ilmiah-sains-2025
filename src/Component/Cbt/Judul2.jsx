@@ -19,11 +19,28 @@ const DeskripsiLomba = () => {
   };
 
   const benefits = [
-    { icon: <FiAward className="text-yellow-300 text-2xl" />, title: 'Juara 1', description: 'Rp. 3.000.000 + Sertifikat + Trophy' },
-    { icon: <FiAward className="text-gray-300 text-2xl" />, title: 'Juara 2', description: 'Rp. 2.000.000 + Sertifikat + Trophy' },
-    { icon: <FiAward className="text-amber-600 text-2xl" />, title: 'Juara 3', description: 'Rp. 1.000.000 + Sertifikat + Trophy' },
-    { icon: <FiFileText className="text-purple-300 text-2xl" />, title: 'E-Certificate', description: 'Untuk semua peserta' },
-  ];
+  {
+    icon: <FiAward className="text-yellow-300 text-2xl" />,
+    title: 'Juara I SMA/MA/SMK',
+    description: 'Trophy + Medali + Uang Pembinaan + Merchandise + Sertifikat Silver Ticket',
+  },
+  {
+    icon: <FiAward className="text-yellow-300 text-2xl" />,
+    title: 'Juara I Perguruan Tinggi',
+    description: 'Trophy + Medali + Uang Pembinaan + Merchandise + Publikasi Artikel',
+  },
+  {
+    icon: <FiAward className="text-gray-300 text-2xl" />,
+    title: 'Juara II',
+    description: 'Trophy + Uang Pembinaan + Merchandise + Sertifikat',
+  },
+  {
+    icon: <FiAward className="text-amber-600 text-2xl" />,
+    title: 'Juara III',
+    description: 'Trophy + Uang Pembinaan + Merchandise + Sertifikat',
+  },
+];
+
 
   return (
     <div className="bg-gradient-to-b from-[#210034] to-[#3a0061] min-h-screen">
@@ -36,7 +53,7 @@ const DeskripsiLomba = () => {
         exit="exit"
       >
         <div className="container max-w-6xl mx-auto px-6 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
+          <div className="mt-11 grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
             
             {/* Text Content */}
             <motion.div
@@ -55,7 +72,7 @@ const DeskripsiLomba = () => {
               </motion.div>
               
               <h1 className="font-bold text-4xl lg:text-5xl xl:text-6xl leading-tight mb-6 text-white">
-                Karya Tulis Ilmiah <span className="text-purple-400">2025</span>
+                Science Competition <span className="text-purple-400">2025</span>
               </h1>
               
               <motion.p 
@@ -64,8 +81,8 @@ const DeskripsiLomba = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
               >
-                Mengangkat tema <span className="font-semibold text-purple-300">"Inovasi Teknologi untuk Pembangunan Berkelanjutan"</span> yang 
-                mendorong mahasiswa untuk menuangkan ide dan solusi kreatif bagi permasalahan aktual di Indonesia.
+                Salah satu cabang lomba unggulan dalam rangkaian <span className="font-semibold text-purple-300">Gebyar Ilmiah Sains</span> yang diselenggarakan setiap tahun. Kompetisi ini berbentuk Olimpiade IPA yang ditujukan untuk siswa SD/MI dan SMP/MTs sederajat.
+                
               </motion.p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -89,13 +106,13 @@ const DeskripsiLomba = () => {
               </div>
               
               <div className="flex flex-wrap gap-6 text-purple-200">
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <FiCalendar className="text-purple-400" />
                   <span>Deadline: 20 Juni 2025</span>
-                </div>
+                </div> */}
                 <div className="flex items-center gap-2">
                   <FiUsers className="text-purple-400" />
-                  <span>2-3 mahasiswa/tim</span>
+                  <span>SD/MI dan SMP/MTs sederajat</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <FiClipboard className="text-purple-400" />
@@ -145,8 +162,14 @@ const DeskripsiLomba = () => {
                     transition={{ delay: 0.8, duration: 0.5 }}
                     whileHover={{ scale: 1.05 }}
                   >
-                    <p className="text-white text-lg font-bold">Rp 100.000<span className="text-sm font-normal">/tim</span></p>
+                    <p className="text-white text-lg font-bold">
+                      Gel. 1: Rp 60.000<span className="text-sm font-normal"></span>
+                    </p>
+                    <p className="text-white text-lg font-bold">
+                      Gel. 2: Rp 65.000<span className="text-sm font-normal"></span>
+                    </p>
                   </motion.div>
+
                 </motion.div>
               </div>
             </motion.div>
@@ -156,7 +179,7 @@ const DeskripsiLomba = () => {
       
       {/* About Competition Section */}
       <motion.section 
-        className="py-16"
+        className="py-3"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -184,19 +207,9 @@ const DeskripsiLomba = () => {
               >
                 <h3 className="text-2xl font-bold text-purple-300 mb-4">Deskripsi</h3>
                 <p className="text-purple-100 mb-4 leading-relaxed">
-                  Kompetisi Karya Tulis Ilmiah merupakan ajang bergengsi bagi mahasiswa seluruh Indonesia untuk menuangkan ide 
-                  dan gagasan inovatif dalam bentuk karya tulis ilmiah. Dengan tema <span className="font-semibold">"Inovasi Teknologi untuk Pembangunan Berkelanjutan"</span>, 
-                  peserta didorong untuk mengembangkan solusi kreatif berbasis teknologi yang dapat mendukung pembangunan berkelanjutan di Indonesia.
+                  Salah satu cabang lomba unggulan dalam rangkaian <span className="font-semibold">Gebyar Ilmiah Sains</span> yang diselenggarakan setiap tahun. Kompetisi ini berbentuk Olimpiade IPA yang ditujukan untuk siswa SD/MI dan SMP/MTs sederajat. SC terdiri dari tiga babak menantang: Penyisihan, Semifinal, dan Final. Melalui ajang ini, peserta diajak untuk menunjukkan kemampuan terbaik mereka dalam bidang Ilmu Pengetahuan Alam, berpikir kritis, dan bersaing secara sportif dalam suasana yang edukatif dan menyenangkan. SC adalah panggung bagi calon ilmuwan muda untuk unjuk prestasi.
                 </p>
-                <p className="text-purple-100 mb-4 leading-relaxed">
-                  Karya tulis yang diajukan diharapkan memiliki nilai kebaruan, orisinalitas, serta implementasi yang realistis 
-                  untuk diterapkan dalam konteks pembangunan Indonesia. Peserta ditantang untuk mengintegrasikan teknologi dengan 
-                  aspek sosial, ekonomi, dan lingkungan yang berkelanjutan.
-                </p>
-                <p className="text-purple-100 leading-relaxed">
-                  Tim yang lolos ke tahap final akan berkesempatan untuk mempresentasikan karyanya di hadapan dewan juri yang 
-                  terdiri dari akademisi dan praktisi profesional di bidangnya.
-                </p>
+                
               </motion.div>
             </div>
             
@@ -230,10 +243,10 @@ const DeskripsiLomba = () => {
                     <span className="text-purple-400 mt-1">•</span>
                     <span>Format penulisan sesuai dengan template yang disediakan</span>
                   </li>
-                  <li className="flex items-start gap-2">
+                  {/* <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
                     <span>Maksimal 20 halaman (tidak termasuk lampiran)</span>
-                  </li>
+                  </li> */}
                 </ul>
               </motion.div>
             </div>
@@ -343,11 +356,13 @@ const DeskripsiLomba = () => {
             </div>
             
             <div className="relative z-10">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Siap Menunjukkan Inovasimu?</h2>
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                Siap Menjadi Ilmuwan Muda Berprestasi?
+              </h2>
               <p className="text-lg text-purple-200 mb-8 max-w-2xl mx-auto">
-                Daftarkan timmu sekarang dan jadilah bagian dari kompetisi karya tulis ilmiah nasional. 
-                Buktikan ide kreatifmu dalam memecahkan masalah aktual di Indonesia!
+                Olimpiade IPA untuk SD/MI & SMP/MTs dengan tiga babak seru: Penyisihan, Semifinal, dan Final!
               </p>
+
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link

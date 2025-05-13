@@ -20,8 +20,11 @@ import sponsor5 from "../../assets/gimage.jpeg";
 import poster from "../../assets/Pamflet GIS 2024.png";
 import FAQ from '../FAQ/FAQ';
 import MediaPartner from "../FAQ/MediaPartner";
-import scienceCompetitionImg from "../../assets/sc.jpg"; // Image for Science Competition
-import scienceWritingImg from "../../assets/swc.jpg"; // Image for Science Writing Competition
+import scienceCompetitionImg from "../../assets/gimage.jpeg"; 
+import scienceWritingImg from "../../assets/gimage.jpeg";
+import InstagramIcon1 from "../../assets/instagram.png";
+import InstagramIcon2 from '../../assets/instagram.png'; 
+import TikTokIcon from '../../assets/tiktok.png'; 
 
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -209,6 +212,49 @@ const EnhancedPosterSection = () => {
   );
 };
 
+const SocialLinks = () => {
+  return (
+    <div className="flex justify-center gap-6 mt-8">
+  {/* Instagram 1 */}
+  <a
+    href="https://instagram.com/gisunesa"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Instagram GIS Unesa"
+    className="hover:scale-110 transition-transform flex flex-col items-center mx-5"
+  >
+    <img src={InstagramIcon1} alt="Instagram GIS Unesa" width={36} height={36} />
+    <span className="text-white text-sm mt-2">@gisunesa</span>
+  </a>
+
+  {/* Instagram 2 */}
+  <a
+    href="https://instagram.com/hmpipaunesa"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Instagram HMP IPA Unesa"
+    className="hover:scale-110 transition-transform flex flex-col items-center"
+  >
+    <img src={InstagramIcon2} alt="Instagram HMP IPA Unesa" width={36} height={36} />
+    <span className="text-white text-sm mt-2">@hmppipaunesa</span>
+  </a>
+
+  {/* TikTok */}
+  <a
+    href="https://www.tiktok.com/@gisunesa"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="TikTok GIS Unesa"
+    className="hover:scale-110 transition-transform flex flex-col items-center"
+  >
+    <img src={TikTokIcon} alt="TikTok GIS Unesa" width={36} height={36} />
+    <span className="text-white text-sm mt-2">@gisfmipaunesa</span>
+  </a>
+</div>
+
+  );
+};
+
 // Ganti bagian Poster Section di dalam Deskripsi dengan EnhancedPosterSection
 const Deskripsi = () => {
   const [activeTab, setActiveTab] = useState('kti'); // 'kti' or 'cbt'
@@ -253,7 +299,11 @@ const Deskripsi = () => {
           {/* Enhanced Poster Section */}
           <EnhancedPosterSection />
         </div>
+        <SocialLinks />
       </motion.div>
+      
+
+
 
       {/* Competition Tabs */}
       <div className="max-w-screen-xl mx-auto mb-32">
@@ -803,6 +853,7 @@ const Deskripsi = () => {
               Pelajari Selengkapnya
             </GradientButton>
           </div>
+          <SocialLinks />
         </div>
       </motion.div>
     </div>

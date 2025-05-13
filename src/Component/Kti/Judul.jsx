@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
+import { FiCalendar, FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
 import foto4 from '../../assets/gimage.jpeg';
 
 const DeskripsiLomba = () => {
@@ -19,11 +19,28 @@ const DeskripsiLomba = () => {
   };
 
   const benefits = [
-    { icon: <FiAward className="text-yellow-300 text-2xl" />, title: 'Juara 1', description: 'Uang Pembinaan + Sertifikat + Trophy' },
-    { icon: <FiAward className="text-gray-300 text-2xl" />, title: 'Juara 2', description: 'Uang Pembinaan + Sertifikat + Trophy' },
-    { icon: <FiAward className="text-amber-600 text-2xl" />, title: 'Juara 3', description: 'Uang Pembinaan + Sertifikat + Trophy' },
-    { icon: <FiFileText className="text-purple-300 text-2xl" />, title: 'E-Certificate', description: 'Untuk semua peserta' },
-  ];
+  {
+    icon: <FiAward className="text-yellow-300 text-2xl" />,
+    title: 'Juara I',
+    description: '-',
+  },
+  {
+    icon: <FiAward className="text-yellow-300 text-2xl" />,
+    title: 'Juara II ',
+    description: '-',
+  },
+  {
+    icon: <FiAward className="text-gray-300 text-2xl" />,
+    title: 'Juara III',
+    description: '-',
+  },
+  {
+    icon: <FiAward className="text-amber-600 text-2xl" />,
+    title: 'Juara IV',
+    description: '-',
+  },
+];
+
 
   return (
     <div className="bg-gradient-to-b from-[#210034] to-[#3a0061] min-h-screen">
@@ -36,7 +53,7 @@ const DeskripsiLomba = () => {
         exit="exit"
       >
         <div className="container max-w-6xl mx-auto px-6 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
+          <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
             
             {/* Text Content */}
             <motion.div
@@ -55,7 +72,7 @@ const DeskripsiLomba = () => {
               </motion.div>
               
               <h1 className="font-bold text-4xl lg:text-5xl xl:text-6xl leading-tight mb-6 text-white">
-                Science <span className="text-purple-400">Writing</span> Competition 
+                Science Writing Competition <span className="text-purple-400">2025</span>
               </h1>
               
               <motion.p 
@@ -64,8 +81,8 @@ const DeskripsiLomba = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
               >
-                Mengangkat tema <span className="font-semibold text-purple-300">Inovasi Teknologi untuk Pembangunan Berkelanjutan</span> yang 
-                mendorong mahasiswa untuk menuangkan ide dan solusi kreatif bagi permasalahan aktual di Indonesia.
+                Merupakan <span className="font-semibold text-purple-300">Lomba Karya Tulis Ilmiah</span> yang dapat diikuti oleh tingkat SMA/MA/SMK/Sederajat dan Mahasiswa/i.
+                
               </motion.p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -79,19 +96,20 @@ const DeskripsiLomba = () => {
                     transition={{ repeat: Infinity, duration: 1.5 }}
                   >→</motion.span>
                 </Link>
-                <a
-                  href="https://drive.google.com/your-guidebook-link" // Ganti dengan link Google Drive Guidebook Anda
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link 
+                  to="/guidebook" 
                   className="bg-transparent border-2 border-purple-400 text-purple-200 px-8 py-3 rounded-lg font-semibold hover:bg-purple-900 hover:bg-opacity-30 transition-colors duration-300 flex items-center justify-center gap-2"
                 >
                   <FiFileText />
                   <span>Download Guidebook</span>
-                </a>
+                </Link>
               </div>
               
               <div className="flex flex-wrap gap-6 text-purple-200">
-                
+                {/* <div className="flex items-center gap-2">
+                  <FiCalendar className="text-purple-400" />
+                  <span>Deadline: 20 Juni 2025</span>
+                </div> */}
                 <div className="flex items-center gap-2">
                   <FiUsers className="text-purple-400" />
                   <span>2-3 mahasiswa/tim</span>
@@ -132,7 +150,7 @@ const DeskripsiLomba = () => {
                 >
                   <img
                     src={foto4}
-                    alt="Lomba Science Writing Competition"
+                    alt="Lomba Karya Tulis Ilmiah"
                     className="w-80 h-auto rounded-xl shadow-2xl border-2 border-purple-400 border-opacity-40"
                   />
                   
@@ -144,8 +162,14 @@ const DeskripsiLomba = () => {
                     transition={{ delay: 0.8, duration: 0.5 }}
                     whileHover={{ scale: 1.05 }}
                   >
-                    <p className="text-white text-lg font-bold">Rp 100.000<span className="text-sm font-normal">/tim</span></p>
+                    <p className="text-white text-lg font-bold">
+                      Gel. 1: Rp 65.000<span className="text-sm font-normal">/tim</span>
+                    </p>
+                    <p className="text-white text-lg font-bold">
+                      Gel. 2: Rp 70.000<span className="text-sm font-normal">/tim</span>
+                    </p>
                   </motion.div>
+
                 </motion.div>
               </div>
             </motion.div>
@@ -153,9 +177,9 @@ const DeskripsiLomba = () => {
         </div>
       </motion.div>
       
-      {/* About Competition Section
+      {/* About Competition Section */}
       <motion.section 
-        className="py-16"
+        className="py-3"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -183,19 +207,9 @@ const DeskripsiLomba = () => {
               >
                 <h3 className="text-2xl font-bold text-purple-300 mb-4">Deskripsi</h3>
                 <p className="text-purple-100 mb-4 leading-relaxed">
-                  Kompetisi Science Writing Competition merupakan ajang bergengsi bagi mahasiswa seluruh Indonesia untuk menuangkan ide 
-                  dan gagasan inovatif dalam bentuk Science Writing Competition. Dengan tema <span className="font-semibold">"Inovasi Teknologi untuk Pembangunan Berkelanjutan"</span>, 
-                  peserta didorong untuk mengembangkan solusi kreatif berbasis teknologi yang dapat mendukung pembangunan berkelanjutan di Indonesia.
+                  Merupakan Lomba <span className="font-semibold">Karya Tulis Ilmiah</span> yang dapat diikuti oleh tingkat SMA/MA/SMK/Sederajat dan Mahasiswa/i. Yang bertujuan untuk untuk meningkatkan kemampuan bersaing siswa dan mahasiswa dalam Ilmu Pengetahuan dan Teknologi (IPTEK) dan melatih siswa dan mahasiswa  dalam bersaing inovasi di bidang Pendidikan, Bioteknologi, Energi Terbarukan, dan Lingkungan.
                 </p>
-                <p className="text-purple-100 mb-4 leading-relaxed">
-                  Karya tulis yang diajukan diharapkan memiliki nilai kebaruan, orisinalitas, serta implementasi yang realistis 
-                  untuk diterapkan dalam konteks pembangunan Indonesia. Peserta ditantang untuk mengintegrasikan teknologi dengan 
-                  aspek sosial, ekonomi, dan lingkungan yang berkelanjutan.
-                </p>
-                <p className="text-purple-100 leading-relaxed">
-                  Tim yang lolos ke tahap final akan berkesempatan untuk mempresentasikan karyanya di hadapan dewan juri yang 
-                  terdiri dari akademisi dan praktisi profesional di bidangnya.
-                </p>
+
               </motion.div>
             </div>
             
@@ -238,7 +252,7 @@ const DeskripsiLomba = () => {
             </div>
           </div>
         </div>
-      </motion.section> */}
+      </motion.section>
       
       {/* Benefits Section */}
       <motion.section 
@@ -342,11 +356,13 @@ const DeskripsiLomba = () => {
             </div>
             
             <div className="relative z-10">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Siap Menunjukkan Inovasimu?</h2>
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+               Siap Membawa Inovasimu ke Panggung Nasional?
+              </h2>
               <p className="text-lg text-purple-200 mb-8 max-w-2xl mx-auto">
-                Daftarkan timmu sekarang dan jadilah bagian dari kompetisi Science Writing Competition nasional. 
-                Buktikan ide kreatifmu dalam memecahkan masalah aktual di Indonesia!
+                Kirimkan karyamu dan raih kesempatan meraih prestasi nasional!
               </p>
+
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
