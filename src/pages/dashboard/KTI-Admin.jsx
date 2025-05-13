@@ -357,7 +357,7 @@ export function Portofolio() {
                             <td className="py-3 px-4 border-b border-purple-100 text-gray-600">{participant.email}</td>
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span
-                                className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium 
+                                className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium 
                                 ${statusConfig[participant.status_verifikasi]?.bgColor || "bg-gray-100"} 
                                 ${statusConfig[participant.status_verifikasi]?.textColor || "text-gray-800"} 
                                 border ${statusConfig[participant.status_verifikasi]?.borderColor || "border-gray-200"}`}

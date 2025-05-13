@@ -1,3 +1,4 @@
+import ScrollToTop from "@/ScrollToTop";
 import logo from "../assets/logohmppendidikan.png";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -208,6 +209,7 @@ const Navbar = () => {
                 onClick={() => {
                   handleSidebar();
                   handleScrollToContact();
+                  ScrollToTop();
                 }}
                 className="flex items-center space-x-3 text-white hover:text-[#A78BFA] transition duration-300 py-2 px-4 rounded-lg hover:bg-white/5 cursor-pointer"
               >

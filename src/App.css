@@ -145,5 +145,52 @@ body, html {
     transform: skewX(-20deg);
     animation: shine 1.2s ease-in-out forwards;
   }
+  /* Tambahan media query untuk responsif mobile (maksimum 768px) */
+@media (max-width: 768px) {
+  .admin-container {
+    flex-direction: column;
+  }
+
+  .sidenav {
+    position: relative;
+    width: 100%;
+    transform: translateX(-100%);
+    z-index: 20;
+  }
+
+  .sidenav.open {
+    transform: translateX(0);
+  }
+
+  .content-container {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .dashboard-navbar {
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  .footer {
+    font-size: 14px;
+    padding: 15px;
+  }
+
+  .logo {
+    height: 4em;
+    padding: 1em;
+  }
+
+  .card {
+    padding: 1em;
+  }
+
+  #root {
+    padding: 1rem;
+  }
+}
+
+  
   
   

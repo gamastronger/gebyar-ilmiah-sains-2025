@@ -78,6 +78,8 @@ const TiltCard = ({ children }) => {
   );
 };
 
+
+
 // Custom button component
 const GradientButton = ({ children, onClick, primary = true }) => {
   return (
@@ -375,7 +377,7 @@ const Deskripsi = () => {
                   Science Competition
                 </h1>
                 <p className="text-lg mb-8 text-white/90 leading-relaxed">
-                  -
+                  adalah salah satu cabang lomba unggulan dalam rangkaian Gebyar Ilmiah Sains yang diselenggarakan setiap tahun. Kompetisi ini berbentuk Olimpiade IPA yang ditujukan untuk siswa SD/MI dan SMP/MTs sederajat. SC terdiri dari tiga babak menantang: Penyisihan, Semifinal, dan Final. Melalui ajang ini, peserta diajak untuk menunjukkan kemampuan terbaik mereka dalam bidang Ilmu Pengetahuan Alam, berpikir kritis, dan bersaing secara sportif dalam suasana yang edukatif dan menyenangkan.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 mb-8">
@@ -399,7 +401,7 @@ const Deskripsi = () => {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">Jenjang</p>
-                      <p className="font-medium">SMA/MA/SMK Sederajat & Mahasiswa/i</p>
+                      <p className="font-medium">SD/MI Sederajat & SMP/MTs Sederajat</p>
                     </div>
                   </div>
                 </div>
@@ -429,8 +431,8 @@ const Deskripsi = () => {
         </SectionTitle>
 
         <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#31004d] to-[#A78BFA]"></div>
+          {/* Vertical line - only visible on medium screens and up */}
+          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#31004d] to-[#A78BFA]"></div>
 
           {/* Timeline items */}
           {[
@@ -487,19 +489,22 @@ const Deskripsi = () => {
           ].map((item, index) => (
             <motion.div 
               key={index}
-              className={`relative flex items-center mb-12 ${
-                index % 2 === 0 ? "flex-row-reverse" : ""
+              className={`relative flex md:items-center mb-12 ${
+                index % 2 === 0 ? "md:flex-row-reverse" : ""
               }`}
-              initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+              initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className="w-1/2"></div>
-          
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-[#31004d] to-[#A78BFA] border-4 border-[#31004d] z-10"></div>
-          
-              <div className={`w-1/2 ${index % 2 === 0 ? "pr-12" : "pl-12"}`}>
+              {/* For desktop layout */}
+              <div className="hidden md:block w-1/2"></div>
+            
+              {/* Center point - visible on all screens */}
+              <div className="absolute left-4 md:left-1/2 top-0 md:top-1/2 transform md:-translate-x-1/2 md:-translate-y-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-[#31004d] to-[#A78BFA] border-4 border-[#31004d] z-10"></div>
+            
+              {/* Content section */}
+              <div className={`md:w-1/2 pl-12 md:pl-12 md:pr-12 ${index % 2 === 0 ? "md:pr-12 md:pl-0" : "md:pl-12 md:pr-0"}`}>
                 <motion.div
                   className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/20 transition-all duration-300"
                   whileHover={{ y: -5 }}
@@ -770,6 +775,7 @@ const Deskripsi = () => {
       </motion.div>
 
       <MediaPartner />
+      
 
       {/* FAQ Section */}
       <FAQ />

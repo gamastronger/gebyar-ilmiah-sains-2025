@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path'; // Add this import
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
@@ -14,5 +14,6 @@ export default defineConfig({
   },
   server: {
     historyApiFallback: true,
+    allowedHosts: ['262f-103-144-146-14.ngrok-free.app'], // Tambahan ini
   },
 });

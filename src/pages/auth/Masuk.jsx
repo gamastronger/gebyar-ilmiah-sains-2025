@@ -14,31 +14,19 @@ export function Masuk() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    try {
-      // Login dummy untuk testing tanpa backend
   
-
-      // Jika bukan login dummy, lakukan login ke backend
-      const response = await fetch(`${api.URL_API}/api/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Login gagal. Silakan periksa email dan kata sandi Anda.");
-      }
-
-      const data = await response.json();
-      localStorage.setItem("token", data.access_token);
+    // Login dummy (hanya untuk testing, tidak untuk produksi)
+    const dummyEmail = "admin@gmail.com";
+    const dummyPassword = "admin1";
+  
+    if (email === dummyEmail && password === dummyPassword) {
+      localStorage.setItem("token", "dummytoken123");
       navigate("/admin", { replace: true });
-    } catch (err) {
-      setError(err.message);
+    } else {
+      setError("Email atau password salah.");
     }
   };
+  
 
   const fadeIn = {
     initial: { opacity: 0, y: 30, filter: "blur(8px)" },
