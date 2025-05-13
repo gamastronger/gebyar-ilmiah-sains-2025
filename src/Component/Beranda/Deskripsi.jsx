@@ -20,8 +20,8 @@ import sponsor5 from "../../assets/gimage.jpeg";
 import poster from "../../assets/Pamflet GIS 2024.png";
 import FAQ from '../FAQ/FAQ';
 import MediaPartner from "../FAQ/MediaPartner";
-import scienceCompetitionImg from "../../assets/gimage.jpeg"; 
-import scienceWritingImg from "../../assets/gimage.jpeg";
+import scienceCompetitionImg from "../../assets/sc.jpg"; 
+import scienceWritingImg from "../../assets/swc.jpg";
 import InstagramIcon1 from "../../assets/instagram.png";
 import InstagramIcon2 from '../../assets/instagram.png'; 
 import TikTokIcon from '../../assets/tiktok.png'; 
@@ -853,7 +853,7 @@ const Deskripsi = () => {
               Pelajari Selengkapnya
             </GradientButton>
           </div>
-          <SocialLinks />
+         
         </div>
       </motion.div>
     </div>

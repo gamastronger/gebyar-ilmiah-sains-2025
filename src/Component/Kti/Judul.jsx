@@ -87,7 +87,7 @@ const DeskripsiLomba = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link
-                  to="/daftar"
+                  to="../../auth/daftar"
                   className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-8 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-purple-900 hover:-translate-y-1 transition-all duration-300"
                 >
                   <span>Daftar Sekarang</span>
@@ -97,7 +97,7 @@ const DeskripsiLomba = () => {
                   >→</motion.span>
                 </Link>
                 <Link 
-                  to="/guidebook" 
+                  to="https://unesa.me/BukuPanduan13thGIS" 
                   className="bg-transparent border-2 border-purple-400 text-purple-200 px-8 py-3 rounded-lg font-semibold hover:bg-purple-900 hover:bg-opacity-30 transition-colors duration-300 flex items-center justify-center gap-2"
                 >
                   <FiFileText />
@@ -366,7 +366,7 @@ const DeskripsiLomba = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  to="/daftar"
+                  to="../../auth/daftar"
                   className="bg-white text-purple-900 px-8 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-purple-100 transition-colors duration-300"
                 >
                   <span>Daftar Sekarang</span>

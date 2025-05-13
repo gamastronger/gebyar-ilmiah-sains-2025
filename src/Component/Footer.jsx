@@ -24,11 +24,15 @@ const Footer = () => {
         <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
       </svg>
     ),
-    youtube: (
-      <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-      </svg>
-    )
+    tiktok: (
+  <svg
+    className="w-6 h-6 fill-current"
+    viewBox="0 0 256 256"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M232 64.002c-24.797 0-45-20.203-45-45h-34.997v138.247a37.5 37.5 0 1 1-26.7-36.025V84.08a72.456 72.456 0 0 0-10.8-.83c-40.485 0-73.497 32.617-73.497 72.816 0 40.2 33.012 72.937 73.497 72.937S216 196.267 216 155.826v-91.8c4.886 1.283 10.06 1.976 15.464 1.976h.536v-32z" />
+  </svg>
+)
   };
 
   const containerAnimation = {
@@ -151,7 +155,7 @@ const Footer = () => {
             <p className="text-purple-100/80 leading-relaxed">
               GIS Unesa adalah event nasional yang menyelenggarakan kompetisi untuk mahasiswa seluruh Indonesia. Diselenggarakan oleh Universitas Negeri Surabaya, event ini bertujuan menjadi wadah kreativitas dan inovasi mahasiswa di berbagai bidang.
             </p>
-            <a 
+            {/* <a 
               href="/about" 
               className="inline-flex items-center text-purple-300 hover:text-white transition-colors group"
             >
@@ -159,7 +163,7 @@ const Footer = () => {
               <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </a> */}
           </div>
 
           {/* Competitions Column */}
@@ -248,7 +252,7 @@ const Footer = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <div className="ml-3">
+                <div className="mx-3 ml-7">
                   <span className="text-purple-100 block">
                     Visit Us
                   </span>
@@ -284,7 +288,7 @@ const Footer = () => {
                 </button>
               </Link>
               
-              <Link to="/register">
+              <Link to="../../auth/daftar">
                 <button className="mt-2 w-full relative overflow-hidden group bg-transparent border border-purple-500 text-purple-200 font-medium py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-purple-900/20">
                   <span className="relative z-10 flex items-center justify-center">
                     Register Now
@@ -315,11 +319,9 @@ const Footer = () => {
           {/* Social Media with improved hover effects */}
           <div className="flex gap-4 items-center">
             {[
-              { name: "Facebook", icon: socialIcons.facebook, url: "https://facebook.com/gisunesa" },
               { name: "Instagram", icon: socialIcons.instagram, url: "https://instagram.com/gisunesa" },
-              { name: "Twitter", icon: socialIcons.twitter, url: "https://twitter.com/gisunesa" },
-              { name: "LinkedIn", icon: socialIcons.linkedin, url: "https://linkedin.com/company/gisunesa" },
-              { name: "YouTube", icon: socialIcons.youtube, url: "https://youtube.com/channel/gisunesa" },
+              { name: "Instagram", icon: socialIcons.instagram, url: "https://instagram.com/hmpipaunesa" },
+              { name: "Tiktok", icon: socialIcons.tiktok, url: "https://www.tiktok.com/@gisunesa" },
             ].map((social, index) => (
               <a
                 key={index}

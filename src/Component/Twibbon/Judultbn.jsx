@@ -248,7 +248,7 @@ const TwibbonGallery = () => {
           onClick={closePreview}
         >
           <motion.div
-            className="relative w-full max-w-md md:max-w-lg bg-[#300049]/90 p-4 rounded-2xl shadow-2xl border border-purple-500/30"
+            className="relative w-full max-w-sm md:max-w-md bg-[#300049]/90 p-3 rounded-2xl shadow-2xl border border-purple-500/30"
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
@@ -270,9 +270,9 @@ const TwibbonGallery = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <h3 className="text-white text-xl font-medium">
+              {/* <h3 className="text-white text-xl font-medium">
                 Twibbon Preview
-              </h3>
+              </h3> */}
             </motion.div>
             <div className="flex justify-center gap-4 mt-6">
               <button
@@ -284,15 +284,17 @@ const TwibbonGallery = () => {
                 </svg>
                 Tutup
               </button>
-              <button
+              <a
+                href="https://twibbonize.com/nama-twibbon" // ← ganti dengan link twibbonize kamu
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 hover:opacity-90 transition"
-                onClick={() => downloadImage(previewImage, "download")}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                Download
-              </button>
+                Twibbonize
+              </a>
             </div>
           </motion.div>
         </motion.div>

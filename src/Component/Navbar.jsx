@@ -1,5 +1,5 @@
 import ScrollToTop from "@/ScrollToTop";
-import logo from "../assets/logohmppendidikan.png";
+import logo from "../assets/logomascot.png";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
@@ -56,8 +56,8 @@ const Navbar = () => {
       >
         {/* Logo Section */}
         <div className="flex items-center">
-          <div className="w-10 h-10 flex items-center justify-center">
-            <img className="w-[40px] drop-shadow-md" src={logo} alt="Logo" />
+          <div className="mt-1 w-15 h-10 flex items-center justify-center">
+            <img className="w-15 h-20 drop-shadow-md" src={logo} alt="Logo" />
           </div>
           <span className="ml-3 text-xl font-bold font-[Poppins] tracking-wide text-white drop-shadow-sm">
             GIS
