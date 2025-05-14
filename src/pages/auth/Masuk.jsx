@@ -14,19 +14,33 @@ export function Masuk() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
-    // Login dummy (hanya untuk testing, tidak untuk produksi)
-    const dummyEmail = "admin@gmail.com";
-    const dummyPassword = "admin1";
-  
-    if (email === dummyEmail && password === dummyPassword) {
-      localStorage.setItem("token", "dummytoken123");
-      navigate("/admin", { replace: true });
-    } else {
-      setError("Email atau password salah.");
+
+    try {
+      const response = await fetch(`${api.URL_API}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login gagal. Silakan periksa email dan kata sandi Anda.");
+      }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      if (data.role === "peserta") {
+        navigate("/onboarding", { replace: true });
+      }
+      if (data.role === "admin") {
+        navigate("/admin", { replace: true });
+      }
+    } catch (err) {
+      setError(err.message);
     }
   };
-  
 
   const fadeIn = {
     initial: { opacity: 0, y: 30, filter: "blur(8px)" },
@@ -119,7 +133,7 @@ export function Masuk() {
 
               <p className="text-center text-sm text-gray-600 mt-3">
                 Belum punya akun?{" "}
-                <a href="/daftar" className="text-purple-600 font-medium hover:underline">
+                <a href="/auth/daftar" className="text-purple-600 font-medium hover:underline">
                   Daftar di sini
                 </a>
               </p>

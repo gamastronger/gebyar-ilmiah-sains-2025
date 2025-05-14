@@ -11,7 +11,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import api from "../../configs/api"; // Pastikan path ini benar
+import { participantsData } from "../../data/participantsData";
+import api from "@/configs/api";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import "dayjs/locale/id"; // Bahasa Indonesia
+
+dayjs.extend(localizedFormat);
+dayjs.locale("id");
 
 export function Portofolio() {
   const [participants, setParticipants] = useState([]);
@@ -29,47 +36,33 @@ export function Portofolio() {
 
   // Fetch data peserta dari API
   useEffect(() => {
-    const fetchParticipants = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(`${api.URL_API}/api/users`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+  }, []);
 
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        
-        if (data && Array.isArray(data.data)) {
-          const normalized = data.data.map((item, idx) => ({
-            id: item.id || idx + 1,
-            name: item.name || "-",
-            email: item.email || "-",
-            status_verifikasi: item.status_verifikasi || item.status || "-",
-            jenjang_pendidikan: item.jenjang_pendidikan || item.jenjang || "-",
-            verified_at: item.verified_at || item.verifiedAt || "",
-            // jurnal: item.jurnal || false,
-          }));
-          setParticipants(normalized);
-        } else {
-          setParticipants([]);
-        }
-      } catch (error) {
-        console.error("Error fetching participants:", error);
-        setParticipants([]);
-      } finally {
+  // Perbarui data saat komponen dimuat ulang
+  useEffect(() => {
+    const getUsers = async () => {
+      const response = await fetch(`${api.URL_API}/api/users`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setParticipants(data);
+        setIsLoading(false);
+      } else {
+        console.error("Error fetching participants:", data);
         setIsLoading(false);
       }
     };
-
-    fetchParticipants();
+    getUsers();
+    // setParticipants([...participantsData]);
   }, []);
 
   const handleDetail = (id) => {
@@ -101,16 +94,16 @@ export function Portofolio() {
 
     const matchesJenjang =
       selectedFilters.jenjang === "all" || 
-      (participant.jenjang_pendidikan && participant.jenjang_pendidikan.toLowerCase() === selectedFilters.jenjang.toLowerCase());
+      (participant.jenjang && participant.jenjang.toLowerCase() === selectedFilters.jenjang.toLowerCase());
 
     const matchesStatus =
       selectedFilters.status === "all" || 
-      (participant.status_verifikasi && participant.status_verifikasi.toLowerCase() === selectedFilters.status.toLowerCase());
+      (participant.status && participant.status.toLowerCase() === selectedFilters.status.toLowerCase());
 
     const matchesWaktu =
       selectedFilters.waktu === "all" ||
-      (selectedFilters.waktu === "verified" && participant.verified_at) ||
-      (selectedFilters.waktu === "not_verified" && !participant.verified_at);
+      (selectedFilters.waktu === "verified" && participant.email_verified_at) ||
+      (selectedFilters.waktu === "not_verified" && !participant.email_verified_at);
 
     return matchesSearch && matchesJenjang && matchesStatus && matchesWaktu;
   });
@@ -162,10 +155,10 @@ export function Portofolio() {
         <div className="absolute top-0 left-0 right-0 bottom-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDU2MCA1NjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSIwIiBjeT0iMCIgcj0iMSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGdyYWRpZW50VHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjgwIDI4MCkgc2NhbGUoMjgwKSI+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNmZmYiIHN0b3Atb3BhY2l0eT0iMC4xIi8+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNmZmYiIHN0b3Atb3BhY2l0eT0iMCIgb2Zmc2V0PSIxIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iNTYwIiBoZWlnaHQ9IjU2MCIgZmlsbD0idXJsKCNnKSIvPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9IjAuMiIgc3Ryb2tlLXdpZHRoPSIyIj4KICAgIDxjaXJjbGUgY3g9IjI4MCIgY3k9IjI4MCIgcj0iMTAwIi8+CiAgICA8Y2lyY2xlIGN4PSIyODAiIGN5PSIyODAiIHI9IjE3NSIvPgogICAgPGNpcmNsZSBjeD0iMjgwIiBjeT0iMjgwIiByPSIyNTAiLz4KICA8L2c+Cjwvc3ZnPg==')] bg-no-repeat bg-center opacity-20"></div>
         <div className="relative z-10">
           <Typography variant="h4" className="font-bold text-white mb-2">
-            Daftar Peserta SC
+            Daftar Peserta KTI
           </Typography>
           <Typography variant="paragraph" className="text-purple-100">
-            Manajemen peserta Science Writing Competition {filteredParticipants.length} peserta terdaftar
+            Manajemen peserta Karya Tulis Ilmiah {filteredParticipants.length} peserta terdaftar
           </Typography>
         </div>
       </div>
@@ -237,8 +230,8 @@ export function Portofolio() {
                       }}
                     >
                       <Option value="all">Semua Jenjang</Option>
-                      <Option value="SMP">SMP</Option>
-                      <Option value="SMA">SMA</Option>
+                      <Option value="SMA/MA/SMK">SMA/MA/SMK</Option>
+                      <Option value="Mahasiswa/i">Mahasiswa/i</Option>
                     </Select>
                   </div>
 
@@ -357,22 +350,25 @@ export function Portofolio() {
                             <td className="py-3 px-4 border-b border-purple-100 text-gray-600">{participant.email}</td>
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span
-                                className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium 
-                                ${statusConfig[participant.status_verifikasi]?.bgColor || "bg-gray-100"} 
-                                ${statusConfig[participant.status_verifikasi]?.textColor || "text-gray-800"} 
-                                border ${statusConfig[participant.status_verifikasi]?.borderColor || "border-gray-200"}`}
+                                className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium 
+                                ${statusConfig[participant.status]?.bgColor || "bg-gray-100"} 
+                                ${statusConfig[participant.status]?.textColor || "text-gray-800"} 
+                                border ${statusConfig[participant.status]?.borderColor || "border-gray-200"}`}
                               >
-                                {statusConfig[participant.status_verifikasi]?.label || participant.status_verifikasi}
+                                {statusConfig[participant.status]?.label || participant.status}
                               </span>
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">
-                                {participant.jenjang_pendidikan || "—"}
+                                {participant.jenjang || "—"}
                               </span>
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100 text-gray-500">
-                              {participant.verified_at || "—"}
+                              {participant.email_verified_at
+                                ? dayjs(participant.email_verified_at).format("dddd, D MMMM YYYY [pukul] HH:mm")
+                                : "—"}
                             </td>
+
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span
                                 className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium 
