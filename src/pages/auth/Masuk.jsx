@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../Component/Navbar"; // Pastikan path ini benar
 import illustrationImg from "../../assets/bgsementararegister.jpg"; // Gambar bisa disesuaikan
+import api from "@/configs/api";
 
 export function Masuk() {
   const [email, setEmail] = useState("");
@@ -15,15 +16,7 @@ export function Masuk() {
     e.preventDefault();
 
     try {
-      // Login dummy untuk testing tanpa backend
-      if (email === "admin@gmail.com" && password === "12341234") {
-        localStorage.setItem("token", "dummy_token");
-        navigate("/admin", { replace: true });
-        return;
-      }
-
-      // Jika bukan login dummy, lakukan login ke backend
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+      const response = await fetch(`${api.URL_API}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,8 +29,12 @@ export function Masuk() {
       }
 
       const data = await response.json();
-      localStorage.setItem("token", data.access_token);
-      navigate("/admin", { replace: true });
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      localStorage.setItem('status', data.user.status); // Simpan data user ke localStorage
+      console.log("Navigating to /admin");
+      navigate("/admin/Dash-Admin");
+      console.log("Navigating to /admin hahhhh");
     } catch (err) {
       setError(err.message);
     }
@@ -134,7 +131,7 @@ export function Masuk() {
 
               <p className="text-center text-sm text-gray-600 mt-3">
                 Belum punya akun?{" "}
-                <a href="/daftar" className="text-purple-600 font-medium hover:underline">
+                <a href="/auth/daftar" className="text-purple-600 font-medium hover:underline">
                   Daftar di sini
                 </a>
               </p>

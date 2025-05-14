@@ -13,6 +13,12 @@ import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/f
 import { motion, AnimatePresence } from "framer-motion";
 import { participantsData } from "../../data/participantsData";
 import api from "@/configs/api";
+import dayjs from 'dayjs'
+import 'dayjs/locale/id'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+
+dayjs.extend(localizedFormat)
+dayjs.locale('id')
 
 export function Portofolio() {
   const [participants, setParticipants] = useState([]);
@@ -38,8 +44,9 @@ export function Portofolio() {
   // Perbarui data saat komponen dimuat ulang
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetch(`${api.URL_API}/api/users?jenis_lomba=kti`, {
+      const response = await fetch(`${api.URL_API}/api/users`, {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -353,11 +360,13 @@ export function Portofolio() {
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">
-                                {participant.jenjang_pendidikan || "—"}
+                                {participant.jenjang || "—"}
                               </span>
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100 text-gray-500">
-                              {participant.verified_at || "—"}
+                              {participant.email_verified_at
+                                ? dayjs(participant.email_verified_at).format('dddd, D MMMM YYYY')
+                                : '—'}
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span

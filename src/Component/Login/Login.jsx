@@ -45,6 +45,7 @@ const LoginPage = () => {
       // Simpan token ke localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role); // Simpan data user ke localStorage
+      localStorage.setItem('status', data.user.status); // Simpan data user ke localStorage
       if (data.role === 'admin') {
         navigate('/admin');
       }
@@ -120,7 +121,7 @@ const LoginPage = () => {
 
             <p className="text-center text-sm text-gray-600 mt-3">
               Belum punya akun?{' '}
-              <Link to="/register" className="text-purple-600 font-medium hover:underline">
+              <Link to="/auth/daftar" className="text-purple-600 font-medium hover:underline">
                 Daftar di sini
               </Link>
             </p>

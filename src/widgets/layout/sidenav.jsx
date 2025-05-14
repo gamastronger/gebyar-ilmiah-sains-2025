@@ -24,6 +24,8 @@ export function Sidenav({ brandName, routes }) {
     const confirmLogout = window.confirm("Apakah Anda yakin untuk keluar sebagai admin?");
     if (confirmLogout) {
       localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("status");
       navigate("/login");
     }
   };
