@@ -683,7 +683,7 @@ const Deskripsi = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">GIS Unesa 2024</h3>
+            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Science Writing Competition 2024</h3>
             <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">dokumentasi kegiatan GIS Unesa 2024</p>
           </div>
         </div>
@@ -701,8 +701,8 @@ const Deskripsi = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Persentasi Finalis</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Persentasi Finalis GIS Unesa 2024</p>
+            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Persentasi Peserta SWC 2024</h3>
+            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Persentasi Peserta SWC pada GIS Unesa 2024</p>
           </div>
         </div>
         <img
@@ -739,8 +739,8 @@ const Deskripsi = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Teamwork</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Kerja TIM Finalis GIS Unesa 2024</p>
+            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Science Competition 2024</h3>
+            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Dokumentasi Science Competition pada GIS Unesa 2024 </p>
           </div>
         </div>
         <img
@@ -759,8 +759,8 @@ const Deskripsi = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Thinking</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Pengerjaan Finalis GIS Unesa 2024</p>
+            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Peserta Science Competition 2024</h3>
+            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Peserta Science Competition pada GIS Unesa 2024</p>
           </div>
         </div>
         <img
@@ -778,7 +778,7 @@ const Deskripsi = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
             <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">The Winner</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Juara lomba KTI tingkat Mahasiswa</p>
+            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Juara lomba SWC tingkat Mahasiswa</p>
           </div>
         </div>
         <img
