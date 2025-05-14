@@ -11,19 +11,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-
-// Data dummy (30 peserta)
-const dummyParticipants = Array.from({ length: 30 }, (_, i) => ({
-  id: i + 1,
-  name: `Peserta ${i + 1}`,
-  email: `peserta${i + 1}@example.com`,
-  status: i % 3 === 0 ? "verified" : i % 3 === 1 ? "pending" : "failed",
-  verifiedAt: i % 3 === 0 ? `2025-04-${10 + (i % 20)} 10:30` : null,
-  jenjang: i % 2 === 0 ? "SMA" : "SMP",
-}));
+import api from "@/configs/api";
 
 export function Layanan() {
-  const [participants, setParticipants] = useState(dummyParticipants);
+  const [participants, setParticipants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -33,14 +24,42 @@ export function Layanan() {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const itemsPerPage = 20; // Menampilkan 20 peserta per halaman
+  const itemsPerPage = 20;
   const navigate = useNavigate();
 
-  // Simulasi loading data
+  // Fetch data peserta dari API
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
+          setIsLoading(false);
+        }, 800);
+      }, []);
+    
+      // Perbarui data saat komponen dimuat ulang
+      useEffect(() => {
+    const getUsers = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${api.URL_API}/api/users`, {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setParticipants(data?.participants || []);
+        } else {
+          console.error("Error fetching participants:", data);
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getUsers();
   }, []);
 
   const handleDetail = (id) => {
@@ -67,14 +86,16 @@ export function Layanan() {
   // Filter peserta berdasarkan pencarian dan filter yang dipilih
   const filteredParticipants = participants.filter((participant) => {
     const matchesSearch =
-      participant.name.toLowerCase().includes(searchTerm) ||
-      participant.email.toLowerCase().includes(searchTerm);
+      (participant.name?.toLowerCase().includes(searchTerm) ||
+        participant.email?.toLowerCase().includes(searchTerm));
 
     const matchesJenjang =
-      selectedFilters.jenjang === "all" || participant.jenjang === selectedFilters.jenjang;
+      selectedFilters.jenjang === "all" ||
+      (participant.jenjang && participant.jenjang.toLowerCase() === selectedFilters.jenjang.toLowerCase());
 
     const matchesStatus =
-      selectedFilters.status === "all" || participant.status === selectedFilters.status;
+      selectedFilters.status === "all" ||
+      (participant.status && participant.status.toLowerCase() === selectedFilters.status.toLowerCase());
 
     const matchesWaktu =
       selectedFilters.waktu === "all" ||
@@ -115,6 +136,12 @@ export function Layanan() {
       bgColor: "bg-red-100",
       textColor: "text-red-800",
       borderColor: "border-red-200",
+    },
+    "-": {
+      label: "-",
+      bgColor: "bg-gray-100",
+      textColor: "text-gray-800",
+      borderColor: "border-gray-200",
     },
   };
 
@@ -319,12 +346,12 @@ export function Layanan() {
                             <td className="py-3 px-4 border-b border-purple-100 text-gray-600">{participant.email}</td>
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span
-                                className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium 
-                                ${statusConfig[participant.status].bgColor} 
-                                ${statusConfig[participant.status].textColor} 
-                                border ${statusConfig[participant.status].borderColor}`}
+                                className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium 
+                                ${statusConfig[participant.status]?.bgColor || "bg-gray-100"} 
+                                ${statusConfig[participant.status]?.textColor || "text-gray-800"} 
+                                border ${statusConfig[participant.status]?.borderColor || "border-gray-200"}`}
                               >
-                                {statusConfig[participant.status].label}
+                                {statusConfig[participant.status]?.label || participant.status}
                               </span>
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100">
@@ -349,28 +376,7 @@ export function Layanan() {
                       ) : (
                         <tr>
                           <td colSpan="7" className="py-8 px-4 text-center text-gray-500">
-                            <div className="flex flex-col items-center justify-center">
-                              <svg
-                                className="w-12 h-12 text-gray-300 mb-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
-                              <Typography variant="paragraph" className="font-medium">
-                                Tidak ada data peserta yang sesuai dengan filter
-                              </Typography>
-                              <Typography variant="small" className="text-gray-400 mt-1">
-                                Coba ubah filter atau kata kunci pencarian
-                              </Typography>
-                            </div>
+                            Tidak ada data peserta yang sesuai dengan filter
                           </td>
                         </tr>
                       )}

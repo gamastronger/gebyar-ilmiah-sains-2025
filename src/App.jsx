@@ -14,7 +14,7 @@ import Kti from "./Views/Kti";
 import Cbt from "./Views/Cbt";
 import Twibbon from "./Views/Twibbon";
 // import Login from "./Views/Login";
-import RegisterPage from "./Views/Register";
+// import RegisterPage from "./Views/Register";
 import Forgot from "./Component/Login/Forgot";
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
 import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
@@ -28,7 +28,7 @@ import Panduan from "./Views/Dashboard User/Panduan";
 import Bantuan from "./Views/Dashboard User/Bantuan";
 import Invoice from "./Views/Dashboard User/Invoice";
 import CbtUser from "./Views/Dashboard User/CbtUser";
-
+import Kontak from "./Views/Kontak";
 function App() {
   const isAuthenticated = localStorage.getItem('token') !== null;
 
@@ -52,6 +52,7 @@ function App() {
       <Route path="/forgot" element={<Forgot />} />
       <Route path="/kti" element={<Kti />} />
       <Route path="/cbt" element={<Cbt />} />
+      <Route path="/kontak" element={<Kontak />} />
       <Route path="/twibbon" element={<Twibbon />} />
       <Route path="/portofolio/:id" element={<ParticipantDetail />} />
       <Route path="/cbt-admin/detail/:id" element={<ParticipantDetail2 />} />

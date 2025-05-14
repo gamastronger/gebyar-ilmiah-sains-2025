@@ -3,9 +3,6 @@ import { useState } from "react";
 import foto1 from "../../assets/twibbon peserta.png";
 import foto2 from "../../assets/twibbon peserta.png";
 import foto3 from "../../assets/twibbon peserta.png";
-import foto4 from "../../assets/twibbon peserta.png";
-import foto5 from "../../assets/twibbon peserta.png";
-import foto6 from "../../assets/twibbon peserta.png";
 
 const TwibbonGallery = () => {
   const [previewImage, setPreviewImage] = useState(null);
@@ -58,13 +55,7 @@ const TwibbonGallery = () => {
       images: [foto1, foto2, foto3],
       downloadUrl: "/download/twibbon-kti.zip",
     },
-    {
-      id: "cbt",
-      title: "Tryout CBT",
-      description: "Gunakan twibbon resmi untuk Tryout CBT dan bagikan ke sosial media Anda.",
-      images: [foto4, foto5, foto6],
-      downloadUrl: "/download/twibbon-cbt.zip",
-    },
+    
   ];
 
   const handlePreview = (image) => {
@@ -188,19 +179,20 @@ const TwibbonGallery = () => {
 
               {/* Download Button */}
               <motion.div className="flex justify-center pt-10" variants={itemVariants}>
-                <motion.button
-                  className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-8 py-4 rounded-xl font-semibold shadow-lg shadow-purple-900/30 flex items-center space-x-2 hover:shadow-purple-900/50"
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                  onClick={() => handleDownload(twibbon.downloadUrl)}
-                >
-                  <span>Download Twibbon {twibbon.title}</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                </motion.button>
-              </motion.div>
+              
+              {/* Tombol/link ke Twibbonize */}
+              <a
+                href="https://twibbonize.com/namalinkanda"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-4 bg-white text-purple-800 px-6 py-4 rounded-xl font-semibold shadow-lg shadow-purple-900/20 flex items-center space-x-2 hover:bg-purple-100 transition"
+              >
+                <span>Download Twibbonize</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 3h7v7m0 0L10 21l-7-7 11-11z" />
+                </svg>
+              </a>
+            </motion.div>
             </motion.div>
           </motion.div>
         ))}
@@ -219,13 +211,12 @@ const TwibbonGallery = () => {
           <div className="space-y-4 text-purple-100">
             <p>Twibbon merupakan bingkai foto profil untuk menunjukkan dukungan Anda dalam kompetisi.</p>
             <ol className="list-decimal list-inside space-y-2 ml-4">
-              <li>Unduh twibbon yang Anda inginkan dari galeri di atas</li>
-              <li>Siapkan foto Anda dengan format persegi (1:1)</li>
-              <li>Gunakan aplikasi edit foto seperti Canva, Photoshop, atau PicsArt</li>
-              <li>Masukkan foto Anda sebagai lapisan dasar</li>
-              <li>Tambahkan twibbon sebagai lapisan atas</li>
-              <li>Sesuaikan ukuran dan posisi jika diperlukan</li>
-              <li>Simpan dan bagikan ke media sosial Anda</li>
+              <li>Kunjungi halaman kampanye twibbon di <strong>twibbonize.com</strong></li>
+              <li>Klik tombol <strong>"Pilih Foto"</strong> atau <strong>"Upload Photo"</strong></li>
+              <li>Sesuaikan posisi dan ukuran foto Anda jika diperlukan</li>
+              <li>Klik tombol <strong>"Next" / "Selanjutnya"</strong> dan tunggu proses selesai</li>
+              <li>Unduh twibbon hasil edit dan bagikan ke media sosial Anda</li>
+
             </ol>
             <p className="mt-6 text-purple-300 font-medium flex items-center">
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -257,7 +248,7 @@ const TwibbonGallery = () => {
           onClick={closePreview}
         >
           <motion.div
-            className="relative max-w-4xl w-full bg-[#300049]/90 p-4 rounded-2xl shadow-2xl border border-purple-500/30"
+            className="relative w-full max-w-sm md:max-w-md bg-[#300049]/90 p-3 rounded-2xl shadow-2xl border border-purple-500/30"
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
@@ -279,9 +270,9 @@ const TwibbonGallery = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <h3 className="text-white text-xl font-medium">
+              {/* <h3 className="text-white text-xl font-medium">
                 Twibbon Preview
-              </h3>
+              </h3> */}
             </motion.div>
             <div className="flex justify-center gap-4 mt-6">
               <button
@@ -293,15 +284,17 @@ const TwibbonGallery = () => {
                 </svg>
                 Tutup
               </button>
-              <button
+              <a
+                href="https://twibbonize.com/nama-twibbon" // ← ganti dengan link twibbonize kamu
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 hover:opacity-90 transition"
-                onClick={() => downloadImage(previewImage, "download")}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                Download
-              </button>
+                Twibbonize
+              </a>
             </div>
           </motion.div>
         </motion.div>

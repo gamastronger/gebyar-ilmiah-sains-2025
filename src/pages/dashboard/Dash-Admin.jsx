@@ -1,12 +1,5 @@
-import {
-  Card,
-  CardBody,
-  Typography,
-} from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import {
-  LineChart,
-  Line,
   CartesianGrid,
   XAxis,
   YAxis,
@@ -23,18 +16,15 @@ export function Profil() {
     peserta: 0,
     karyaMasuk: 0,
     terverifikasi: 0,
-    skorTertinggi: 0,
     pendapatan: 0,
   });
 
   const [karyaData, setKaryaData] = useState([]);
-  const [skorData, setSkorData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [animatedValues, setAnimatedValues] = useState({
     peserta: 0,
     karyaMasuk: 0,
     terverifikasi: 0,
-    skorTertinggi: 0,
     pendapatan: 0,
   });
 
@@ -52,7 +42,6 @@ export function Profil() {
       peserta: 420,
       karyaMasuk: 385,
       terverifikasi: 310,
-      skorTertinggi: 97,
       pendapatan: 9100000, // total dari semua kategori dan gelombang
     };
     
@@ -73,7 +62,6 @@ export function Profil() {
           peserta: Math.round(finalData.peserta * progress),
           karyaMasuk: Math.round(finalData.karyaMasuk * progress),
           terverifikasi: Math.round(finalData.terverifikasi * progress),
-          skorTertinggi: Math.round(finalData.skorTertinggi * progress),
           pendapatan: Math.round(finalData.pendapatan * progress),
         });
       } else {
@@ -87,12 +75,6 @@ export function Profil() {
       { name: "Mar", karya: 65 },
       { name: "Apr", karya: 85 },
       { name: "Mei", karya: 160 },
-    ]);
-
-    setSkorData([
-      { name: "SMP", skor: 87 },
-      { name: "SMA", skor: 93 },
-      { name: "Mahasiswa", skor: 97 },
     ]);
 
     // Delay rendering for animation
@@ -123,16 +105,16 @@ export function Profil() {
       <div className="max-w-7xl mx-auto">
         {/* Header dengan Animasi */}
         <div className="mb-8 opacity-0 animate-fade-in" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
-          <Typography variant="h3" className="text-purple-900 font-bold">
+          <h1 className="text-3xl font-bold text-purple-900">
             Dashboard Overview
-          </Typography>
-          <Typography variant="paragraph" className="text-gray-600">
+          </h1>
+          <p className="text-gray-600">
             Monitoring data kompetisi dan statistik peserta
-          </Typography>
+          </p>
         </div>
 
         {/* Ringkasan Statistik dengan Animasi */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {[
             {
               title: "Total Peserta",
@@ -156,19 +138,11 @@ export function Profil() {
               delay: "0.4s"
             },
             {
-              title: "Skor Tertinggi",
-              value: animatedValues.skorTertinggi,
-              color: "amber",
-              icon: <i className="fas fa-trophy text-xl"></i>,
-              delay: "0.5s",
-              suffix: "%"
-            },
-            {
               title: "Total Pendapatan",
-              value: `Rp${animatedValues.pendapatan.toLocaleString()}`,
+              value: `Rp${animatedValues.pendapatan.toLocaleString('id-ID')}`,
               color: "amber",
               icon: <i className="fas fa-coins text-xl"></i>,
-              delay: "0.6s"
+              delay: "0.5s"
             }
           ].map((item, index) => (
             <div 
@@ -176,22 +150,21 @@ export function Profil() {
               className={`opacity-0 animate-slide-up`} 
               style={{ animationDelay: item.delay, animationFillMode: "forwards" }}
             >
-              <Card className={`bg-${item.color}-50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden relative`}>
-                <div className={`absolute top-0 left-0 h-full w-1 bg-${item.color}-500`}></div>
-                <CardBody className="flex items-center justify-between">
-                  <div>
-                    <Typography variant="small" className={`text-${item.color}-700 font-medium mb-1`}>
+              <div className={`bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-xl overflow-hidden border-l-4 border-${item.color}-500`}>
+                <div className="p-5">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className={`text-${item.color}-700 font-medium`}>
                       {item.title}
-                    </Typography>
-                    <Typography variant="h3" className={`text-${item.color}-900 font-bold`}>
-                      {item.value}{item.suffix || ""}
-                    </Typography>
+                    </h3>
+                    <div className={`p-2 rounded-lg bg-${item.color}-100 text-${item.color}-600`}>
+                      {item.icon}
+                    </div>
                   </div>
-                  <div className={`p-3 rounded-full bg-${item.color}-100 text-${item.color}-600`}>
-                    {item.icon}
-                  </div>
-                </CardBody>
-              </Card>
+                  <p className={`text-2xl font-bold text-${item.color}-900`}>
+                    {item.value}
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -200,12 +173,12 @@ export function Profil() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Grafik Pengumpulan Karya */}
           <div className="opacity-0 animate-slide-left" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardBody>
+            <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="p-5">
                 <div className="flex justify-between items-center mb-4">
-                  <Typography variant="h6" className="text-purple-800 font-semibold">
+                  <h3 className="text-lg text-purple-800 font-semibold">
                     Perkembangan Pengumpulan Karya
-                  </Typography>
+                  </h3>
                   <div className="text-purple-500">
                     <i className="fas fa-chart-line"></i>
                   </div>
@@ -237,18 +210,18 @@ export function Profil() {
                     </ResponsiveContainer>
                   )}
                 </div>
-              </CardBody>
-            </Card>
+              </div>
+            </div>
           </div>
 
-          {/* Grafik Skor Tertinggi per Jenjang */}
+          {/* Distribusi peserta per jenjang */}
           <div className="opacity-0 animate-slide-right" style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}>
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardBody>
+            <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="p-5">
                 <div className="flex justify-between items-center mb-4">
-                  <Typography variant="h6" className="text-indigo-800 font-semibold">
-                    Skor Tertinggi per Jenjang
-                  </Typography>
+                  <h3 className="text-lg text-indigo-800 font-semibold">
+                    Peserta per Jenjang
+                  </h3>
                   <div className="text-indigo-500">
                     <i className="fas fa-chart-bar"></i>
                   </div>
@@ -256,10 +229,17 @@ export function Profil() {
                 <div className="h-64">
                   {isLoaded && (
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={skorData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                      <BarChart 
+                        data={[
+                          { name: "SMP", peserta: 120 },
+                          { name: "SMA", peserta: 180 },
+                          { name: "Mahasiswa", peserta: 120 },
+                        ]} 
+                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                      >
                         <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                         <XAxis dataKey="name" stroke="#6B7280" />
-                        <YAxis domain={[0, 100]} stroke="#6B7280" />
+                        <YAxis stroke="#6B7280" />
                         <Tooltip content={<CustomTooltip />} />
                         <defs>
                           <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
@@ -268,7 +248,7 @@ export function Profil() {
                           </linearGradient>
                         </defs>
                         <Bar 
-                          dataKey="skor" 
+                          dataKey="peserta" 
                           fill="url(#barGradient)" 
                           barSize={40} 
                           radius={[5, 5, 0, 0]} 
@@ -278,19 +258,19 @@ export function Profil() {
                     </ResponsiveContainer>
                   )}
                 </div>
-              </CardBody>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Progress Verifikasi */}
         <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.8s", animationFillMode: "forwards" }}>
-          <Card className="mb-8 shadow-lg hover:shadow-xl transition-all duration-300">
-            <CardBody>
+          <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
+            <div className="p-5">
               <div className="flex justify-between items-center mb-4">
-                <Typography variant="h6" className="text-green-800 font-semibold">
+                <h3 className="text-lg text-green-800 font-semibold">
                   Progress Verifikasi Karya
-                </Typography>
+                </h3>
                 <div className="text-green-500">
                   <i className="fas fa-tasks"></i>
                 </div>
@@ -310,27 +290,32 @@ export function Profil() {
                   </div>
                 </div>
                 <div className="flex justify-between text-sm text-gray-600">
-                  <Typography variant="small" className="text-gray-600">
+                  <p className="text-gray-600">
                     {animatedValues.terverifikasi} dari {summary.karyaMasuk} karya telah diverifikasi
-                  </Typography>
-                  <Typography variant="small" className="text-green-600 font-medium">
+                  </p>
+                  <p className="text-green-600 font-medium">
                     Target: 100%
-                  </Typography>
+                  </p>
                 </div>
               </div>
-            </CardBody>
-          </Card>
+            </div>
+          </div>
         </div>
 
         {/* Tabel Pendapatan per Kategori dan Gelombang */}
         <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}>
-          <Card className="shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
-            <CardBody>
-              <Typography variant="h6" className="text-amber-800 font-semibold mb-4">
-                Pendapatan per Kategori & Gelombang
-              </Typography>
-              <div className="overflow-x-auto rounded-lg border border-gray-200">
-                <table className="w-full text-left table-auto border-collapse">
+          <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
+            <div className="p-5">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg text-amber-800 font-semibold">
+                  Pendapatan per Kategori & Gelombang
+                </h3>
+                <div className="text-amber-500">
+                  <i className="fas fa-money-bill-wave"></i>
+                </div>
+              </div>
+              <div className="overflow-x-auto rounded-lg">
+                <table className="w-full text-left table-auto">
                   <thead>
                     <tr className="bg-amber-50">
                       <th className="px-4 py-3 font-medium text-amber-900 border-b">Kategori</th>
@@ -343,32 +328,38 @@ export function Profil() {
                     {pendapatanKategori.map((row, idx) => (
                       <tr key={idx} className="border-b hover:bg-amber-50 transition-colors duration-200">
                         <td className="px-4 py-3 font-medium text-amber-900">{row.kategori}</td>
-                        <td className="px-4 py-3 text-amber-800">Rp{row.gelombang1.toLocaleString()}</td>
-                        <td className="px-4 py-3 text-amber-800">Rp{row.gelombang2.toLocaleString()}</td>
-                        <td className="px-4 py-3 font-bold text-amber-900">Rp{row.total.toLocaleString()}</td>
+                        <td className="px-4 py-3 text-amber-800">Rp{row.gelombang1.toLocaleString('id-ID')}</td>
+                        <td className="px-4 py-3 text-amber-800">Rp{row.gelombang2.toLocaleString('id-ID')}</td>
+                        <td className="px-4 py-3 font-bold text-amber-900">Rp{row.total.toLocaleString('id-ID')}</td>
                       </tr>
                     ))}
+                    <tr className="bg-amber-50">
+                      <td className="px-4 py-3 font-medium text-amber-900">Total Keseluruhan</td>
+                      <td className="px-4 py-3 font-medium text-amber-900">Rp{pendapatanKategori.reduce((sum, item) => sum + item.gelombang1, 0).toLocaleString('id-ID')}</td>
+                      <td className="px-4 py-3 font-medium text-amber-900">Rp{pendapatanKategori.reduce((sum, item) => sum + item.gelombang2, 0).toLocaleString('id-ID')}</td>
+                      <td className="px-4 py-3 font-bold text-amber-900">Rp{pendapatanKategori.reduce((sum, item) => sum + item.total, 0).toLocaleString('id-ID')}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
-            </CardBody>
-          </Card>
+            </div>
+          </div>
         </div>
 
         {/* Tabel Aktivitas Terakhir */}
         <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.9s", animationFillMode: "forwards" }}>
-          <Card className="shadow-lg hover:shadow-xl transition-all duration-300">
-            <CardBody>
+          <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="p-5">
               <div className="flex justify-between items-center mb-4">
-                <Typography variant="h6" className="text-purple-800 font-semibold">
+                <h3 className="text-lg text-purple-800 font-semibold">
                   Aktivitas Terakhir
-                </Typography>
+                </h3>
                 <div className="text-purple-500">
                   <i className="fas fa-history"></i>
                 </div>
               </div>
-              <div className="overflow-x-auto rounded-lg border border-gray-200">
-                <table className="w-full text-left table-auto border-collapse">
+              <div className="overflow-x-auto rounded-lg">
+                <table className="w-full text-left table-auto">
                   <thead>
                     <tr className="bg-purple-50">
                       <th className="px-4 py-3 font-medium text-purple-900 border-b">Tanggal</th>
@@ -383,17 +374,30 @@ export function Profil() {
                       { date: "20 Apr 2025", name: "Nadia Salma", action: "Edit Biodata", status: "info" },
                       { date: "19 Apr 2025", name: "Doni Wijaya", action: "Submit Jawaban CBT", status: "warning" },
                       { date: "19 Apr 2025", name: "Sinta Dewi", action: "Verifikasi Email", status: "success" },
+                      { date: "18 Apr 2025", name: "Rendi Pratama", action: "Pendaftaran Baru", status: "success" },
                     ].map((item, idx) => (
-                      <tr key={idx} className="border-b hover:bg-gray-50 transition-colors duration-200 animate-fade-in" style={{ animationDelay: `${1 + idx * 0.1}s` }}>
+                      <tr key={idx} className="border-b hover:bg-purple-50 transition-colors duration-200">
                         <td className="px-4 py-3 text-gray-700">{item.date}</td>
-                        <td className="px-4 py-3 font-medium text-gray-900">{item.name}</td>
+                        <td className="px-4 py-3 font-medium text-gray-900">
+                          <div className="flex items-center">
+                            <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mr-2 font-bold">
+                              {item.name.charAt(0)}
+                            </div>
+                            {item.name}
+                          </div>
+                        </td>
                         <td className="px-4 py-3 text-gray-700">{item.action}</td>
                         <td className="px-4 py-3">
-                          <span className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
+                          <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${
                             item.status === 'success' ? 'bg-green-100 text-green-800' : 
                             item.status === 'info' ? 'bg-blue-100 text-blue-800' : 
                             'bg-amber-100 text-amber-800'
                           }`}>
+                            <span className={`w-2 h-2 mr-1 rounded-full ${
+                              item.status === 'success' ? 'bg-green-600' : 
+                              item.status === 'info' ? 'bg-blue-600' : 
+                              'bg-amber-600'
+                            }`}></span>
                             {item.status === 'success' ? 'Selesai' : 
                              item.status === 'info' ? 'Diproses' : 'Menunggu'}
                           </span>
@@ -403,8 +407,8 @@ export function Profil() {
                   </tbody>
                 </table>
               </div>
-            </CardBody>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>

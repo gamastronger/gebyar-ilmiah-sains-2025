@@ -1,10 +1,10 @@
-import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useMotionTemplate} from "framer-motion";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import foto4 from "../../assets/gimage.jpeg";
-import facebookLogo from "../../assets/facebooklogo.png";
-import instagramLogo from "../../assets/instagramlogo.png";
-import twitterLogo from "../../assets/linkedlogo.png";
+// import foto4 from "../../assets/sc.jpg";
+// import facebookLogo from "../../assets/facebooklogo.png";
+// import instagramLogo from "../../assets/instagramlogo.png";
+// import twitterLogo from "../../assets/linkedlogo.png";
 import kegiatan1 from "../../assets/doc2.jpg";
 import kegiatan2 from "../../assets/doc1.jpg";
 import kegiatan3 from "../../assets/docfotbar1.jpg";
@@ -17,18 +17,14 @@ import sponsor2 from "../../assets/gimage.jpeg";
 import sponsor3 from "../../assets/gimage.jpeg";
 import sponsor4 from "../../assets/gimage.jpeg";
 import sponsor5 from "../../assets/gimage.jpeg";
-import mediaPartner1 from "../../assets/gimage.jpeg";
-import mediaPartner2 from "../../assets/gimage.jpeg";
-import mediaPartner3 from "../../assets/gimage.jpeg";
-import mediaPartner4 from "../../assets/gimage.jpeg";
-import mediaPartner5 from "../../assets/gimage.jpeg";
-import mediaPartner6 from "../../assets/gimage.jpeg";
-import mediaPartner7 from "../../assets/gimage.jpeg";
-import mediaPartner8 from "../../assets/gimage.jpeg";
-import mediaPartner9 from "../../assets/gimage.jpeg";
-import mediaPartner10 from "../../assets/gimage.jpeg";
 import poster from "../../assets/Pamflet GIS 2024.png";
 import FAQ from '../FAQ/FAQ';
+import MediaPartner from "../FAQ/MediaPartner";
+import scienceCompetitionImg from "../../assets/sc.jpg"; 
+import scienceWritingImg from "../../assets/swc.jpg";
+import InstagramIcon1 from "../../assets/instagram.png";
+import InstagramIcon2 from '../../assets/instagram.png'; 
+import TikTokIcon from '../../assets/tiktok.png'; 
 
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -85,6 +81,8 @@ const TiltCard = ({ children }) => {
   );
 };
 
+
+
 // Custom button component
 const GradientButton = ({ children, onClick, primary = true }) => {
   return (
@@ -107,7 +105,7 @@ const GradientButton = ({ children, onClick, primary = true }) => {
 // Section title component
 const SectionTitle = ({ children, subtitle }) => {
   return (
-    <div className="text-center mb-16">
+    <div className="text-center mb-10">
       <h2 className="text-4xl font-bold text-white mb-4 relative inline-block">
         {children}
         <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#A78BFA] to-[#31004d] transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
@@ -174,6 +172,8 @@ const EnhancedPosterSection = () => {
             className="w-full h-[500px] object-contain rounded-lg"
           />
         </TiltCard>
+
+        
         
         {/* Right side info */}
         <motion.div 
@@ -209,6 +209,49 @@ const EnhancedPosterSection = () => {
         </motion.div>
       </div>
     </motion.div>
+  );
+};
+
+const SocialLinks = () => {
+  return (
+    <div className="flex justify-center gap-6 mt-8">
+  {/* Instagram 1 */}
+  <a
+    href="https://instagram.com/gisunesa"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Instagram GIS Unesa"
+    className="hover:scale-110 transition-transform flex flex-col items-center mx-5"
+  >
+    <img src={InstagramIcon1} alt="Instagram GIS Unesa" width={36} height={36} />
+    <span className="text-white text-sm mt-2">@gisunesa</span>
+  </a>
+
+  {/* Instagram 2 */}
+  <a
+    href="https://instagram.com/hmpipaunesa"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Instagram HMP IPA Unesa"
+    className="hover:scale-110 transition-transform flex flex-col items-center"
+  >
+    <img src={InstagramIcon2} alt="Instagram HMP IPA Unesa" width={36} height={36} />
+    <span className="text-white text-sm mt-2">@hmppipaunesa</span>
+  </a>
+
+  {/* TikTok */}
+  <a
+    href="https://www.tiktok.com/@gisunesa"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="TikTok GIS Unesa"
+    className="hover:scale-110 transition-transform flex flex-col items-center"
+  >
+    <img src={TikTokIcon} alt="TikTok GIS Unesa" width={36} height={36} />
+    <span className="text-white text-sm mt-2">@gisfmipaunesa</span>
+  </a>
+</div>
+
   );
 };
 
@@ -256,7 +299,11 @@ const Deskripsi = () => {
           {/* Enhanced Poster Section */}
           <EnhancedPosterSection />
         </div>
+        <SocialLinks />
       </motion.div>
+      
+
+
 
       {/* Competition Tabs */}
       <div className="max-w-screen-xl mx-auto mb-32">
@@ -299,16 +346,16 @@ const Deskripsi = () => {
               <div className="relative rounded-xl overflow-hidden group shadow-2xl">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-60"></div>
                 <img
-                  src={foto4}
+                  src={scienceWritingImg} // Changed this line
                   alt="Science Writing Competition"
                   className="w-full h-[300px] object-cover rounded-xl"
                 />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                {/* <div className="absolute bottom-0 left-0 right-0 p-6">
                   <div className="flex items-center space-x-2 mb-2">
                     <div className="w-2 h-2 rounded-full bg-[#A78BFA]"></div>
-                    <span className="text-sm font-medium text-[#A78BFA]">Pendaftaran Dibuka</span>
+                    <span className="text-sm font-medium text-[#eeccff]">Pendaftaran Dibuka</span>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Teks KTI */}
@@ -317,9 +364,8 @@ const Deskripsi = () => {
                 Science <span className="text-[#A78BFA]">Writing</span> Competition
                 </h1>
                 <p className="text-lg mb-8 text-white/90 leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                  eget felis eget nunc lacinia lacinia. Nullam nec nunc nec
-                  nunceget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
+                Merupakan Lomba Karya Tulis Ilmiah yang dapat diikuti oleh tingkat SMA/SMK/Sederajat dan Mahasiswa/i. Yang bertujuan untuk untuk meningkatkan kemampuan bersaing siswa dan mahasiswa dalam Ilmu Pengetahuan dan Teknologi (IPTEK) dan melatih siswa dan mahasiswa  dalam bersaing inovasi di bidang Pendidikan, Bioteknologi, Energi Terbarukan, dan Lingkungan.
+
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 mb-8">
@@ -363,16 +409,16 @@ const Deskripsi = () => {
               <div className="relative rounded-xl overflow-hidden group shadow-2xl order-1">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-60"></div>
                 <img
-                  src={foto4}
+                  src={scienceCompetitionImg} // Changed this line
                   alt="Science Competition"
                   className="w-full h-[300px] object-cover rounded-xl"
                 />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                {/* <div className="absolute bottom-0 left-0 right-0 p-6">
                   <div className="flex items-center space-x-2 mb-2">
                     <div className="w-2 h-2 rounded-full bg-[#A78BFA]"></div>
                     <span className="text-sm font-medium text-[#A78BFA]">Pendaftaran Dibuka</span>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Teks CBT */}
@@ -381,9 +427,7 @@ const Deskripsi = () => {
                   Science Competition
                 </h1>
                 <p className="text-lg mb-8 text-white/90 leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                  eget felis eget nunc lacinia lacinia. Nullam nec nunc nec
-                  nunceget felis eget nunc lacinia lacinia. Nullam nec nunc nec.
+                  adalah salah satu cabang lomba unggulan dalam rangkaian Gebyar Ilmiah Sains yang diselenggarakan setiap tahun. Kompetisi ini berbentuk Olimpiade IPA yang ditujukan untuk siswa SD/MI dan SMP/MTs sederajat. SC terdiri dari tiga babak menantang: Penyisihan, Semifinal, dan Final. Melalui ajang ini, peserta diajak untuk menunjukkan kemampuan terbaik mereka dalam bidang Ilmu Pengetahuan Alam, berpikir kritis, dan bersaing secara sportif dalam suasana yang edukatif dan menyenangkan.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 mb-8">
@@ -407,7 +451,7 @@ const Deskripsi = () => {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">Jenjang</p>
-                      <p className="font-medium">SMA/MA/SMK Sederajat & Mahasiswa/i</p>
+                      <p className="font-medium">SD/MI Sederajat & SMP/MTs Sederajat</p>
                     </div>
                   </div>
                 </div>
@@ -437,8 +481,8 @@ const Deskripsi = () => {
         </SectionTitle>
 
         <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#31004d] to-[#A78BFA]"></div>
+          {/* Vertical line - only visible on medium screens and up */}
+          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#31004d] to-[#A78BFA]"></div>
 
           {/* Timeline items */}
           {[
@@ -495,19 +539,22 @@ const Deskripsi = () => {
           ].map((item, index) => (
             <motion.div 
               key={index}
-              className={`relative flex items-center mb-12 ${
-                index % 2 === 0 ? "flex-row-reverse" : ""
+              className={`relative flex md:items-center mb-12 ${
+                index % 2 === 0 ? "md:flex-row-reverse" : ""
               }`}
-              initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+              initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className="w-1/2"></div>
-          
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-[#31004d] to-[#A78BFA] border-4 border-[#31004d] z-10"></div>
-          
-              <div className={`w-1/2 ${index % 2 === 0 ? "pr-12" : "pl-12"}`}>
+              {/* For desktop layout */}
+              <div className="hidden md:block w-1/2"></div>
+            
+              {/* Center point - visible on all screens */}
+              <div className="absolute left-4 md:left-1/2 top-0 md:top-1/2 transform md:-translate-x-1/2 md:-translate-y-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-[#31004d] to-[#A78BFA] border-4 border-[#31004d] z-10"></div>
+            
+              {/* Content section */}
+              <div className={`md:w-1/2 pl-12 md:pl-12 md:pr-12 ${index % 2 === 0 ? "md:pr-12 md:pl-0" : "md:pl-12 md:pr-0"}`}>
                 <motion.div
                   className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/20 transition-all duration-300"
                   whileHover={{ y: -5 }}
@@ -636,7 +683,7 @@ const Deskripsi = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">GIS Unesa 2024</h3>
+            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Science Writing Competition 2024</h3>
             <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">dokumentasi kegiatan GIS Unesa 2024</p>
           </div>
         </div>
@@ -654,8 +701,8 @@ const Deskripsi = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Persentasi Finalis</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Persentasi Finalis GIS Unesa 2024</p>
+            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Persentasi Peserta SWC 2024</h3>
+            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Persentasi Peserta SWC pada GIS Unesa 2024</p>
           </div>
         </div>
         <img
@@ -692,8 +739,8 @@ const Deskripsi = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Teamwork</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Kerja TIM Finalis GIS Unesa 2024</p>
+            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Science Competition 2024</h3>
+            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Dokumentasi Science Competition pada GIS Unesa 2024 </p>
           </div>
         </div>
         <img
@@ -712,8 +759,8 @@ const Deskripsi = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Thinking</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Pengerjaan Finalis GIS Unesa 2024</p>
+            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Peserta Science Competition 2024</h3>
+            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Peserta Science Competition pada GIS Unesa 2024</p>
           </div>
         </div>
         <img
@@ -731,7 +778,7 @@ const Deskripsi = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
           <div className="p-6 w-full">
             <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">The Winner</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Juara lomba KTI tingkat Mahasiswa</p>
+            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Juara lomba SWC tingkat Mahasiswa</p>
           </div>
         </div>
         <img
@@ -747,7 +794,7 @@ const Deskripsi = () => {
       {/* Sponsors */}
       <motion.div
         id="sponsors"
-        className="max-w-screen-xl mx-auto mb-32"
+        className="max-w-screen-xl mx-auto"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -757,8 +804,8 @@ const Deskripsi = () => {
           Sponsor & Media Partner
         </SectionTitle>
 
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-white mb-8 text-center">Sponsor Utama</h3>
+        <div className="mb-3">
+          <h3 className="text-3xl font-bold text-white mb-8 text-center">Sponsor</h3>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {[sponsor1, sponsor2, sponsor3, sponsor4, sponsor5].map((logo, index) => (
               <motion.div
@@ -775,34 +822,10 @@ const Deskripsi = () => {
             ))}
           </div>
         </div>
-
-        <motion.div
-          id="media-partner"
-          className="max-w-screen-xl mx-auto mb-32 overflow-hidden"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <SectionTitle subtitle="Media partner yang telah mendukung acara GIS Unesa 2025">
-            Media Partner
-          </SectionTitle>
-
-          <div className="relative w-full overflow-hidden">
-            <div className="flex gap-6 animate-scroll">
-              {[mediaPartner1, mediaPartner2, mediaPartner3, mediaPartner4, mediaPartner5, mediaPartner6, mediaPartner7, mediaPartner8, mediaPartner9, mediaPartner10].map((logo, index) => (
-                <motion.div
-                  key={index}
-                  className="flex-shrink-0 w-40 h-40 bg-white/10 backdrop-blur-sm rounded-lg p-3 flex items-center justify-center border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <img src={logo} alt={`Media Partner ${index + 1}`} className="max-h-20" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
       </motion.div>
+
+      <MediaPartner />
+      
 
       {/* FAQ Section */}
       <FAQ />
@@ -830,6 +853,7 @@ const Deskripsi = () => {
               Pelajari Selengkapnya
             </GradientButton>
           </div>
+         
         </div>
       </motion.div>
     </div>

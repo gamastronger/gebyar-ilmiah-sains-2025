@@ -11,6 +11,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { participantsData } from "../../data/participantsData";
+import api from "@/configs/api";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import "dayjs/locale/id"; // Bahasa Indonesia
+
+dayjs.extend(localizedFormat);
+dayjs.locale("id");
 
 export function Portofolio() {
   const [participants, setParticipants] = useState([]);
@@ -28,38 +36,33 @@ export function Portofolio() {
 
   // Fetch data peserta dari API
   useEffect(() => {
-    const fetchParticipants = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch("https://gis-backend.karyavisual.com/api/users");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        // Pastikan data.data adalah array dan mapping field agar konsisten
-        if (data && Array.isArray(data.data)) {
-          // Normalisasi data agar field yang dipakai di table selalu ada
-          const normalized = data.data.map((item, idx) => ({
-            id: item.id || idx + 1,
-            name: item.name || "-",
-            email: item.email || "-",
-            status_verifikasi: item.status_verifikasi || item.status || "-",
-            jenjang_pendidikan: item.jenjang_pendidikan || item.jenjang || "-",
-            verified_at: item.verified_at || item.verifiedAt || "",
-            jurnal: item.jurnal || false,
-          }));
-          setParticipants(normalized);
-        } else {
-          setParticipants([]);
-        }
-      } catch (error) {
-        console.error("Error fetching participants:", error);
-        setParticipants([]);
-      } finally {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+  }, []);
+
+  // Perbarui data saat komponen dimuat ulang
+  useEffect(() => {
+    const getUsers = async () => {
+      const response = await fetch(`${api.URL_API}/api/users`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setParticipants(data);
+        setIsLoading(false);
+      } else {
+        console.error("Error fetching participants:", data);
         setIsLoading(false);
       }
     };
-    fetchParticipants();
+    getUsers();
+    // setParticipants([...participantsData]);
   }, []);
 
   const handleDetail = (id) => {
@@ -91,16 +94,16 @@ export function Portofolio() {
 
     const matchesJenjang =
       selectedFilters.jenjang === "all" || 
-      (participant.jenjang_pendidikan && participant.jenjang_pendidikan.toLowerCase() === selectedFilters.jenjang.toLowerCase());
+      (participant.jenjang && participant.jenjang.toLowerCase() === selectedFilters.jenjang.toLowerCase());
 
     const matchesStatus =
       selectedFilters.status === "all" || 
-      (participant.status_verifikasi && participant.status_verifikasi.toLowerCase() === selectedFilters.status.toLowerCase());
+      (participant.status && participant.status.toLowerCase() === selectedFilters.status.toLowerCase());
 
     const matchesWaktu =
       selectedFilters.waktu === "all" ||
-      (selectedFilters.waktu === "verified" && participant.verified_at) ||
-      (selectedFilters.waktu === "not_verified" && !participant.verified_at);
+      (selectedFilters.waktu === "verified" && participant.email_verified_at) ||
+      (selectedFilters.waktu === "not_verified" && !participant.email_verified_at);
 
     return matchesSearch && matchesJenjang && matchesStatus && matchesWaktu;
   });
@@ -227,8 +230,8 @@ export function Portofolio() {
                       }}
                     >
                       <Option value="all">Semua Jenjang</Option>
-                      <Option value="SMP">SMP</Option>
-                      <Option value="SMA">SMA</Option>
+                      <Option value="SMA/MA/SMK">SMA/MA/SMK</Option>
+                      <Option value="Mahasiswa/i">Mahasiswa/i</Option>
                     </Select>
                   </div>
 
@@ -348,21 +351,24 @@ export function Portofolio() {
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span
                                 className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium 
-                                ${statusConfig[participant.status_verifikasi]?.bgColor || "bg-gray-100"} 
-                                ${statusConfig[participant.status_verifikasi]?.textColor || "text-gray-800"} 
-                                border ${statusConfig[participant.status_verifikasi]?.borderColor || "border-gray-200"}`}
+                                ${statusConfig[participant.status]?.bgColor || "bg-gray-100"} 
+                                ${statusConfig[participant.status]?.textColor || "text-gray-800"} 
+                                border ${statusConfig[participant.status]?.borderColor || "border-gray-200"}`}
                               >
-                                {statusConfig[participant.status_verifikasi]?.label || participant.status_verifikasi}
+                                {statusConfig[participant.status]?.label || participant.status}
                               </span>
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">
-                                {participant.jenjang_pendidikan || "—"}
+                                {participant.jenjang || "—"}
                               </span>
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100 text-gray-500">
-                              {participant.verified_at || "—"}
+                              {participant.email_verified_at
+                                ? dayjs(participant.email_verified_at).format("dddd, D MMMM YYYY [pukul] HH:mm")
+                                : "—"}
                             </td>
+
                             <td className="py-3 px-4 border-b border-purple-100">
                               <span
                                 className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium 
