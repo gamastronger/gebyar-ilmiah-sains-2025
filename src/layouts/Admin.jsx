@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Cog6ToothIcon } from "@heroicons/react/24/solid";
-import { IconButton } from "@material-tailwind/react";
+import { useState } from "react";
 import {
   Sidenav,
   DashboardNavbar,
@@ -12,29 +11,55 @@ import { useMaterialTailwindController } from "@/context";
 export function Admin() {
   const [controller] = useMaterialTailwindController();
   const { sidenavType } = controller;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-[#260038]">
-      {/* Sidebar */}
-      <Sidenav
-        routes={routes}
-        brandImg={
-          sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
-        }
-        className="h-screen overflow-y-auto fixed top-0 left-0 xl:w-72 w-64 bg-white shadow-xl border-r border-purple-200"
-      />
+    <div className="min-h-screen bg-[#260038] relative">
+      {/* Sidebar Desktop */}
+      <div className="hidden sm:block">
+        <Sidenav
+          routes={routes}
+          brandImg={
+            sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
+          }
+          sidebarOpen={true}
+          setSidebarOpen={setSidebarOpen}
+          isDesktop
+        />
+      </div>
+
+      {/* Sidebar Mobile */}
+      <div className="sm:hidden">
+        <Sidenav
+          routes={routes}
+          brandImg={
+            sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
+          }
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
+        {/* Overlay */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+      </div>
+
       {/* Main Content */}
-      <div className="flex-1 xl:ml-72 ml-64 p-6 transition-all duration-300">
+      <div className="flex-1 sm:ml-64 xl:ml-72 ml-0 p-4 transition-all duration-300">
+        {/* Navbar */}
         <DashboardNavbar />
-        <div className="mt-4 p-6 bg-white rounded-xl shadow-md">
+        {/* Page Content */}
+        <div className="mt-4 p-4 bg-white rounded-xl shadow-md">
           <Routes>
-            {/* Redirect /admin to /admin/Dash-Admin */}
             <Route path="/" element={<Navigate to="/admin/Dash-Admin" replace />} />
             {routes.map(
               ({ layout, pages }) =>
                 layout === "admin" &&
                 pages.map(({ path, element }) => (
-                  <Route key={path} exact path={path} element={element} />
+                  <Route key={path} path={path} element={element} />
                 ))
             )}
           </Routes>

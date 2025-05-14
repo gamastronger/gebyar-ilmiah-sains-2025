@@ -58,19 +58,8 @@ export function DashboardNavbar() {
       blurred={fixedNavbar}
     >
       <div className="flex items-center justify-between w-full">
-        {/* LEFT: Mobile menu button & Title */}
         <div className="flex items-center gap-2">
           {/* Sidebar toggle button */}
-          <IconButton
-            id="sidenav-toggle"
-            variant="text"
-            color="white"
-            className="flex items-center justify-center h-9 w-9 rounded-lg hover:bg-white/10"
-            onClick={() => setOpenSidenav(dispatch, !openSidenav)}
-          >
-            <Bars3Icon className="h-5 w-5 text-white" />
-          </IconButton>
-
           {/* Title section - adaptive for mobile */}
           <div className="flex flex-col">
             {/* Breadcrumbs - hidden on very small screens */}
@@ -105,20 +94,6 @@ export function DashboardNavbar() {
               Online
             </Typography>
           </div>
-
-          {/* Notification bell */}
-          <IconButton 
-            variant="text" 
-            color="white"
-            className="flex items-center justify-center h-9 w-9 rounded-lg hover:bg-white/10"
-          >
-            <div className="relative">
-              <BellIcon className="h-5 w-5 text-white" />
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
-                2
-              </span>
-            </div>
-          </IconButton>
 
           {/* User profile */}
           <div className="hidden sm:block">
