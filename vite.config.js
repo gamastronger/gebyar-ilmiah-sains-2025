@@ -15,7 +15,7 @@ export default defineConfig({
   server: {
     host: true, // <- penting untuk akses via IP/ngrok
     historyApiFallback: true,
-    allowedHosts: ['c76e-36-82-76-124.ngrok-free.app'],
+    allowedHosts: ['e17c-36-81-163-66.ngrok-free.app'],
   },
 });
  

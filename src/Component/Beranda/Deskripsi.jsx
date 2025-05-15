@@ -151,17 +151,21 @@ const EnhancedPosterSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10">
-            <h3 className="text-lg font-bold text-white mb-2">Kompetisi Nasional</h3>
-            <p className="text-white/80 text-sm">Diikuti oleh lebih dari 500 peserta dari seluruh Indonesia</p>
+          
+          
+          <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10 text-left">
+            <h3 className="text-lg font-bold text-white mb-2">Tanggal Penting</h3>
+            <div className="space-y-2">
+              <p className="text-white/80 text-sm flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-[#A78BFA]"></span>
+                <span>Gelombang 1: 17 Mei - 12 Juli 2025</span>
+              </p>
+              <p className="text-white/80 text-sm flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-[#A78BFA]"></span>
+                <span>Gelombang 2: 13 Juli - 24 Agustus 2025</span>
+              </p>
+            </div>
           </div>
-          <motion.div 
-            className="p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h3 className="text-lg font-bold text-white mb-2">Total Hadiah</h3>
-            <p className="text-[#A78BFA] text-xl font-bold">Rp 23.000.0000</p>
-          </motion.div>
         </motion.div>
         
         {/* Center poster */}
@@ -183,19 +187,13 @@ const EnhancedPosterSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10">
-            <h3 className="text-lg font-bold text-white mb-2">Tanggal Penting</h3>
-            <div className="space-y-2">
-              <p className="text-white/80 text-sm flex items-center justify-center md:justify-start gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#A78BFA]"></span>
-                <span>Gelombang 1: 17 Mei - 12 Juli 2025</span>
-              </p>
-              <p className="text-white/80 text-sm flex items-center justify-center md:justify-start gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#A78BFA]"></span>
-                <span>Gelombang 2: 13 Juli - 24 Agustus 2025</span>
-              </p>
-            </div>
-          </div>
+          <motion.div 
+            className="p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10"
+            whileHover={{ scale: 1.05 }}
+          >
+            <h3 className="text-lg font-bold text-white mb-2">Total Hadiah</h3>
+            <p className="text-[#A78BFA] text-xl font-bold">Rp 23.000.0000</p>
+          </motion.div>
           <motion.div 
             className="p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10"
             whileHover={{ scale: 1.05 }}
@@ -217,23 +215,23 @@ const SocialLinks = () => {
     <div className="flex justify-center gap-6 mt-8">
   {/* Instagram 1 */}
   <a
-    href="https://instagram.com/gisunesa"
+    href="https://www.instagram.com/gisfmipaunesa/"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Instagram GIS Unesa"
     className="hover:scale-110 transition-transform flex flex-col items-center mx-5"
   >
     <img src={InstagramIcon1} alt="Instagram GIS Unesa" width={36} height={36} />
-    <span className="text-white text-sm mt-2">@gisunesa</span>
+    <span className="text-white text-sm mt-2">@gisfmipaunesa</span>
   </a>
 
   {/* Instagram 2 */}
   <a
-    href="https://instagram.com/hmpipaunesa"
+    href="https://instagram.com/hmppipaunesa"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Instagram HMP IPA Unesa"
-    className="hover:scale-110 transition-transform flex flex-col items-center"
+    className="hover:scale-110 transition-transform flex flex-col items-center mx-5"
   >
     <img src={InstagramIcon2} alt="Instagram HMP IPA Unesa" width={36} height={36} />
     <span className="text-white text-sm mt-2">@hmppipaunesa</span>
@@ -241,11 +239,11 @@ const SocialLinks = () => {
 
   {/* TikTok */}
   <a
-    href="https://www.tiktok.com/@gisunesa"
+    href="https://www.tiktok.com/@gisfmipaunesa"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="TikTok GIS Unesa"
-    className="hover:scale-110 transition-transform flex flex-col items-center"
+    className="hover:scale-110 transition-transform flex flex-col items-center mx-5"
   >
     <img src={TikTokIcon} alt="TikTok GIS Unesa" width={36} height={36} />
     <span className="text-white text-sm mt-2">@gisfmipaunesa</span>
@@ -608,8 +606,8 @@ const Deskripsi = () => {
                 </svg>
               ),
               contacts: [
-                { name: "Nisa", role: "Koordinator", phone: "+6287876440866" },
-                { name: "Farid", role: "Wakil Koordinator", phone: "+62087758375435" },
+                { name: "Nisa", role: "Koordinator", phone: "+f" },
+                { name: "Dzaky", role: "Wakil Koordinator", phone: "+62087758375435" },
               ],
             },
           ].map((section, index) => (
