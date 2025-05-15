@@ -1,33 +1,58 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const PrivateRoute = ({ isAuthenticated, allowedRoles, userRole, element }) => {
-  // Jika tidak terautentikasi, arahkan ke halaman login
-  if (!isAuthenticated) {
-    return <Navigate to="/auth/masuk" replace />;
-  }
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [canRender, setCanRender] = useState(false);
 
-  // Jika peran pengguna tidak diizinkan, arahkan ke halaman akses ditolak
-  if (allowedRoles && !allowedRoles.includes(userRole)) {
-    if (userRole === "admin") {
-      return <Navigate to="/admin/Dash-Admin" replace />;
-    }
-    if (userRole === "peserta") {
-      if (localStorage.getItem("status") === "null") {
-        return <Navigate to="/onboarding" replace />;
+  useEffect(() => {
+    // Jika belum login
+    if (!isAuthenticated) {
+      if (location.pathname !== "/auth/masuk") {
+        navigate("/auth/masuk", { replace: true });
       }
-      if (localStorage.getItem("status") === "pending") {
-        return <Navigate to="/dashboard/pending" replace />;
-      }
-      if (localStorage.getItem("status") === "success") {
-        return <Navigate to="/dashboard/user" replace />;
-      }
+      return;
     }
 
-    return <Navigate to="/" replace />;
-  }
+    // Jika role tidak diperbolehkan
+    if (allowedRoles && !allowedRoles.includes(userRole)) {
+      const status = localStorage.getItem("status");
 
-  // Jika lolos semua pemeriksaan, render elemen yang diminta
+      if (userRole === "admin" && location.pathname !== "/admin/Dash-Admin") {
+        navigate("/admin/Dash-Admin", { replace: true });
+        return;
+      }
+
+      if (userRole === "peserta") {
+        if (status === "null" && location.pathname !== "/onboarding") {
+          navigate("/onboarding", { replace: true });
+          return;
+        }
+        if (status === "pending" && location.pathname !== "/dashboard/pending") {
+          navigate("/dashboard/pending", { replace: true });
+          return;
+        }
+        if (status === "success" && location.pathname !== "/dashboard/user") {
+          navigate("/dashboard/user", { replace: true });
+          return;
+        }
+      }
+
+      // fallback
+      if (location.pathname !== "/") {
+        navigate("/", { replace: true });
+      }
+
+      return;
+    }
+
+    // Validasi sukses, izinkan render
+    setCanRender(true);
+  }, [isAuthenticated, allowedRoles, userRole, navigate, location]);
+
+  if (!canRender) return null;
+
   return element;
 };
 

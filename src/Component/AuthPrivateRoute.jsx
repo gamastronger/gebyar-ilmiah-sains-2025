@@ -1,20 +1,28 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthPrivateRoute = ({ element }) => {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const navigate = useNavigate();
+  const [shouldRender, setShouldRender] = useState(false);
 
-  if (token) {
-    if (role === "peserta") {
-      return <Navigate to="/dashboard/user" replace />;
-    }
-    if (role === "admin") {
-      return <Navigate to="/admin/Dash-Kti" replace />;
-    }
-  }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
 
-  return element; // kalau belum login, biarkan akses halaman auth
+    if (token) {
+      if (role === "peserta") {
+        navigate("/dashboard/user", { replace: true });
+      } else if (role === "admin") {
+        navigate("/admin", { replace: true });
+      }
+    } else {
+      // Tidak login, render elemen Auth
+      setShouldRender(true);
+    }
+  }, [navigate]);
+
+  // Render halaman Auth hanya jika user belum login
+  return shouldRender ? element : null;
 };
 
 export default AuthPrivateRoute;

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Admin, Auth } from "@/layouts";
 import AddPortofolio from "./pages/Input/AddPortofolio";
 import AddLayanan from "./pages/Input/AddLayanan";
@@ -8,17 +8,13 @@ import AddTestimoni from "./pages/Input/AddTestimoni";
 import AddTentangKami from "./pages/Input/AddTentangKami";
 import AddFAQ from "./pages/Input/AddFAQ";
 import AddBanner from "./pages/Input/AddBanner";
-import PrivateRoute from "./Component/PrivateRoute";
-import AuthPrivateRoute from "./Component/AuthPrivateRoute";
+import SmartRoute from "./Component/SmartRoute";
 import Beranda from "./Views/Beranda";
 import Kti from "./Views/Kti";
 import Cbt from "./Views/Cbt";
 import Twibbon from "./Views/Twibbon";
-// import Login from "./Views/Login";
-// import RegisterPage from "./Views/Register";
 import Forgot from "./Component/Login/Forgot";
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
-// import Daftar from "./pages/auth/Daftar";
 import KTIAdmin from "./pages/dashboard/KTI-Admin";
 import Judul from "./Component/Kti/Judul";
 import Onboarding from "./Views/Dashboard User/Onboarding";
@@ -30,194 +26,89 @@ import Invoice from "./Views/Dashboard User/Invoice";
 import CbtUser from "./Views/Dashboard User/CbtUser";
 import Kontak from "./Views/Kontak";
 import Jurnal from "./Views/Dashboard User/Jurnal";
-import { isTokenExpired } from "./configs/isTokenExpired";
+
 function App() {
-  const isAuthenticated = localStorage.getItem('token') !== null;
-  const userRole = localStorage.getItem('role'); // Ambil data user dari localStorage
-  const token = localStorage.getItem("token");
-
-  if (!token || isTokenExpired(token)) {
-    localStorage.removeItem("token");
-  }
-
-  console.log("User Role:", userRole);
   return (
     <Routes>
-      {/* Routing Auth */}
+      {/* Auth routes - hanya untuk guest */}
       <Route
         path="/auth/*"
-        element={<AuthPrivateRoute element={<Auth />} />}
+        element={<SmartRoute authOnly={true} element={<Auth />} />}
       />
       {/* <Route
         path="/auth/daftar"
-        element={<AuthPrivateRoute element={<Daftar />} />}
+        element={<SmartRoute authOnly={true} element={<Daftar />} />}
       /> */}
 
-      {/* Routing Public */}
+      {/* Public routes */}
       <Route path="/" element={<Beranda />} />
       <Route path="/forgot" element={<Forgot />} />
-
-      { /* Untuk Guest */}
       <Route path="/kti" element={<Kti />} />
       <Route path="/cbt" element={<Cbt />} />
       <Route path="/kontak" element={<Kontak />} />
       <Route path="/twibbon" element={<Twibbon />} />
 
-      { /* Untuk User */ }
+      {/* Peserta / user routes */}
       <Route
         path="/onboarding"
         element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["peserta"]}
-            userRole={userRole}
-            element={<Onboarding />}
-          />
+          <SmartRoute allowedRoles={["peserta"]} element={<Onboarding />} />
         }
       />
       <Route
         path="/dashboard/pending"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["peserta"]}
-            userRole={userRole}
-            element={<Pending />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["peserta"]} element={<Pending />} />}
       />
       <Route
         path="/dashboard/user"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["peserta"]}
-            userRole={userRole}
-            element={<User />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["peserta"]} element={<User />} />}
       />
       <Route
         path="/dashboard/user/panduan"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["peserta"]}
-            userRole={userRole}
-            element={<Panduan />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["peserta"]} element={<Panduan />} />}
       />
       <Route
         path="/dashboard/user/bantuan"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["peserta"]}
-            userRole={userRole}
-            element={<Bantuan />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["peserta"]} element={<Bantuan />} />}
       />
       <Route
         path="/dashboard/user/invoice"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["peserta"]}
-            userRole={userRole}
-            element={<Invoice />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["peserta"]} element={<Invoice />} />}
       />
-
       <Route
         path="/dashboard/user/jurnal"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["peserta"]}
-            userRole={userRole}
-            element={<Jurnal />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["peserta"]} element={<Jurnal />} />}
       />
-
       <Route
         path="/dashboard/user/cbt"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["peserta"]}
-            userRole={userRole}
-            element={<CbtUser />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["peserta"]} element={<CbtUser />} />}
       />
 
-
-      { /* Untuk Admin */}
-      {/* <Route path="/admin/*" 
-      element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Admin />} />}
-      /> */}
-      { /* Untuk Admin */ }
+      {/* Admin routes */}
       <Route
         path="/admin/*"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["admin"]}
-            userRole={userRole}
-            element={<Admin />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["admin"]} element={<Admin />} />}
       />
       <Route
         path="/portofolio/:id"
         element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["admin"]}
-            userRole={userRole}
-            element={<ParticipantDetail />}
-          />
+          <SmartRoute allowedRoles={["admin"]} element={<ParticipantDetail />} />
         }
       />
-      
       <Route
         path="/dashboard/kti-admin"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["admin"]}
-            userRole={userRole}
-            element={<KTIAdmin />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["admin"]} element={<KTIAdmin />} />}
       />
       <Route
         path="/dashboard/participant-detail/:id"
         element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["admin"]}
-            userRole={userRole}
-            element={<ParticipantDetail />}
-          />
+          <SmartRoute allowedRoles={["admin"]} element={<ParticipantDetail />} />
         }
       />
       <Route
         path="/judul"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["admin"]}
-            userRole={userRole}
-            element={<Judul />}
-          />
-        }
+        element={<SmartRoute allowedRoles={["admin"]} element={<Judul />} />}
       />
-
 
       <Route path="/auth/forbidden" element={<h1>Forbidden</h1>} />
     </Routes>
