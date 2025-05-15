@@ -29,13 +29,13 @@ export default function ParticipantDetail() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    whatsapp: "",
+    nomor_wa: "",
     alamat: "",
-    sekolah: "",
+    asal_sekolah: "",
     nisn: "",
     kelas: "",
     jenjang: "",
-    jenisLomba: "",
+    jenis_lomba: "",
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -59,13 +59,13 @@ export default function ParticipantDetail() {
             ...formData,
             ...data,
             name: data.name || data.nama || "",
-            whatsapp: data.whatsapp || "",
+            nomor_wa: data.nomor_wa || "",
             alamat: data.alamat || "",
-            sekolah: data.sekolah || "",
+            asal_sekolah: data.asal_sekolah || "",
             nisn: data.nisn || "",
             kelas: data.kelas || "",
             jenjang: data.jenjang || "",
-            jenisLomba: data.jenisLomba || "",
+            jenis_lomba: data.jenis_lomba || "",
             email: data.email || "",
           });
         }
@@ -93,8 +93,8 @@ export default function ParticipantDetail() {
   const validateForm = () => {
     const newErrors = {};
     const requiredFields = [
-      "name", "email", "whatsapp", 
-      "alamat", "sekolah", "nisn", "kelas"
+      "name", "email", "nomor_wa", 
+      "alamat", "asal_sekolah", "nisn", "kelas"
     ];
     
     requiredFields.forEach(field => {
@@ -105,10 +105,10 @@ export default function ParticipantDetail() {
       newErrors.email = "Email tidak valid";
     }
     
-    if (formData.whatsapp && !/^\d+$/.test(formData.whatsapp)) {
-      newErrors.whatsapp = "Nomor WhatsApp harus berupa angka";
-    } else if (formData.whatsapp && !/^[+]?[\d\s-]{10,15}$/.test(formData.whatsapp)) {
-      newErrors.whatsapp = "Nomor telepon tidak valid";
+    if (formData.nomor_wa && !/^\d+$/.test(formData.nomor_wa)) {
+      newErrors.nomor_wa = "Nomor WhatsApp harus berupa angka";
+    } else if (formData.nomor_wa && !/^[+]?[\d\s-]{10,15}$/.test(formData.nomor_wa)) {
+      newErrors.nomor_wa = "Nomor telepon tidak valid";
     }
     
     if (formData.nisn && !/^\d+$/.test(formData.nisn)) {
@@ -249,10 +249,10 @@ export default function ParticipantDetail() {
                       
                       <FormInput 
                         label="Nomor WhatsApp" 
-                        name="whatsapp" 
-                        value={formData.whatsapp}
+                        name="nomor_wa" 
+                        value={formData.nomor_wa}
                         placeholder="08xxxxxxxxxx"
-                        error={errors.whatsapp}
+                        error={errors.nomor_wa}
                       />
                       
                       <div className="md:col-span-2">
@@ -283,10 +283,10 @@ export default function ParticipantDetail() {
                       <div className="md:col-span-2">
                         <FormInput 
                           label="Asal Sekolah" 
-                          name="sekolah" 
-                          value={formData.sekolah}
+                          name="asal_sekolah" 
+                          value={formData.asal_sekolah}
                           placeholder="Masukkan nama sekolah"
-                          error={errors.sekolah}
+                          error={errors.asal_sekolah}
                         />
                       </div>
                       
@@ -350,43 +350,43 @@ export default function ParticipantDetail() {
                         <button
                           type="button"
                           className={`flex items-center px-4 py-3 rounded-lg transition-all ${
-                            formData.jenisLomba === "kti" 
+                            formData.jenis_lomba === "science-competition" 
                               ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-md" 
                               : "bg-purple-50 text-gray-700 hover:bg-purple-100 border border-purple-200"
                           }`}
-                          onClick={() => setFormData({...formData, jenisLomba: "kti"})}
+                          onClick={() => setFormData({...formData, jenis_lomba: "science-competition"})}
                         >
-                          <div className={`p-2 mr-3 rounded-full ${formData.jenisLomba === "kti" ? "bg-white bg-opacity-20" : "bg-purple-100"}`}>
-                            <FiFile className={formData.jenisLomba === "kti" ? "text-white" : "text-purple-500"} />
+                          <div className={`p-2 mr-3 rounded-full ${formData.jenis_lomba === "science-competition" ? "bg-white bg-opacity-20" : "bg-purple-100"}`}>
+                            <FiFile className={formData.jenis_lomba === "science-competition" ? "text-white" : "text-purple-500"} />
                           </div>
                           <div className="text-left">
-                            <span className="font-medium block">Lomba KTI</span>
-                            <span className="text-xs block opacity-80">Karya Tulis Ilmiah</span>
+                            <span className="font-medium block">Science Competition</span>
+                            <span className="text-xs block opacity-80">Science Writing Competition</span>
                           </div>
-                          {formData.jenisLomba === "kti" && <FiCheck className="ml-auto" />}
+                          {formData.jenis_lomba === "science-competition" && <FiCheck className="ml-auto" />}
                         </button>
                         
                         <button
                           type="button"
                           className={`flex items-center px-4 py-3 rounded-lg transition-all ${
-                            formData.jenisLomba === "cbt" 
+                            formData.jenis_lomba === "science-writing-competition" 
                               ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-md" 
                               : "bg-purple-50 text-gray-700 hover:bg-purple-100 border border-purple-200"
                           }`}
-                          onClick={() => setFormData({...formData, jenisLomba: "cbt"})}
+                          onClick={() => setFormData({...formData, jenis_lomba: "science-writing-competition"})}
                         >
-                          <div className={`p-2 mr-3 rounded-full ${formData.jenisLomba === "cbt" ? "bg-white bg-opacity-20" : "bg-purple-100"}`}>
-                            <FiFile className={formData.jenisLomba === "cbt" ? "text-white" : "text-purple-500"} />
+                          <div className={`p-2 mr-3 rounded-full ${formData.jenis_lomba === "science-writing-competition" ? "bg-white bg-opacity-20" : "bg-purple-100"}`}>
+                            <FiFile className={formData.jenis_lomba === "science-writing-competition" ? "text-white" : "text-purple-500"} />
                           </div>
                           <div className="text-left">
-                            <span className="font-medium block">Lomba CBT</span>
-                            <span className="text-xs block opacity-80">Computer Based Test</span>
+                            <span className="font-medium block">Science Writing Competition</span>
+                            <span className="text-xs block opacity-80">Science Writing Competition</span>
                           </div>
-                          {formData.jenisLomba === "cbt" && <FiCheck className="ml-auto" />}
+                          {formData.jenis_lomba === "science-writing-competition" && <FiCheck className="ml-auto" />}
                         </button>
                       </div>
-                      {errors.jenisLomba && (
-                        <p className="text-red-500 text-xs mt-2">{errors.jenisLomba}</p>
+                      {errors.jenis_lomba && (
+                        <p className="text-red-500 text-xs mt-2">{errors.jenis_lomba}</p>
                       )}
                     </div>
                     
@@ -451,8 +451,8 @@ export default function ParticipantDetail() {
                     <FiPhone className="text-white" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">WhatsApp</p>
-                    <p className="font-medium text-gray-800">{formData.whatsapp || "-"}</p>
+                    <p className="text-xs text-gray-500">Whatsapp</p>
+                    <p className="font-medium text-gray-800">{formData.nomor_wa || "-"}</p>
                   </div>
                 </div>
               </div>
@@ -483,8 +483,8 @@ export default function ParticipantDetail() {
                     </span>
                   </div>
                   <p className="text-sm font-medium text-purple-600 bg-purple-50 py-1 px-3 rounded-full inline-block">
-                    {formData.jenisLomba === "kti" ? "Karya Tulis Ilmiah" : 
-                     formData.jenisLomba === "cbt" ? "Computer Based Test" : "Belum dipilih"}
+                    {formData.jenis_lomba === "science-competition" ? "SC" : 
+                     formData.jenis_lomba === "science-writing-competition" ? "SWC" : "Belum dipilih"}
                   </p>
                 </div>
                 
@@ -498,41 +498,6 @@ export default function ParticipantDetail() {
                   <p className="text-sm font-medium text-purple-600 bg-purple-50 py-1 px-3 rounded-full inline-block">
                     {formData.jenjang ? formData.jenjang.toUpperCase() : "Belum dipilih"}
                   </p>
-                </div>
-              </div>
-            </div>
-            
-            {/* Activity Log */}
-            <div className="bg-white rounded-xl shadow-sm mt-6 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-gray-800">Riwayat Aktivitas</h3>
-                <button className="text-sm text-purple-600 hover:text-purple-800 font-medium">
-                  Lihat Semua
-                </button>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="flex items-start p-3 bg-purple-50 rounded-lg border border-purple-100">
-                  <div className="p-2 bg-gradient-to-r from-purple-600 to-pink-500 rounded-lg mr-3">
-                    <FiEdit2 className="text-white" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium text-gray-800">Pendaftaran Berhasil</p>
-                      <span className="text-xs bg-green-100 text-green-600 py-0.5 px-2 rounded">Baru</span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">2 hari yang lalu</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start p-3 bg-white rounded-lg border border-gray-100">
-                  <div className="p-2 bg-gray-100 rounded-lg mr-3">
-                    <FiFile className="text-gray-500" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">Berkas Diunggah</p>
-                    <p className="text-xs text-gray-500 mt-1">4 hari yang lalu</p>
-                  </div>
                 </div>
               </div>
             </div>
