@@ -13,7 +13,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Beranda, Profil, Tabel, Portofolio, Layanan, Paket, Pesanan, Testimoni, Faq } from "@/pages/dashboard";
 import { Daftar, Masuk } from "@/pages/auth";
-import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
+
 
 const icon = {
   className: "w-5 h-5 text-inherit",

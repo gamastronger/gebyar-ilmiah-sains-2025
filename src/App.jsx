@@ -17,7 +17,6 @@ import Twibbon from "./Views/Twibbon";
 // import RegisterPage from "./Views/Register";
 import Forgot from "./Component/Login/Forgot";
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
-import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
 // import Daftar from "./pages/auth/Daftar";
 import KTIAdmin from "./pages/dashboard/KTI-Admin";
 import Judul from "./Component/Kti/Judul";
@@ -156,17 +155,7 @@ function App() {
           />
         }
       />
-      <Route
-        path="/cbt-admin/detail/:id"
-        element={
-          <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            allowedRoles={["admin"]}
-            userRole={userRole}
-            element={<ParticipantDetail2 />}
-          />
-        }
-      />
+      
       <Route
         path="/dashboard/kti-admin"
         element={

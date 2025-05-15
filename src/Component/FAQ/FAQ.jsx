@@ -45,12 +45,13 @@ const FAQ = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
       <div className="text-center mb-16">
-        <h5 className="text-purple-300 font-medium tracking-wider uppercase mb-3">
-          Pertanyaan yang sering ditanyakan seputar GIS Unesa 2025
-        </h5>
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-purple-400">
-          Frequently Asked Questions
+        
+        <h2 className="mt-12 text-4xl md:text-5xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-purple-400">
+          Buku Panduan
         </h2>
+        <h5 className="md-4 text-purple-300 font-medium tracking-wider uppercase mb-3">
+          Lihat buku panduan untuk informasi lebih lanjut
+        </h5>
         <div className="h-1 w-24 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
       </div>
 
@@ -122,7 +123,7 @@ const FAQ = () => {
         <div className="flex flex-col items-center space-y-6"> {/* Changed from gap-4 to space-y-6 */}
           {/* Download Button */}
           <a 
-            href="https://drive.google.com/your-drive-link-here"  
+            href="https://unesa.me/BukuPanduan13thGIS"  
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#31004d] to-[#A78BFA] text-white rounded-full font-medium hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
@@ -157,29 +158,7 @@ const FAQ = () => {
             <span className="text-base">Download Guidebook</span>
           </a>
 
-          {/* Contact Link */}
-          <div className="pt-2"> {/* Added padding top */}
-            <a 
-              href="#contact" 
-              className="inline-flex items-center text-white font-medium hover:text-purple-300 transition-colors group"
-            >
-              <span className="text-sm">Hubungi kami untuk informasi lebih lanjut</span>
-              <svg 
-                className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform"
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth="2" 
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </a>
-          </div>
+
         </div>
       </motion.div>
     </motion.div>

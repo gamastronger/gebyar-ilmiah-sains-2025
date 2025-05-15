@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../Component/Navbar"; // Pastikan path ini benar
-import illustrationImg from "../../assets/bgsementararegister.jpg"; // Gambar bisa disesuaikan
+import illustrationImg from "../../assets/docfotbar1.jpg"; // Gambar bisa disesuaikan
 import api from "@/configs/api";
 
 export function Masuk() {
@@ -65,9 +65,17 @@ export function Masuk() {
         exit="exit"
       >
         <div className="w-full max-w-6xl h-[80vh] lg:h-[70vh] bg-white rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
-          {/* Gambar di sisi kiri */}
-          <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ddd6f3] to-[#f3e7e9]">
-            <img src={illustrationImg} alt="Illustration" className="max-h-[80%] object-contain" />
+          {/* Gambar di sisi kiri dengan gradient ungu */}
+          <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-[#ddd6f3] to-[#f3e7e9] relative">
+            {/* Gradient di atas gambar */}
+            <div className="absolute inset-0 z-10 bg-gradient-to-tl from-purple-400 via-transparent to-purple-600 mix-blend-multiply opacity-60 pointer-events-none" />
+            
+            {/* Gambar */}
+            <img
+              src={illustrationImg}
+              alt="Illustration"
+              className="rounded-2xl max-h-[95%] object-contain relative z-20"
+            />
           </div>
 
           {/* Form Login */}
