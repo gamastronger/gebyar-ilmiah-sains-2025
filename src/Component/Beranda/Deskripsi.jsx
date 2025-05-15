@@ -792,7 +792,7 @@ const Deskripsi = () => {
 </motion.div>
 
       {/* Sponsors */}
-      <motion.div
+      {/* <motion.div
         id="sponsors"
         className="max-w-screen-xl mx-auto"
         initial={{ opacity: 0, y: 30 }}
@@ -824,7 +824,7 @@ const Deskripsi = () => {
         </div>
       </motion.div>
 
-      <MediaPartner />
+      <MediaPartner /> */}
       
 
       {/* FAQ Section */}
