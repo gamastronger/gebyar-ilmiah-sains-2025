@@ -9,6 +9,7 @@ import AddTentangKami from "./pages/Input/AddTentangKami";
 import AddFAQ from "./pages/Input/AddFAQ";
 import AddBanner from "./pages/Input/AddBanner";
 import PrivateRoute from "./Component/PrivateRoute";
+import AuthPrivateRoute from "./Component/AuthPrivateRoute";
 import Beranda from "./Views/Beranda";
 import Kti from "./Views/Kti";
 import Cbt from "./Views/Cbt";
@@ -29,17 +30,30 @@ import Invoice from "./Views/Dashboard User/Invoice";
 import CbtUser from "./Views/Dashboard User/CbtUser";
 import Kontak from "./Views/Kontak";
 import Jurnal from "./Views/Dashboard User/Jurnal";
+import { isTokenExpired } from "./configs/isTokenExpired";
 function App() {
   const isAuthenticated = localStorage.getItem('token') !== null;
   const userRole = localStorage.getItem('role'); // Ambil data user dari localStorage
+  const token = localStorage.getItem("token");
+
+  if (!token || isTokenExpired(token)) {
+    localStorage.removeItem("token");
+  }
 
   console.log("User Role:", userRole);
   return (
     <Routes>
-      { /* Untuk Auth */}
-      
-      <Route path="/auth/*" element={<Auth />} />
-      <Route path="*" element={<Navigate to="/admin" replace />} />
+      {/* Routing Auth */}
+      <Route
+        path="/auth/*"
+        element={<AuthPrivateRoute element={<Auth />} />}
+      />
+      {/* <Route
+        path="/auth/daftar"
+        element={<AuthPrivateRoute element={<Daftar />} />}
+      /> */}
+
+      {/* Routing Public */}
       <Route path="/" element={<Beranda />} />
       <Route path="/forgot" element={<Forgot />} />
 

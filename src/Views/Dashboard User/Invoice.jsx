@@ -48,7 +48,7 @@ function Invoice() {
 
   const getInvoices = async () => {
     try {
-      const response = await fetch(`${api.URL_API}/api/invoices`, {
+      const response = await fetch(`${api.URL_API}/api/invoices/byAuth`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -420,9 +420,7 @@ function Invoice() {
                       invoices.map((invoice, index) => (
                         <tr key={invoice.id} className="hover:bg-purple-50 transition-colors">
                           <td className="border p-3 text-center">{index + 1}</td>
-                          <td className="border p-3 text-center">
-                            Rp {invoice.total_pembayaran.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                          </td>
+                          <td className="border p-3 text-center">{invoice.kode_bayar}</td>
                           <td className="border p-3 text-center">
                             <span
                               className={`font-semibold ${
@@ -432,7 +430,9 @@ function Invoice() {
                               {invoice.status === 'paid' ? 'Lunas' : 'Menunggu'}
                             </span>
                           </td>
-                          <td className="border p-3 text-center">Rp {invoice.total_pembayaran}</td>
+                          <td className="border p-3 text-center">
+                            Rp {invoice.total_pembayaran.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </td>
                           <td className="border p-3 text-center">
                             {invoice.status !== 'paid' && (
                               <motion.button

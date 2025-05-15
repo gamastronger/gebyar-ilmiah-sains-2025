@@ -24,9 +24,7 @@ const PrivateRoute = ({ isAuthenticated, allowedRoles, userRole, element }) => {
       }
     }
 
-    return element;
-
-    return <Navigate to="/auth/forbidden" replace />;
+    return <Navigate to="/" replace />;
   }
 
   // Jika lolos semua pemeriksaan, render elemen yang diminta
