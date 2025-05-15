@@ -24,6 +24,8 @@ const PrivateRoute = ({ isAuthenticated, allowedRoles, userRole, element }) => {
       }
     }
 
+    return element;
+
     return <Navigate to="/auth/forbidden" replace />;
   }
 

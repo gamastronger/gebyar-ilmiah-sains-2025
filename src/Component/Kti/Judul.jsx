@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiCalendar, FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
-import foto4 from '../../assets/gimage.jpeg';
+import foto4 from '../../assets/doc2.jpg';
 
 const DeskripsiLomba = () => {
   const fadeUp = {
@@ -151,9 +151,9 @@ const DeskripsiLomba = () => {
                   <img
                     src={foto4}
                     alt="Lomba Karya Tulis Ilmiah"
-                    className="w-80 h-auto rounded-xl shadow-2xl border-2 border-purple-400 border-opacity-40"
+                    className="w-90 h-auto rounded-xl shadow-2xl border-2 border-purple-400 border-opacity-40"
                   />
-                  
+                
                   {/* Price tag */}
                   <motion.div 
                     className="absolute -bottom-6 right-0 bg-gradient-to-r from-purple-600 to-purple-800 px-6 py-3 rounded-lg shadow-xl"

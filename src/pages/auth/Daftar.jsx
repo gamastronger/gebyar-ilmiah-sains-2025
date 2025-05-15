@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import illustrationImg from "../../assets/bgsementararegister.jpg";
+import illustrationImg from "../../assets/docfotbar1.jpg";
 import { motion } from "framer-motion";
 import Navbar from "../../Component/Navbar";
 import { toast, ToastContainer } from 'react-toastify';
@@ -297,12 +297,12 @@ const Daftar = () => {
                     <option value="">Pilih jenjang</option>
                     {jenisLomba === "science-competition" ? (
                       <>
-                        <option value="sd">SD</option>
-                        <option value="smp">SMP</option>
+                        <option value="sd">SD/MI</option>
+                        <option value="smp">SMP/MTS</option>
                       </>
                     ) : jenisLomba === "science-writing" ? (
                       <>
-                        <option value="sma">SMA</option>
+                        <option value="sma">SMA/SMK/MA Sederajat</option>
                         <option value="mahasiswa">Mahasiswa/i</option>
                       </>
                     ) : null}
