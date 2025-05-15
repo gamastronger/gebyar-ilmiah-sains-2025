@@ -146,13 +146,13 @@ function Onboarding() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.5 }}
-          className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl border border-purple-100 mx-8 mt-8"
+          className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-xl w-full max-w-4xl border border-purple-100 mx-2 sm:mx-4 md:mx-8 mt-4 md:mt-8"
         >
-          <h2 className="text-2xl font-bold mb-6 text-purple-800 text-center">Data Pribadi</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-purple-800 text-center">Data Pribadi</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div className='col-span-1'>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+              <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1 sm:mb-2">Nama Lengkap</label>
               <input
                 type="text"
                 placeholder="Nama Lengkap"
@@ -178,6 +178,17 @@ function Onboarding() {
               <input
                 type="text"
                 placeholder="NISN"
+                value={dataPribadi.nisn}
+                onChange={(e) => setDataPribadi({ ...dataPribadi, nisn: e.target.value })}
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none"
+              />
+            </div>
+            {/* no whatsapp */}
+            <div className="col-span-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">No WhatsApp</label>
+              <input
+                type="text"
+                placeholder="No WhatsApp"
                 value={dataPribadi.nisn}
                 onChange={(e) => setDataPribadi({ ...dataPribadi, nisn: e.target.value })}
                 className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none"
@@ -240,18 +251,6 @@ function Onboarding() {
                 ))}
               </select>
             </div>
-
-            <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Pilih Jenis Lomba</label>
-              <select 
-                value={dataPribadi.jenis_lomba}
-                onChange={(e) => setDataPribadi({ ...dataPribadi, jenis_lomba: e.target.value })}
-                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none">
-                <option value="">Pilih Jenis Lomba</option>
-                <option value="science-competition">Science Competition</option>
-                <option value="science-writing-competition">Science Writing Competition</option>
-              </select>
-            </div>
           </div>
           
           <div className="mt-8 flex justify-end">
@@ -272,37 +271,11 @@ function Onboarding() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.5 }}
-          className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl border border-purple-100 mx-8 mt-8"
+          className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-xl w-full max-w-4xl border border-purple-100 mx-2 sm:mx-4 md:mx-8 mt-4 md:mt-8"
         >
           <h2 className="text-2xl font-bold mb-6 text-purple-800 text-center">Data Sekolah</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Jenjang</label>
-              <select 
-                name="jenjang"
-                value={dataSekolah.jenjang}
-                onChange={(e) => setDataSekolah({ ...dataSekolah, jenjang: e.target.value })}
-                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none">
-                <option value="">Pilih Jenjang</option>
-                <option value="sd">SD</option>
-                <option value="smp">SMP</option>
-                <option value="sma">SMA</option>
-                <option value="mahasiswa/i">SMK</option>
-              </select>
-            </div>
-            
-            <div className='col-span-1'>
-              <label className='block text-sm font-medium text-gray-700 mb-2'>Kelas</label>
-              <input
-                type='number'
-                placeholder='Kelas'
-                value={dataSekolah.kelas}
-                onChange={(e) => setDataSekolah({ ...dataSekolah, kelas: e.target.value })}
-                className='border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none'
-              />
-            </div>
-            
              <div className='col-span-1'>
               <label className='block text-sm font-medium text-gray-700 mb-2'>Asal Sekolah</label>
               <input
@@ -373,28 +346,28 @@ function Onboarding() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.5 }}
-          className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl border border-purple-100 mx-8 mt-8"
+          className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-xl w-full max-w-4xl border border-purple-100 mx-2 sm:mx-4 md:mx-8 mt-4 md:mt-8"
         >
-          <h2 className="text-2xl font-bold mb-6 text-purple-800 text-center">Bukti Upload Twibbon</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-purple-800 text-center">Bukti Upload Twibbon</h2>
           
-          <div className="flex flex-col items-center mb-8">
-            <h3 className="text-lg font-medium text-gray-700 mb-4">Contoh Twibbon</h3>
-            <div className="w-80 h-80 border border-gray-200 rounded-lg shadow-md flex items-center justify-center bg-gray-50 overflow-hidden">
+          <div className="flex flex-col items-center mb-6 sm:mb-8">
+            <h3 className="text-base sm:text-lg font-medium text-gray-700 mb-3 sm:mb-4">Contoh Twibbon</h3>
+            <div className="w-64 sm:w-80 h-64 sm:h-80 border border-gray-200 rounded-lg shadow-md flex items-center justify-center bg-gray-50 overflow-hidden">
               <img src='/src/assets/gimage.jpeg' alt="Contoh Twibbon" className='max-h-full max-w-full object-contain'/>
             </div>
           </div>
           
-          <div className="space-y-6">
-            <div className="bg-purple-50 p-4 rounded-lg">
-              <div className="flex items-center mb-3">
-                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-purple-700" viewBox="0 0 20 20" fill="currentColor">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-purple-50 p-3 sm:p-4 rounded-lg">
+              <div className="flex items-center mb-2 sm:mb-3">
+                <div className="w-8 sm:w-10 h-8 sm:h-10 bg-purple-100 rounded-full flex items-center justify-center mr-2 sm:mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 sm:h-5 w-4 sm:w-5 text-purple-700" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-medium text-purple-800">Petunjuk</h3>
+                <h3 className="text-base sm:text-lg font-medium text-purple-800">Petunjuk</h3>
               </div>
-              <ol className="list-decimal ml-6 text-gray-700 space-y-2">
+              <ol className="list-decimal ml-4 sm:ml-6 text-gray-700 space-y-1 sm:space-y-2 text-sm sm:text-base">
                 <li>Download template Twibbon pada link di bawah</li>
                 <li>Unggah foto profil Anda menggunakan template Twibbon</li>
                 <li>Posting ke Instagram Anda dengan caption yang ditentukan</li>
@@ -403,27 +376,27 @@ function Onboarding() {
             </div>
             
             <div>
-              <h3 className="text-lg font-medium text-gray-700 mb-2">Download Twibbon</h3>
+              <h3 className="text-base sm:text-lg font-medium text-gray-700 mb-2 sm:mb-3">Download Twibbon</h3>
               <a
                 href="https://twibbon.com/example"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors"
+                className="inline-flex items-center px-3 sm:px-4 py-1 sm:py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm sm:text-base"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 sm:h-5 w-4 sm:w-5 mr-1 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
                 Download Twibbon
               </a>
             </div>
             
-            <div className="mt-6">
-              <h3 className="text-lg font-medium text-gray-700 mb-2">Unggah Bukti</h3>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center">
+            <div className="mt-4 sm:mt-6">
+              <h3 className="text-base sm:text-lg font-medium text-gray-700 mb-2 sm:mb-3">Unggah Bukti</h3>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 flex flex-col items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <p className="text-sm text-gray-500 mb-4 text-center">Unggah screenshot postingan Instagram Anda</p>
+                <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4 text-center">Unggah screenshot postingan Instagram Anda</p>
                 <input
                   name='link_twibbon'
                   onChange={(e) => setDataPribadi({ ...dataPribadi, link_twibbon: e.target.files[0] })}
