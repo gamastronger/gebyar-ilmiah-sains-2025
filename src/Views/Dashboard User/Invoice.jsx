@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import api from '../../configs/api'; // Import API configuration
 
 function Invoice() {
   const [showUploadForm, setShowUploadForm] = useState(false);
   const [showConfirmationPage, setShowConfirmationPage] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 100);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    getInvoices();
   }, []);
 
   const toggleMenu = () => {
@@ -38,6 +44,28 @@ function Invoice() {
 
   const handleBackToHome = () => {
     setShowConfirmationPage(false);
+  };
+
+  const getInvoices = async () => {
+    try {
+      const response = await fetch(`${api.URL_API}/api/invoices`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setInvoices(data); // Simpan data invoice ke state
+      } else {
+        console.error('Gagal mendapatkan data invoice:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Terjadi kesalahan saat memuat data invoice:', error);
+    }
   };
 
   const containerVariants = {
@@ -388,27 +416,45 @@ function Invoice() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="hover:bg-purple-50 transition-colors">
-                      <td className="border p-3 text-center">1</td>
-                      <td className="border p-3 text-center">INV001</td>
-                      <td className="border p-3 text-center">
-                        <span className="text-amber-500 font-semibold">
-                          Menunggu
-                        </span>
-                      </td>
-                      <td className="border p-3 text-center">Rp 500.000</td>
-                      <td className="border p-3 text-center">
-                        <motion.button
-                          onClick={handleShowUploadForm}
-                          className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
-                          transition={{ type: "spring", stiffness: 400 }}
-                        >
-                          Upload Bukti
-                        </motion.button>
-                      </td>
-                    </tr>
+                    {invoices.length > 0 ? (
+                      invoices.map((invoice, index) => (
+                        <tr key={invoice.id} className="hover:bg-purple-50 transition-colors">
+                          <td className="border p-3 text-center">{index + 1}</td>
+                          <td className="border p-3 text-center">
+                            Rp {invoice.total_pembayaran.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </td>
+                          <td className="border p-3 text-center">
+                            <span
+                              className={`font-semibold ${
+                                invoice.status === 'paid' ? 'text-green-600' : 'text-amber-500'
+                              }`}
+                            >
+                              {invoice.status === 'paid' ? 'Lunas' : 'Menunggu'}
+                            </span>
+                          </td>
+                          <td className="border p-3 text-center">Rp {invoice.total_pembayaran}</td>
+                          <td className="border p-3 text-center">
+                            {invoice.status !== 'paid' && (
+                              <motion.button
+                                onClick={handleShowUploadForm}
+                                className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
+                                transition={{ type: "spring", stiffness: 400 }}
+                              >
+                                Upload Bukti
+                              </motion.button>
+                            )}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="border p-3 text-center text-gray-500">
+                          Tidak ada data invoice.
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
 

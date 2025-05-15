@@ -23,7 +23,7 @@ function Onboarding() {
     provinsi_id: '',
     kabupaten_id: '',
     jenis_lomba: '',
-    link_twibbon: null
+    link_twibbon: null,
   });
 
   const [dataSekolah, setDataSekolah] = useState({
@@ -99,8 +99,32 @@ function Onboarding() {
 
       const data = await response.json();
       if (response.ok) {
-        alert('Onboarding berhasil!');
-        // navigate('/dashboard/user');
+        try {
+          const invoiceResponse = await fetch(`${api.URL_API}/api/invoices`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({
+              user_id: data.id, // Assuming `data.id` contains the user ID
+              jenis_lomba: dataPribadi.jenis_lomba,
+            }),
+          });
+
+          if (invoiceResponse.ok) {
+            alert('Onboarding berhasil dan invoice berhasil dibuat!');
+            navigate('/dashboard/user');
+          } else {
+            const invoiceError = await invoiceResponse.json();
+            alert('Onboarding berhasil, tetapi gagal membuat invoice.');
+            console.error('Invoice error:', invoiceError);
+          }
+        } catch (invoiceError) {
+          console.error('Invoice fetch error:', invoiceError);
+          alert('Onboarding berhasil, tetapi terjadi kesalahan saat membuat invoice.');
+        }
       } else {
         alert('Onboarding gagal! Silakan periksa data Anda.');
         console.error('Server response:', data);
@@ -575,7 +599,7 @@ function Onboarding() {
 
     if(data.status === 'pending') {
       alert('Anda sudah melakukan onboarding, silakan tunggu konfirmasi dari panitia');
-      navigate('/dashboard/pending');
+      navigate('/dashboard/user');
     } else if (data.status === 'success') {
       alert('Anda sudah melakukan onboarding, silakan tunggu konfirmasi dari panitia');
       navigate('/dashboard/user');

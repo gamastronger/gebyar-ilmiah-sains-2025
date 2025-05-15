@@ -37,6 +37,7 @@ function App() {
   return (
     <Routes>
       { /* Untuk Auth */}
+      
       <Route path="/auth/*" element={<Auth />} />
       <Route path="*" element={<Navigate to="/admin" replace />} />
       <Route path="/" element={<Beranda />} />
