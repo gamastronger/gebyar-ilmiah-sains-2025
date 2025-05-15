@@ -17,12 +17,13 @@ function User() {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
               <Link to="/" className="font-bold text-xl text-slate-800 flex items-center">
-                <img src="/src/assets/hmpti.png" alt="Logo GIS" className="w-10 h-10 mr-2" />
+                <img src="/src/assets/logomascot.png" alt="Logo GIS" className="w-10 h-10 mr-2" />
                 <span className='text-purple-900'>Gebyar Ilmiah Sains</span>
               </Link>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/dashboard/user/invoice" className="text-purple-900 hover:text-purple-600 font-medium transition duration-300 ease-in-out">Invoice</Link>
+              <Link to="/dashboard/user/jurnal" className="text-purple-900 hover:text-purple-600 font-medium transition duration-300 ease-in-out">Upload Jurnal</Link>
               <Link to="/dashboard/user/panduan" className="text-purple-900 hover:text-purple-600 font-medium transition duration-300 ease-in-out">Panduan</Link>
               <Link to="/dashboard/user/bantuan" className="text-purple-900 hover:text-purple-600 font-medium transition duration-300 ease-in-out">Bantuan</Link>
               <Link to="/dashboard/user/cbt" className="text-purple-900 hover:text-purple-600 font-medium py-2 border-b border-gray-100">CBT</Link>
@@ -80,7 +81,7 @@ function User() {
               whileHover={{ rotate: 5, scale: 1.05 }}
             >
               <motion.img 
-                src="/src/assets/hmpti.png" 
+                src="/src/assets/logomascot.png" 
                 alt="Logo GIS" 
                 className="w-32 h-32 rounded-full shadow-lg"
                 whileHover={{ scale: 1.1 }}
@@ -147,38 +148,11 @@ function User() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
-              Geographic Information System (GIS) adalah sistem yang dirancang untuk menangkap, menyimpan, memanipulasi, menganalisis, mengelola, dan menyajikan semua jenis data geografis. GIS memungkinkan pengguna untuk memahami pola, hubungan, dan tren dalam data geografis.
-            </motion.p>
-            
-            <motion.p 
-              className="text-lg leading-relaxed text-slate-700 mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              Dengan GIS, Anda dapat membuat peta interaktif, melakukan analisis spasial, dan mengelola data lokasi untuk berbagai kebutuhan, mulai dari perencanaan kota hingga pelacakan lingkungan.
-            </motion.p>
-            
-            <motion.p 
-              className="text-lg leading-relaxed text-slate-700 mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-            >
-              Sistem ini banyak digunakan dalam berbagai bidang seperti pemerintahan, bisnis, pendidikan, dan penelitian untuk membantu pengambilan keputusan berbasis lokasi.
-            </motion.p>
-            
-            <motion.p 
-              className="text-lg leading-relaxed text-slate-700 mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-            >
-              GIS menggabungkan data spasial dengan data atribut untuk memberikan pemahaman yang lebih komprehensif tentang berbagai fenomena geografis.
-              lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              13th Gebyar Ilmiah Sains Tingkat Nasional 2025 Jenjang SD/Sederajat, SMP/Sederajat, SMA/SMK/Sederajat, dan 
+              Mahasiswa/i yang terdiri dari Science Competition dan Science Writing Competition yang merupakan salah satu 
+              kegiatan dari HMP Pendidikan IPA FMIPA Unesa yang bertujuan sebagai Ajang kompetisi tingkat nasional untuk 
+              meningkatkan kemampuan bersaing siswa dan mahasiswa dalam Ilmu Pengetahuan dan Teknologi (IPTEK) dan melatih 
+              siswa dan mahasiswa  dalam bersaing inovasi di bidang Pendidikan, Bioteknologi, Energi Terbarukan, dan Lingkungan.
             </motion.p>
           </motion.div>
         </motion.div>
