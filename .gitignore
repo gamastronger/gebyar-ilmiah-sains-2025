@@ -26,3 +26,7 @@ pnpm-debug.log*
 # Optional: jika pakai lint-staged atau husky
 /.husky/
 /lint-staged.config.js
+node_modules
+node_modules
+node_modules
+node_modules
