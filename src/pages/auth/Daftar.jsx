@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import illustrationImg from "../../assets/bgsementararegister.jpg";
@@ -5,7 +6,7 @@ import { motion } from "framer-motion";
 import Navbar from "../../Component/Navbar";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import api from "@/configs/api";
 // Input Component
 const Input = ({ label, type = "text", name, value, onChange, error }) => (
   <div>
@@ -112,27 +113,59 @@ const Daftar = () => {
 
     if (Object.keys(newErrors).length === 0) {
       try {
-        // Show success toast with animation
-        toast.success('Pendaftaran berhasil! Silakan cek email Anda.', {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
+        // Send data to the API
+        console.log("Sending data to API:", {
+            name: formData.nama,
+            email: formData.email,
+            jenjang: formData.jenjang,
+            password: formData.password,
+            jenis_lomba: jenisLomba,
+        });
+        const response = await fetch(`${api.URL_API}/api/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            name: formData.nama,
+            email: formData.email,
+            jenjang: formData.jenjang,
+            password: formData.password,
+            jenis_lomba: jenisLomba,
+          }),
         });
 
-        // Reset form after successful submission
-        setFormData({
-          nama: "",
-          email: "",
-          jenjang: "",
-          password: "",
-          konfirmasi: "",
-        });
-        setJenisLomba("");
+        if (response.ok) {
+          // Show success toast with animation
+          toast.success('Pendaftaran berhasil! Anda akan diarahkan le login.', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+
+          setTimeout(() => {
+            console.log("Navigating to login page...");
+            window.location.href = "/auth/masuk";
+          }, 5000);
+        } else {
+          const errorData = await response.json();
+          toast.error(errorData.message || 'Terjadi kesalahan. Silakan coba lagi.', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
       } catch (error) {
         toast.error('Terjadi kesalahan. Silakan coba lagi.', {
           position: "top-center",

@@ -20,6 +20,8 @@ export function Sidenav({
   const handleLogout = () => {
     if (window.confirm("Apakah Anda yakin untuk keluar sebagai admin?")) {
       localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("status");
       navigate("/login");
     }
   };

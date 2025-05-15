@@ -1,28 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { data } from 'autoprefixer';
+import api from '../../configs/api';
+import Footer from '@/Component/Footer';
 
 function Onboarding() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
+  const [provinsi, setProvinsi] = useState([]);
+  const [selectedProvinsi, setSelectedProvinsi] = useState([]);
+  const [kota, setKota] = useState([]);
+  const [selectedKota, setSelectedKota] = useState([]);
+  const [data, setData] = useState({});
+
   const [dataPribadi, setDataPribadi] = useState({
-    nama: '',
+    name: '',
     email: '',
     nisn: '',
-    password: '',
     alamat: '',
-    provinsi: '',
-    kotaKab: '',
-    jenisLomba: ''
+    provinsi_id: '',
+    kabupaten_id: '',
+    jenis_lomba: '',
+    link_twibbon: null
   });
 
   const [dataSekolah, setDataSekolah] = useState({
     jenjang: '',
-    asalSekolah: '',
+    asal_sekolah: '',
     kelas: '',
     guru: '',
-    waGuru: ''  
+    wa_guru: '',
+    email_guru: ''
   });
   
   const steps = [
@@ -47,7 +57,63 @@ function Onboarding() {
     visible: { opacity: 1, y: 0 }
   };
 
+  const kirimData = async () => {
+    const formData = new FormData();
+
+    console.log("Data Pribadi", dataPribadi);
+    console.log("Data Sekolah", dataSekolah);
+    // Data Pribadi
+    if (dataPribadi.name) formData.append('name', dataPribadi.name);
+    if (dataPribadi.email) formData.append('email', dataPribadi.email);
+    if (dataPribadi.nisn) formData.append('nisn', dataPribadi.nisn);
+    if (dataPribadi.alamat) formData.append('alamat', dataPribadi.alamat);
+    if (dataPribadi.jenis_lomba) formData.append('jenis_lomba', dataPribadi.jenis_lomba);
+    if (dataPribadi.provinsi_id) formData.append('provinsi_id', dataPribadi.provinsi_id);
+    if (dataPribadi.kabupaten_id) formData.append('kabupaten_id', dataPribadi.kabupaten_id);
+    if (dataPribadi.link_twibbon instanceof File) {
+      formData.append('link_twibbon', dataPribadi.link_twibbon);
+    }
+
+    // Data Sekolah
+    if (dataSekolah.jenjang) formData.append('jenjang', dataSekolah.jenjang);
+    if (dataSekolah.kelas) formData.append('kelas', dataSekolah.kelas);
+    if (dataSekolah.asal_sekolah) formData.append('asal_sekolah', dataSekolah.asal_sekolah);
+    if (dataSekolah.guru) formData.append('guru', dataSekolah.guru);
+    if (dataSekolah.wa_guru) formData.append('wa_guru', dataSekolah.wa_guru);
+    if (dataSekolah.email_guru) formData.append('email_guru', dataSekolah.email_guru);
+
+    try {
+      console.log("Isi FormData:");
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+
+      const response = await fetch(`${api.URL_API}/api/participants`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert('Onboarding berhasil!');
+        // navigate('/dashboard/user');
+      } else {
+        alert('Onboarding gagal! Silakan periksa data Anda.');
+        console.error('Server response:', data);
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      alert('Terjadi kesalahan jaringan. Silakan coba lagi.');
+    }
+  };
+
+
   const renderForm = () => {
+    
     if (step === 1) {
       return (
         <motion.div 
@@ -66,8 +132,8 @@ function Onboarding() {
               <input
                 type="text"
                 placeholder="Nama Lengkap"
-                value={dataPribadi.nama}
-                onChange={(e) => setDataPribadi({ ...dataPribadi, nama: e.target.value })}
+                value={dataPribadi.name}
+                onChange={(e) => setDataPribadi({ ...dataPribadi, name: e.target.value })}
                 className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none"
               />
             </div>
@@ -95,17 +161,6 @@ function Onboarding() {
             </div>
 
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-              <input
-                type="password"
-                placeholder="Password"
-                value={dataPribadi.password}
-                onChange={(e) => setDataPribadi({ ...dataPribadi, password: e.target.value })}
-                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none"
-              />
-            </div>
-
-            <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
               <input
                 type="text"
@@ -119,38 +174,58 @@ function Onboarding() {
             <div className="col-span-1">
               <label className="block text-sm font-medium text-gray-700 mb-2">Provinsi</label>
               <select
-                value={dataPribadi.provinsi} 
-                onChange={(e) => setDataPribadi({ ...dataPribadi, provinsi: e.target.value })}
-                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none">
-                  <option>Provinsi</option>
-                  <option>Jawa Barat</option>
-                  <option>Jawa Tengah</option>
-                  <option>Jawa Timur</option>
+                value={dataPribadi.provinsi_id}
+                name="provinsi_id"
+                onChange={(e) => {
+                  const selectedValue = e.target.value;
+                  setDataPribadi({ ...dataPribadi, provinsi_id: selectedValue });
+                  setSelectedProvinsi(provinsi.find((item) => item.id === selectedValue)?.name || '');
+
+                  if (selectedValue) {
+                    getKota(selectedValue);
+                  }
+                }}
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none"
+              >
+                <option value="">Pilih Provinsi</option>
+                {provinsi.map((provinsi) => (
+                  <option key={provinsi.id} value={provinsi.id}>
+                    {provinsi.name}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Kota / Kab.</label>
-              <select 
-                value={dataPribadi.kotaKab}
-                onChange={(e) => setDataPribadi({ ...dataPribadi, kotaKab: e.target.value })}
-                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none">
-                  <option>Kota / Kab.</option>
-                  <option>Bandung</option>
-                  <option>Jakarta</option>
-                  <option>Surabaya</option>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Kota/Kabupaten</label>
+              <select
+                value={dataPribadi.kabupaten_id}
+                name="kabupaten_id"
+                onChange={(e) => {
+                  const selectedValue = e.target.value;
+                  setDataPribadi({ ...dataPribadi, kabupaten_id: selectedValue });
+                  setSelectedKota(kota.find((item) => item.id === selectedValue)?.name || '');
+                }}
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none"
+              >
+                <option value="">Pilih Kota/Kabupaten</option>
+                {kota.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Pilih Jenis Lomba</label>
               <select 
-                value={dataPribadi.jenisLomba}
-                onChange={(e) => setDataPribadi({ ...dataPribadi, jenisLomba: e.target.value })}
+                value={dataPribadi.jenis_lomba}
+                onChange={(e) => setDataPribadi({ ...dataPribadi, jenis_lomba: e.target.value })}
                 className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none">
-                <option>Pilih Jenis Lomba</option>
-                <option>KTI</option>
-                <option>Olimpiade</option>
+                <option value="">Pilih Jenis Lomba</option>
+                <option value="science-competition">Science Competition</option>
+                <option value="science-writing-competition">Science Writing Competition</option>
               </select>
             </div>
           </div>
@@ -178,17 +253,18 @@ function Onboarding() {
           <h2 className="text-2xl font-bold mb-6 text-purple-800 text-center">Data Sekolah</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className='col-span-1'>
-              <label className='block text-sm font-medium text-gray-700 mb-2'>Jenjang</label>
+            <div className="col-span-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Jenjang</label>
               <select 
+                name="jenjang"
                 value={dataSekolah.jenjang}
                 onChange={(e) => setDataSekolah({ ...dataSekolah, jenjang: e.target.value })}
-                className='border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none'>
-                <option>Jenjang</option>
-                <option>SMA</option>
-                <option>SMK</option>
-                <option>SMP</option>
-                <option>SD</option>
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none">
+                <option value="">Pilih Jenjang</option>
+                <option value="sd">SD</option>
+                <option value="smp">SMP</option>
+                <option value="sma">SMA</option>
+                <option value="mahasiswa/i">SMK</option>
               </select>
             </div>
             
@@ -203,13 +279,13 @@ function Onboarding() {
               />
             </div>
             
-             <div className='col-span-2'>
+             <div className='col-span-1'>
               <label className='block text-sm font-medium text-gray-700 mb-2'>Asal Sekolah</label>
               <input
                 type='text'
                 placeholder='Asal Sekolah'
-                value={dataSekolah.asalSekolah}
-                onChange={(e) => setDataSekolah({ ...dataSekolah, asalSekolah: e.target.value })}
+                value={dataSekolah.asal_sekolah}
+                onChange={(e) => setDataSekolah({ ...dataSekolah, asal_sekolah: e.target.value })}
                 className='border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none'
               />
             </div>
@@ -230,11 +306,22 @@ function Onboarding() {
               <input
                 type='text'
                 placeholder='WhattsApp Guru Pendamping'
-                value={dataSekolah.waGuru}
-                onChange={(e) => setDataSekolah({ ...dataSekolah, waGuru: e.target.value })}
+                value={dataSekolah.wa_guru}
+                onChange={(e) => setDataSekolah({ ...dataSekolah, wa_guru: e.target.value })}
                 className='border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none'
               />
             </div> 
+
+            <div className='col-span-1'>
+              <label className='block text-sm font-medium text-gray-700 mb-2'>Email Guru Pendamping (Opsional)</label>
+              <input
+                type='email'
+                placeholder='Email Guru Pendamping'
+                value={dataSekolah.email_guru}
+                onChange={(e) => setDataSekolah({ ...dataSekolah, email_guru: e.target.value })}
+                className='border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none'
+              />
+            </div>
           </div>
           
           <div className="mt-8 flex justify-between">
@@ -314,6 +401,8 @@ function Onboarding() {
                 </svg>
                 <p className="text-sm text-gray-500 mb-4 text-center">Unggah screenshot postingan Instagram Anda</p>
                 <input
+                  name='link_twibbon'
+                  onChange={(e) => setDataPribadi({ ...dataPribadi, link_twibbon: e.target.files[0] })}
                   type="file"
                   accept="image/*"
                   className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
@@ -366,7 +455,7 @@ function Onboarding() {
               <div className="space-y-3 text-gray-700">
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Nama</span>
-                  <span className="col-span-2">{dataPribadi.nama || ':'}</span>
+                  <span className="col-span-2">{dataPribadi.name || ':'}</span>
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Email</span>
@@ -382,15 +471,15 @@ function Onboarding() {
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Provinsi</span>
-                  <span className="col-span-2">{dataPribadi.provinsi || ':'}</span>
+                  <span className="col-span-2">{selectedProvinsi || ':'}</span>
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Kota/Kab</span>
-                  <span className="col-span-2">{dataPribadi.kotaKab || ':'}</span>
+                  <span className="col-span-2">{selectedKota || ':'}</span>
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Jenis Lomba</span>
-                  <span className="col-span-2">{dataPribadi.jenisLomba || ':'}</span>
+                  <span className="col-span-2">{dataPribadi.jenis_lomba || ':'}</span>
                 </div>
               </div>
             </div>
@@ -408,7 +497,7 @@ function Onboarding() {
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Asal Sekolah</span>
-                  <span className="col-span-2">{dataSekolah.asalSekolah || ':'}</span>
+                  <span className="col-span-2">{dataSekolah.asal_sekolah || ':'}</span>
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Guru Pendamping</span>
@@ -416,7 +505,11 @@ function Onboarding() {
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">WhatsApp Guru</span>
-                  <span className="col-span-2">{dataSekolah.waGuru || ':'}</span>
+                  <span className="col-span-2">{dataSekolah.wa_guru || ':'}</span>
+                </div>
+                <div className='grid grid-cols-3'>
+                  <span className="font-medium">Email Guru</span>
+                  <span className="col-span-2">{dataSekolah.email_guru || ':'}</span>
                 </div>
               </div>
             </div>
@@ -431,10 +524,10 @@ function Onboarding() {
             </button>
             
             <button
-              onClick={() => navigate('/dashboard/pending')}
+              onClick={() => kirimData()}
               className="bg-purple-700 hover:bg-purple-800 text-white py-3 px-10 rounded-lg font-semibold shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
             >
-              Kirim Pendaftaran
+              Kirim Data Onboarding
             </button>
           </div>
         </motion.div>
@@ -442,26 +535,99 @@ function Onboarding() {
     }
   };
 
+  const getProvinsi = async () => {
+    const response = await fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')
+    const data = await response.json()
+    setProvinsi(data);
+    console.log('provinsi', data);
+  }
+
+  useEffect(() => {
+    getProvinsi();
+    console.log('provinsi', provinsi);
+  }, []);
+
+  const getKota = async (provinsiId) => {
+    const response = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`)
+    const data = await response.json()
+    setKota(data);
+    console.log('kota', data);
+  }
+
+  useEffect(() => {
+    const selectedProv = provinsi.find((item) => item.name === dataPribadi.provinsi_id);
+    if (selectedProv) {
+      getKota(selectedProv.id);
+    }
+  }, [dataPribadi.provinsi]);
+
+  const getUser = async () => {
+    const response = await fetch(`${api.URL_API}/api/users/byAuth`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      credentials: 'include'
+    });
+    const data = await response.json();
+    setData(data);
+
+    if(data.status === 'pending') {
+      alert('Anda sudah melakukan onboarding, silakan tunggu konfirmasi dari panitia');
+      navigate('/dashboard/pending');
+    } else if (data.status === 'success') {
+      alert('Anda sudah melakukan onboarding, silakan tunggu konfirmasi dari panitia');
+      navigate('/dashboard/user');
+    }
+
+    setDataPribadi({
+      ...dataPribadi,
+      name: data.name,
+      email: data.email,
+      nisn: data.nisn,
+      password: data.password,
+      alamat: data.alamat,
+      provinsi_id: data.provinsi,
+      kabupaten_id: data.kota,
+      jenis_lomba: data.jenis_lomba
+    });
+
+    setDataSekolah({
+      ...dataSekolah,
+      jenjang: data.jenjang,
+      asalSekolah: data.asalSekolah,
+      kelas: data.kelas,
+      guru: data.guru,
+      wa_guru: data.wa_guru,
+      email_guru: data.email_guru
+    });
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-purple-50 to-purple-100">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900">
       {/* Fixed Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white py-3 px-6 shadow-md z-50">
+      {/* <header className="fixed top-0 left-0 right-0 bg-white py-3 px-6 shadow-md z-50">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <img src='/src/assets/hmpti.png' alt="Logo" className="h-14 mr-6" />
           </div>
           <div className="flex-grow flex items-center justify-center">
-            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-700 to-purple-900">Registrasi Peserta</h1>
+            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-700 to-purple-900">Onboarding Peserta</h1>
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* Main Content with padding to account for fixed header */}
       <div className="flex flex-col md:flex-row flex-grow md:container mx-auto mt-24 mb-8">
         {/* Steps Sidebar */}
         <div className="md:w-1/4 p-6 bg-white rounded-2xl shadow-lg mx-4 md:mx-0 md:mr-8 mb-6 md:mb-0 md:sticky md:top-28 md:self-start">
           <h2 className="text-xl font-bold mb-6 text-purple-800 border-b border-purple-100 pb-3">
-            Tahapan Pendaftaran
+            Tahapan Onboarding
           </h2>
           
           {steps.map((item, index) => (
@@ -519,11 +685,9 @@ function Onboarding() {
       </div>
       
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-4 text-center text-sm">
-        © {new Date().getFullYear()} Universitas Negeri Surabaya. All Rights Reserved.
-      </footer>
+     
     </div>
   );
 }
 
-export default Onboarding; 
+export default Onboarding;
