@@ -41,7 +41,7 @@ function User() {
               <Link to="/dashboard/user/jurnal" className="text-purple-900 hover:text-purple-600 font-medium transition duration-300 ease-in-out text-sm lg:text-base">Upload Jurnal</Link>
               <Link to="/dashboard/user/bantuan" className="text-purple-900 hover:text-purple-600 font-medium transition duration-300 ease-in-out text-sm lg:text-base">Bantuan</Link>
               <Link to="/dashboard/user/cbt" className="text-purple-900 hover:text-purple-600 font-medium text-sm lg:text-base">CBT</Link>
-              <Link to="/" className="bg-purple-900 text-white px-3 py-1 lg:px-4 lg:py-2 rounded-md hover:bg-purple-700 transition duration-300 ease-in-out text-sm lg:text-base">Logout</Link>
+              <Link onClick={() => {localStorage.clear(); window.location.href = "/"}} className="bg-purple-900 text-white px-3 py-1 lg:px-4 lg:py-2 rounded-md hover:bg-purple-700 transition duration-300 ease-in-out text-sm lg:text-base">Logout</Link>
             </div>
             <div className="md:hidden flex items-center">
               <button 

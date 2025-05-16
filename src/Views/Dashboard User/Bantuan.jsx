@@ -202,23 +202,6 @@ function Bantuan() {
                   </div>
                 </motion.div>
                 
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.7, duration: 0.6 }}
-                  className="flex items-center space-x-4"
-                >
-                  <div className="bg-purple-100 p-3 rounded-full">
-                    <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">Email</p>
-                    <p className="text-gray-600">gisunesa2025@unesa.ac.id</p>
-                  </div>
-                </motion.div>
-                
                 <motion.a
                   href="https://wa.me/6281585616615"
                   target="_blank"
@@ -245,85 +228,35 @@ function Bantuan() {
                   </motion.svg>
                   <span>Hubungi via WhatsApp</span>
                 </motion.a>
-                
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.9, duration: 0.6 }}
-                  className="text-center text-sm text-gray-500 mt-4"
-                >
-                  Kami akan merespon pesan Anda secepatnya
-                </motion.p>
               </div>
             </motion.div>
-            
-            {/* FAQ Section */}
+
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden"
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-2xl shadow-xl p-6 md:p-8"
             >
-              <div className="bg-gradient-to-r from-indigo-600 to-blue-600 p-6">
-                <h2 className="text-2xl font-bold text-white">Pertanyaan Umum</h2>
-                <p className="text-indigo-100 mt-2">Temukan jawaban untuk pertanyaan yang sering diajukan</p>
-              </div>
-              
-              <div className="p-6 md:p-8 space-y-4">
-                {faqItems.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6 + (index * 0.1), duration: 0.6 }}
-                    className="border-b border-gray-200 pb-4 last:border-b-0"
-                  >
-                    <h3 className="text-lg font-medium text-gray-800">{item.question}</h3>
-                    <p className="mt-2 text-gray-600">{item.answer}</p>
-                  </motion.div>
-                ))}
+              <div className="max-w-4xl mx-auto text-center h-full">
+                <h2 className="text-xl md:text-2xl font-bold text-white">Sumber Informasi Tambahan</h2>
+                <p className="mt-2 text-purple-100">
+                  Temukan panduan lengkap tentang kompetisi Gebyar Ilmiah Sains
+                </p>
                 
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.9, duration: 0.6 }}
-                  className="mt-6 pt-4"
-                >
-                  <p className="text-center font-medium text-gray-800">Belum menemukan jawaban?</p>
-                  <p className="text-center text-gray-600 mt-1">
-                    Jangan ragu untuk menghubungi tim kami menggunakan kontak di sebelah
-                  </p>
-                </motion.div>
+                <div className="items-center justify-center mt-6 h-full">
+                  <a 
+                    href="https://unesa.me/BukuPanduan13thGIS" 
+                    className="bg-white/10 backdrop-blur-sm hover:bg-white/20 transition duration-300 rounded-xl p-5 text-white flex flex-col items-center"
+                  >
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span className="mt-3 font-medium">Buku Panduan</span>
+                  </a>
+                </div>
               </div>
             </motion.div>
           </div>
-          
-          {/* Additional Resources */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-12 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-2xl shadow-xl p-6 md:p-8"
-          >
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-xl md:text-2xl font-bold text-white">Sumber Informasi Tambahan</h2>
-              <p className="mt-2 text-purple-100">
-                Temukan panduan lengkap tentang kompetisi Gebyar Ilmiah Sains
-              </p>
-              
-              <div className="items-center justify-center mt-6">
-                <a 
-                  href="https://unesa.me/BukuPanduan13thGIS" 
-                  className="bg-white/10 backdrop-blur-sm hover:bg-white/20 transition duration-300 rounded-xl p-5 text-white flex flex-col items-center"
-                >
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                  <span className="mt-3 font-medium">Buku Panduan</span>
-                </a>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </div>
     </div>

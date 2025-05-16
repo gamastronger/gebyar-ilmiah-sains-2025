@@ -14,20 +14,22 @@ function Onboarding() {
   const [kota, setKota] = useState([]);
   const [selectedKota, setSelectedKota] = useState([]);
   const [data, setData] = useState({});
+  const [user, setUser] = useState({});
 
   const [dataPribadi, setDataPribadi] = useState({
     name: '',
     email: '',
     nisn: '',
+    nomor_wa: '',
     alamat: '',
     provinsi_id: '',
     kabupaten_id: '',
-    no_whatsapp: '',
     link_twibbon: null
   });
 
   const [dataSekolah, setDataSekolah] = useState({
     asal_sekolah: '',
+    kelas: '',
     guru: '',
     wa_guru: '',
     email_guru: ''
@@ -65,7 +67,7 @@ function Onboarding() {
     if (dataPribadi.email) formData.append('email', dataPribadi.email);
     if (dataPribadi.nisn) formData.append('nisn', dataPribadi.nisn);
     if (dataPribadi.alamat) formData.append('alamat', dataPribadi.alamat);
-    if (dataPribadi.no_whatsapp) formData.append('jenis_lomba', dataPribadi.no_whatsapp);
+    if (dataPribadi.nomor_wa) formData.append('nomor_wa', dataPribadi.nomor_wa);
     if (dataPribadi.provinsi_id) formData.append('provinsi_id', dataPribadi.provinsi_id);
     if (dataPribadi.kabupaten_id) formData.append('kabupaten_id', dataPribadi.kabupaten_id);
     if (dataPribadi.link_twibbon instanceof File) {
@@ -74,6 +76,7 @@ function Onboarding() {
 
     // Data Sekolah
     if (dataSekolah.asal_sekolah) formData.append('asal_sekolah', dataSekolah.asal_sekolah);
+    if (dataSekolah.kelas) formData.append('asal_sekolah', dataSekolah.kelas);
     if (dataSekolah.guru) formData.append('guru', dataSekolah.guru);
     if (dataSekolah.wa_guru) formData.append('wa_guru', dataSekolah.wa_guru);
     if (dataSekolah.email_guru) formData.append('email_guru', dataSekolah.email_guru);
@@ -95,8 +98,32 @@ function Onboarding() {
 
       const data = await response.json();
       if (response.ok) {
-        alert('Onboarding berhasil!');
-        // navigate('/dashboard/user');
+        try {
+          const invoiceResponse = await fetch(`${api.URL_API}/api/invoices`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({
+              user_id: data.id, // Assuming `data.id` contains the user ID
+              jenis_lomba: user.jenis_lomba,
+            }),
+          });
+
+          if (invoiceResponse.ok) {
+            alert('Onboarding berhasil dan invoice berhasil dibuat!');
+            navigate('/dashboard/user');
+          } else {
+            const invoiceError = await invoiceResponse.json();
+            alert('Onboarding berhasil, tetapi gagal membuat invoice.');
+            console.error('Invoice error:', invoiceError);
+          }
+        } catch (invoiceError) {
+          console.error('Invoice fetch error:', invoiceError);
+          alert('Onboarding berhasil, tetapi terjadi kesalahan saat membuat invoice.');
+        }
       } else {
         alert('Onboarding gagal! Silakan periksa data Anda.');
         console.error('Server response:', data);
@@ -160,8 +187,8 @@ function Onboarding() {
               <input
                 type="text"
                 placeholder="No WhatsApp"
-                value={dataPribadi.no_whatsapp}
-                onChange={(e) => setDataPribadi({ ...dataPribadi, no_whatsapp: e.target.value })}
+                value={dataPribadi.nomor_wa}
+                onChange={(e) => setDataPribadi({ ...dataPribadi, nomor_wa: e.target.value })}
                 className="border border-gray-300 rounded-lg px-3 py-2 sm:px-4 sm:py-2.5 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none text-sm sm:text-base"
               />
             </div>
@@ -248,15 +275,28 @@ function Onboarding() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              <div className='col-span-1'>
-              <label className='block text-sm font-medium text-gray-700 mb-2'>Asal Sekolah</label>
+              <label className='block text-sm font-medium text-gray-700 mb-2'>Instansi</label>
               <input
                 type='text'
-                placeholder='Asal Sekolah'
+                placeholder='Instansi'
                 value={dataSekolah.asal_sekolah}
                 onChange={(e) => setDataSekolah({ ...dataSekolah, asal_sekolah: e.target.value })}
                 className='border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none'
               />
             </div>
+
+            {user.jenjang !== "mahasiswa" && (
+            <div className='col-span-1'>
+              <label className='block text-sm font-medium text-gray-700 mb-2'>Kelas</label>
+              <input
+                type='text'
+                placeholder='Kelas'
+                value={dataSekolah.kelas}
+                onChange={(e) => setDataSekolah({ ...dataSekolah, kelas: e.target.value })}
+                className='border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none'
+              />
+            </div>
+            )}
             
             <div className='col-span-1'>
               <label className='block text-sm font-medium text-gray-700 mb-2'>Nama Guru Pendamping (Opsional)</label>
@@ -430,12 +470,12 @@ function Onboarding() {
                   <span className="col-span-2">{dataPribadi.email || ':'}</span>
                 </div>
                 <div className="grid grid-cols-3 gap-1 sm:gap-2">
-                  <span className="font-medium">NISN</span>
+                  <span className="font-medium">NISN / NIM</span>
                   <span className="col-span-2">{dataPribadi.nisn || ':'}</span>
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">No WhatsApp</span>
-                  <span className="col-span-2">{dataPribadi.no_whatsapp || ':'}</span>
+                  <span className="col-span-2">{dataPribadi.nomor_wa || ':'}</span>
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Alamat</span>
@@ -459,6 +499,12 @@ function Onboarding() {
                   <span className="font-medium">Asal Sekolah</span>
                   <span className="col-span-2">{dataSekolah.asal_sekolah || ':'}</span>
                 </div>
+                {user.jenjang !== "mahasiswa" && (
+                  <div className="grid grid-cols-3">
+                    <span className="font-medium">Kelas</span>
+                    <span className="col-span-2">{dataSekolah.kelas || ':'}</span>
+                  </div>
+                )}
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Guru Pendamping</span>
                   <span className="col-span-2">{dataSekolah.guru || ':'}</span>
@@ -532,10 +578,11 @@ function Onboarding() {
     });
     const data = await response.json();
     setData(data);
+    setUser(data)
 
     if(data.status === 'pending') {
       alert('Anda sudah melakukan onboarding, silakan tunggu konfirmasi dari panitia');
-      navigate('/dashboard/pending');
+      navigate('/dashboard/user');
     } else if (data.status === 'success') {
       alert('Anda sudah melakukan onboarding, silakan tunggu konfirmasi dari panitia');
       navigate('/dashboard/user');
@@ -550,12 +597,12 @@ function Onboarding() {
       alamat: data.alamat,
       provinsi_id: data.provinsi,
       kabupaten_id: data.kota,
-      no_whatsapp: data.no_whatsapp,
+      nomor_wa: data.nomor_wa,
     });
 
     setDataSekolah({
       ...dataSekolah,
-      asalSekolah: data.asalSekolah,
+      asal_sekolah: data.asal_sekolah,
       guru: data.guru,
       wa_guru: data.wa_guru,
       email_guru: data.email_guru
