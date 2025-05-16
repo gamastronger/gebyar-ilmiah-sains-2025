@@ -20,6 +20,7 @@ import Bantuan from "./Views/Dashboard User/Bantuan";
 import Invoice from "./Views/Dashboard User/Invoice";
 import CbtUser from "./Views/Dashboard User/CbtUser";
 import Kontak from "./Views/Kontak";
+import Jurnal from "./Views/Dashboard User/Jurnal";
 function App() {
   const isAuthenticated = localStorage.getItem('token') !== null;
   const userRole = localStorage.getItem('role'); // Ambil data user dari localStorage
@@ -106,6 +107,19 @@ function App() {
           />
         }
       />
+
+      <Route
+        path="/dashboard/user/jurnal"
+        element={
+          <PrivateRoute
+            isAuthenticated={isAuthenticated}
+            allowedRoles={["peserta"]}
+            userRole={userRole}
+            element={<Jurnal />}
+          />
+        }
+      />
+
       <Route
         path="/dashboard/user/cbt"
         element={

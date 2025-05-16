@@ -111,13 +111,13 @@ const Navbar = () => {
             ) : (
               <>
                 <Link
-                  to="/masuk"
+                  to="/auth/masuk"
                   className="px-4 py-2 hover:bg-white/10 rounded-lg transition duration-300"
                 >
                   Masuk
                 </Link>
                 <Link
-                  to="/daftar"
+                  to="/auth/daftar"
                   className="px-4 py-2 bg-[#A78BFA] hover:bg-[#9061F9] rounded-lg transition duration-300"
                 >
                   Daftar

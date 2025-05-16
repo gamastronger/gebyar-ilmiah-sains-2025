@@ -173,7 +173,7 @@ const EnhancedPosterSection = () => {
           <img
             src={poster}
             alt="GIS Unesa Poster"
-            className="w-full h-[500px] object-contain rounded-lg"
+            className="w-full h-[250px] sm:h-[350px] md:h-[500px] object-contain rounded-lg"
           />
         </TiltCard>
 
@@ -494,11 +494,11 @@ const Deskripsi = () => {
               title: "Pendaftaran Gelombang 2 (SC)",
               description: "Pendaftaran SC gelombang 2 dan pengumpulan karya SWC masih dibuka"
             },
-            {
-              date: "25 – 31 Agustus 2025",
-              title: "Perpanjangan Pendaftaran (SC & SWC)",
-              description: "Periode perpanjangan pendaftaran SC dan pengumpulan karya SWC"
-            },
+            // {
+            //   date: "25 – 31 Agustus 2025",
+            //   title: "Perpanjangan Pendaftaran (SC & SWC)",
+            //   description: "Periode perpanjangan pendaftaran SC dan pengumpulan karya SWC"
+            // },
             {
               date: "06 September 2025",
               title: "Technical Meeting Penyisihan SC",
@@ -606,8 +606,8 @@ const Deskripsi = () => {
                 </svg>
               ),
               contacts: [
-                { name: "Nisa", role: "Koordinator", phone: "+f" },
-                { name: "Dzaky", role: "Wakil Koordinator", phone: "+62087758375435" },
+                { name: "Nisa", role: "Koordinator", phone: "+6287876440866" },
+                { name: "Zaky", role: "Wakil Koordinator", phone: "+62087758375435" },
               ],
             },
           ].map((section, index) => (
@@ -789,8 +789,8 @@ const Deskripsi = () => {
   </div>
 </motion.div>
 
-      {/* Sponsors */}
-      {/* <motion.div
+      {/* Sponsors
+      <motion.div
         id="sponsors"
         className="max-w-screen-xl mx-auto"
         initial={{ opacity: 0, y: 30 }}

@@ -1,6 +1,6 @@
 // src/configs/api.js
 const api = {
-  URL_API: 'https://e17c-36-81-163-66.ngrok-free.app',
+  URL_API: 'https://coba-dawwas.karyavisual.com',
 };
 
 export default api;

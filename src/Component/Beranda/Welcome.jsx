@@ -158,7 +158,7 @@ const Welcome = () => {
     "13th Gebyar Ilmiah Sains Tingkat Nasional 2025 Jenjang SD/Sederajat, SMP/Sederajat, SMA/SMK/Sederajat, dan Mahasiswa/i yang terdiri dari Science Competition dan Science Writing Competition";
 
   return (
-    <div ref={sectionRef}>
+    <div ref={sectionRef} className="overflow-x-hidden">
       <motion.section
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${bgwelcome})`,
@@ -200,7 +200,7 @@ const Welcome = () => {
           </motion.div>
 
           <motion.h1
-            className="text-5xl lg:text-8xl text-white font-bold mb-2 leading-tight flex flex-wrap justify-center"
+            className="text-3xl sm:text-5xl lg:text-8xl text-white font-bold mb-2 leading-tight flex flex-wrap justify-center"
             variants={wordContainer}
             initial="hidden"
             animate="visible"

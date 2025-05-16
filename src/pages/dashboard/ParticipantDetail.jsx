@@ -42,7 +42,14 @@ import { participantsData } from "../../data/participantsData";
 import api from "../../configs/api";
 
 async function getParticipantById(id) {
-  const res = await fetch(`${api.URL_API}/participants/${id}`);
+  const res = await fetch(`${api.URL_API}/api/users/byAuth`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
   if (!res.ok) throw new Error("Gagal mengambil data peserta");
   return res.json();
 }
@@ -74,14 +81,7 @@ export default function ParticipantDetail() {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("participant");
-  const [fileUploads, setFileUploads] = useState([
-    { id: 1, name: "Kartu Pelajar", status: "completed", progress: 100, link: "#" },
-    { id: 2, name: "Form Pendaftaran", status: "completed", progress: 100, link: "#" },
-    { id: 3, name: "Abstract KTI", status: "pending", progress: 0, link: null },
-    { id: 4, name: "Bukti Pembayaran", status: "progress", progress: 65, link: null },
-    { id: 5, name: "Bukti Upload Twibbon", status: "pending", progress: 0, link: null },
-    { id: 6, name: "Bukti Transaksi", status: "pending", progress: 0, link: null },
-  ]);
+  const [fileUploads, setFileUploads] = useState([]);
   const [scoreData, setScoreData] = useState({
     originalitas: 85,
     metodologi: 78,
@@ -147,6 +147,7 @@ export default function ParticipantDetail() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
+        // Fetch data peserta
         const data = await getParticipantById(id);
         if (data) {
           setFormData({
@@ -161,8 +162,20 @@ export default function ParticipantDetail() {
             jenisLomba: data.jenisLomba || "",
           });
         }
+        // Fetch dokumen peserta
+        const res = await fetch(`${api.URL_API}/participants/${id}/files`, {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (res.ok) {
+          const files = await res.json();
+          setFileUploads(files);
+        } else {
+          setFileUploads([]);
+        }
       } catch (error) {
-        Swal.fire("Gagal", "Gagal mengambil data peserta.", "error");
+        Swal.fire("Gagal", "Gagal mengambil data peserta atau dokumen.", "error");
       }
       setIsLoading(false);
     };
@@ -296,38 +309,43 @@ export default function ParticipantDetail() {
     });
   };
 
-  const handleFileUpload = (fileId) => {
-    // Simulate file upload process
-    const updatedFiles = fileUploads.map(file => {
-      if (file.id === fileId && file.status !== "completed") {
-        return { ...file, status: "progress", progress: 1 };
-      }
-      return file;
-    });
-    
-    setFileUploads(updatedFiles);
-    
-    // Simulate upload progress
-    const fileToUpdate = updatedFiles.find(file => file.id === fileId);
-    if (fileToUpdate && fileToUpdate.status === "progress") {
-      const interval = setInterval(() => {
-        setFileUploads(prevFiles => {
-          const newFiles = prevFiles.map(file => {
-            if (file.id === fileId) {
-              const newProgress = file.progress + 5;
-              if (newProgress >= 100) {
-                clearInterval(interval);
-                return { ...file, progress: 100, status: "completed", link: "#" };
-              }
-              return { ...file, progress: newProgress };
-            }
-            return file;
-          });
-          return newFiles;
-        });
-      }, 150);
-    }
-  };
+  const FileUploadCard = ({ file }) => (
+    <div className="bg-white border border-gray-200 rounded-lg p-4 mb-3">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center">
+          <div className="p-2 rounded-full bg-green-100">
+            <FiCheckCircle className="text-green-500" />
+          </div>
+          <div className="ml-3">
+            <p className="font-medium text-gray-800 text-sm">{file.name}</p>
+            <p className="text-xs text-gray-500">
+              {file.url ? "Berkas telah diunggah" : "Berkas belum diunggah"}
+            </p>
+          </div>
+        </div>
+        {file.url && (
+          <a
+            href={file.url}
+            download
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-full transition-colors"
+          >
+            <FiDownload size={16} />
+          </a>
+        )}
+      </div>
+      {file.url && file.type && file.type.startsWith("image") && (
+        <div className="mt-2">
+          <img
+            src={file.url}
+            alt={file.name}
+            className="max-h-40 rounded-lg border border-gray-100 object-contain"
+          />
+        </div>
+      )}
+    </div>
+  );
 
   const SectionButton = ({ icon, title, active, onClick }) => (
     <button
@@ -364,59 +382,6 @@ export default function ParticipantDetail() {
       />
       {error && (
         <p className="text-red-500 text-xs mt-1">{error}</p>
-      )}
-    </div>
-  );
-
-  const FileUploadCard = ({ file, onUpload }) => (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 mb-3">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center">
-          <div className={`p-2 rounded-full ${file.status === "completed" ? "bg-green-100" : file.status === "progress" ? "bg-blue-100" : "bg-gray-100"}`}>
-            {file.status === "completed" ? (
-              <FiCheckCircle className="text-green-500" />
-            ) : file.status === "progress" ? (
-              <FiClock className="text-blue-500" />
-            ) : (
-              <FiFile className="text-gray-500" />
-            )}
-          </div>
-          <div className="ml-3">
-            <p className="font-medium text-gray-800 text-sm">{file.name}</p>
-            <p className="text-xs text-gray-500">
-              {file.status === "completed" 
-                ? "Berkas telah diunggah" 
-                : file.status === "progress" 
-                ? `Mengunggah (${file.progress}%)` 
-                : "Berkas belum diunggah"}
-            </p>
-          </div>
-        </div>
-        
-        {file.status === "completed" ? (
-          <a 
-            href={file.link} 
-            className="p-2 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-full transition-colors"
-          >
-            <FiDownload size={16} />
-          </a>
-        ) : (
-          <button 
-            className="p-2 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-full transition-colors"
-            onClick={() => onUpload(file.id)}
-          >
-            <FiUpload size={16} />
-          </button>
-        )}
-      </div>
-      
-      {file.status === "progress" && (
-        <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
-          <div 
-            className="bg-gradient-to-r from-purple-600 to-pink-500 h-1.5 rounded-full transition-all duration-300" 
-            style={{ width: `${file.progress}%` }}
-          ></div>
-        </div>
       )}
     </div>
   );
@@ -664,9 +629,15 @@ export default function ParticipantDetail() {
                       </div>
                       <div className="p-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          {fileUploads.map((file) => (
-                            <FileUploadCard key={file.id} file={file} onUpload={handleFileUpload} />
-                          ))}
+                          {fileUploads.length > 0 ? (
+                            fileUploads.map((file) => (
+                              <FileUploadCard key={file.id} file={file} />
+                            ))
+                          ) : (
+                            <div className="col-span-2 text-center text-gray-400">
+                              Belum ada dokumen yang diunggah.
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
