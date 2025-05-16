@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiCalendar, FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
-import foto4 from '../../assets/gimage.jpeg';
+import foto4 from '../../assets/postersc.jpg';
 
 const DeskripsiLomba = () => {
   const fadeUp = {
@@ -155,7 +155,7 @@ const DeskripsiLomba = () => {
                   
                   {/* Price tag */}
                   <motion.div 
-                    className="absolute -bottom-6 right-0 bg-gradient-to-r from-purple-600 to-purple-800 px-6 py-3 rounded-lg shadow-xl"
+                    className="absolute -bottom-23 right-0 bg-gradient-to-r from-purple-600 to-purple-800 px-6 py-3 rounded-lg shadow-xl"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.8, duration: 0.5 }}

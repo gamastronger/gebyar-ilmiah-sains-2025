@@ -167,7 +167,11 @@ tiktok: (
               Tertarik untuk berpartisipasi atau menjadi sponsor? Hubungi kami untuk informasi lebih lanjut tentang GIS Unesa 2025.
             </p>
             <div className="space-y-4 pt-2">
-              <Link to="wa.me/6283112080715" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://wa.me/6283112080715"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <button className="w-full relative overflow-hidden group bg-gradient-to-r from-purple-600 to-purple-800 text-white font-medium py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-purple-900/40">
                   <span className="relative z-10 flex items-center justify-center">
                     Get in Touch
@@ -177,7 +181,7 @@ tiktok: (
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                 </button>
-              </Link>
+              </a>
               
               
             </div>
@@ -200,9 +204,9 @@ tiktok: (
           {/* Social Media with improved hover effects */}
           <div className="flex gap-4 items-center">
             {[
-              { name: "Instagram", icon: socialIcons.instagram, url: "https://instagram.com/gisunesa" },
-              { name: "Instagram", icon: socialIcons.instagram, url: "https://instagram.com/hmpipaunesa" },
-              { name: "Tiktok", icon: socialIcons.tiktok, url: "https://www.tiktok.com/@gisunesa" },
+              { name: "Instagram", icon: socialIcons.instagram, url: "https://instagram.com/gisfmipaunesa" },
+              { name: "Instagram", icon: socialIcons.instagram, url: "https://instagram.com/hmppipaunesa" },
+              { name: "Tiktok", icon: socialIcons.tiktok, url: "https://www.tiktok.com/@gisfmipaunesa" },
             ].map((social, index) => (
               <a
                 key={index}
