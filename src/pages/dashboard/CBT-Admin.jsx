@@ -152,10 +152,10 @@ export function Layanan() {
         <div className="absolute top-0 left-0 right-0 bottom-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDU2MCA1NjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSIwIiBjeT0iMCIgcj0iMSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGdyYWRpZW50VHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjgwIDI4MCkgc2NhbGUoMjgwKSI+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNmZmYiIHN0b3Atb3BhY2l0eT0iMC4xIi8+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNmZmYiIHN0b3Atb3BhY2l0eT0iMCIgb2Zmc2V0PSIxIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iNTYwIiBoZWlnaHQ9IjU2MCIgZmlsbD0idXJsKCNnKSIvPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9IjAuMiIgc3Ryb2tlLXdpZHRoPSIyIj4KICAgIDxjaXJjbGUgY3g9IjI4MCIgY3k9IjI4MCIgcj0iMTAwIi8+CiAgICA8Y2lyY2xlIGN4PSIyODAiIGN5PSIyODAiIHI9IjE3NSIvPgogICAgPGNpcmNsZSBjeD0iMjgwIiBjeT0iMjgwIiByPSIyNTAiLz4KICA8L2c+Cjwvc3ZnPg==')] bg-no-repeat bg-center opacity-20"></div>
         <div className="relative z-10">
           <Typography variant="h4" className="font-bold text-white mb-2">
-            Daftar Peserta CBT
+            Daftar Peserta Science Competition
           </Typography>
           <Typography variant="paragraph" className="text-purple-100">
-            Manajemen peserta Tryout berbasis CBT {filteredParticipants.length} peserta terdaftar
+            Manajemen peserta Science Competition berbasis CBT | {filteredParticipants.length} peserta terdaftar
           </Typography>
         </div>
       </div>

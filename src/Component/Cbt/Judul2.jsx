@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiCalendar, FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
-import foto4 from '../../assets/doc3.jpg';
+import foto4 from '../../assets/gimage.jpeg';
 
 const DeskripsiLomba = () => {
   const fadeUp = {
@@ -21,24 +21,23 @@ const DeskripsiLomba = () => {
   const benefits = [
   {
     icon: <FiAward className="text-yellow-300 text-2xl" />,
-    title: 'Juara I SMA/MA/SMK',
-    description: 'Trophy + Medali + Uang Pembinaan + Merchandise + Sertifikat Silver Ticket',
+    title: 'Juara I',
+    jenjang: 'SD/MI Sederajat dan SMP/MTs Sederajat',
+    description: 'Piala Bergilir Gubernur Jatim + Trophy + Medali + Merchandise + Sertifikat Juara + Uang Pembinaan',
   },
   {
     icon: <FiAward className="text-yellow-300 text-2xl" />,
-    title: 'Juara I Perguruan Tinggi',
-    description: 'Trophy + Medali + Uang Pembinaan + Merchandise + Publikasi Artikel',
+    title: 'Juara II',
+    jenjang: 'SD/MI Sederajat dan SMP/MTs Sederajat',
+    description: 'Trophy + Medali + Merchandise + Sertifikat Juara + Uang Pembinaan',
   },
   {
     icon: <FiAward className="text-gray-300 text-2xl" />,
-    title: 'Juara II',
-    description: 'Trophy + Uang Pembinaan + Merchandise + Sertifikat',
-  },
-  {
-    icon: <FiAward className="text-amber-600 text-2xl" />,
     title: 'Juara III',
-    description: 'Trophy + Uang Pembinaan + Merchandise + Sertifikat',
+    jenjang: 'SD/MI Sederajat dan SMP/MTs Sederajat',
+    description: 'Trophy + Medali + Merchandise + Sertifikat Juara + Uang Pembinaan',
   },
+  
 ];
 
 
@@ -225,28 +224,20 @@ const DeskripsiLomba = () => {
                 <ul className="text-purple-100 space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Mahasiswa aktif S1/D4/D3 dari perguruan tinggi di Indonesia</span>
+                    <span>Peserta tercatat sebagai siswa/I tingkat SD/MI sederajat kelas 4,5 dan 6 serta tingkat SMP/MTs sederajat kelas 7,8 dan 9.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Tim terdiri dari 2-3 mahasiswa dari perguruan tinggi yang sama</span>
+                    <span>Lomba bersifat individu.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Melampirkan scan KTM dan surat keterangan aktif</span>
+                    <span>Lomba dilakukan secara online pada tahap penyisihan, secara offline pada tahap semifinal dan final.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Karya bersifat orisinal dan belum pernah dipublikasikan</span>
+                    <span>Pedoman lomba dapat di unduh di web gisunesa.com</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-400 mt-1">•</span>
-                    <span>Format penulisan sesuai dengan template yang disediakan</span>
-                  </li>
-                  {/* <li className="flex items-start gap-2">
-                    <span className="text-purple-400 mt-1">•</span>
-                    <span>Maksimal 20 halaman (tidak termasuk lampiran)</span>
-                  </li> */}
                 </ul>
               </motion.div>
             </div>
@@ -284,30 +275,31 @@ const DeskripsiLomba = () => {
           </motion.p>
           
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             variants={staggerContainer}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-          >
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                className="bg-gradient-to-br from-purple-800 to-purple-900 rounded-xl p-6 shadow-lg border border-purple-700"
-                variants={fadeUp}
-                whileHover={{ y: -10, boxShadow: '0 20px 25px -5px rgba(124, 58, 237, 0.3)' }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 flex items-center justify-center bg-purple-800 rounded-full mb-4 shadow-inner">
-                    {benefit.icon}
+            >
+              {benefits.map((benefit, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-gradient-to-br from-purple-800 to-purple-900 rounded-xl p-6 shadow-lg border border-purple-700"
+                  variants={fadeUp}
+                  whileHover={{ y: -10, boxShadow: '0 20px 25px -5px rgba(124, 58, 237, 0.3)' }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-16 h-16 flex items-center justify-center bg-purple-800 rounded-full mb-4 shadow-inner">
+                      {benefit.icon}
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-1">{benefit.title}</h3>
+                    <div className="text-purple-300 text-sm mb-2">{benefit.jenjang}</div>
+                    <p className="text-purple-200">{benefit.description}</p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
-                  <p className="text-purple-200">{benefit.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
         </div>
       </motion.section>
       

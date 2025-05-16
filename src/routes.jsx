@@ -40,14 +40,14 @@ export const routes = [
       },
       {
         icon: <Squares2X2Icon {...icon} />,
-        name: "KTI",
-        path: "/KTI-Admin",
+        name: "SWC",
+        path: "/SWC-Admin",
         element: <Portofolio />,
       },
       {
         icon: <ClipboardDocumentCheckIcon {...icon} />,
-        name: "CBT",
-        path: "/CBT-Admin",
+        name: "SC",
+        path: "/SC-Admin",
         element: <Layanan />,
       },
       

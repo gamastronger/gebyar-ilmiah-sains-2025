@@ -182,7 +182,7 @@ const TwibbonGallery = () => {
               
               {/* Tombol/link ke Twibbonize */}
               <a
-                href="https://twibbonize.com/namalinkanda"
+                href="https://twibbo.nz/gisfmipaunesa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ml-4 bg-white text-purple-800 px-6 py-4 rounded-xl font-semibold shadow-lg shadow-purple-900/20 flex items-center space-x-2 hover:bg-purple-100 transition"
@@ -215,7 +215,8 @@ const TwibbonGallery = () => {
               <li>Klik tombol <strong>"Pilih Foto"</strong> atau <strong>"Upload Photo"</strong></li>
               <li>Sesuaikan posisi dan ukuran foto Anda jika diperlukan</li>
               <li>Klik tombol <strong>"Next" / "Selanjutnya"</strong> dan tunggu proses selesai</li>
-              <li>Unduh twibbon hasil edit dan bagikan ke media sosial Anda</li>
+              <li>Unduh twibbon hasil edit dan salin caption</li>
+              <li>bagikan ke media sosial anda</li>
 
             </ol>
             <p className="mt-6 text-purple-300 font-medium flex items-center">
@@ -285,7 +286,7 @@ const TwibbonGallery = () => {
                 Tutup
               </button>
               <a
-                href="https://twibbonize.com/nama-twibbon" // ← ganti dengan link twibbonize kamu
+                href="https://twibbo.nz/gisfmipaunesa" // ← ganti dengan link twibbonize kamu
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 hover:opacity-90 transition"

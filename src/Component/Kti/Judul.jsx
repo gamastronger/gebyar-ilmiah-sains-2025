@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiCalendar, FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
-import foto4 from '../../assets/doc2.jpg';
+import foto4 from '../../assets/gimage.jpeg';
 
 const DeskripsiLomba = () => {
   const fadeUp = {
@@ -19,28 +19,31 @@ const DeskripsiLomba = () => {
   };
 
   const benefits = [
-  {
-    icon: <FiAward className="text-yellow-300 text-2xl" />,
-    title: 'Juara I',
-    description: '-',
-  },
-  {
-    icon: <FiAward className="text-yellow-300 text-2xl" />,
-    title: 'Juara II ',
-    description: '-',
-  },
-  {
-    icon: <FiAward className="text-gray-300 text-2xl" />,
-    title: 'Juara III',
-    description: '-',
-  },
-  {
-    icon: <FiAward className="text-amber-600 text-2xl" />,
-    title: 'Juara IV',
-    description: '-',
-  },
-];
-
+    {
+      icon: <FiAward className="text-yellow-300 text-2xl" />,
+      title: 'Juara I',
+      jenjang: 'SMA/MA/SMK Sederajat',
+      description: 'Trophy + Medali + Uang Pembinaan + Merchandise + Sertifikat Silver Ticket',
+    },
+    {
+      icon: <FiAward className="text-yellow-300 text-2xl" />,
+      title: 'Juara I',
+      jenjang: 'Jenjang Perguruan Tinggi',
+      description: 'Trophy + Medali + Uang Pembinaan + Merchandise + Publikasi Artikel',
+    },
+    {
+      icon: <FiAward className="text-gray-300 text-2xl" />,
+      title: 'Juara II',
+     
+      description: 'Trophy + Uang Pembinaan + Merchandise + Sertifikat',
+    },
+    {
+      icon: <FiAward className="text-amber-600 text-2xl" />,
+      title: 'Juara III',
+      
+      description: 'Trophy + Uang Pembinaan + Merchandise + Sertifikat',
+    },
+  ];
 
   return (
     <div className="bg-gradient-to-b from-[#210034] to-[#3a0061] min-h-screen">
@@ -112,7 +115,7 @@ const DeskripsiLomba = () => {
                 </div> */}
                 <div className="flex items-center gap-2">
                   <FiUsers className="text-purple-400" />
-                  <span>2-3 mahasiswa/tim</span>
+                  <span>2 mahasiswa/tim</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <FiClipboard className="text-purple-400" />
@@ -225,27 +228,36 @@ const DeskripsiLomba = () => {
                 <ul className="text-purple-100 space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Mahasiswa aktif S1/D4/D3 dari perguruan tinggi di Indonesia</span>
+                    <span>Peserta adalah siswa/i aktif dan resmi tercatat sebagai siswa di SMA/MA/SMK di seluruh Indonesia pada tahun 2025/2026.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Tim terdiri dari 2-3 mahasiswa dari perguruan tinggi yang sama</span>
+                    <span>Peserta adalah mahasiswa/i aktif dan resmi tercatat sebagai Diploma/Sarjana di seluruh Indonesia pada tahun 2025/2026.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Melampirkan scan KTM dan surat keterangan aktif</span>
+                    <span>Mengupload twibbon di Instagram</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Karya bersifat orisinal dan belum pernah dipublikasikan</span>
+                    <span>Peserta bersifat tim dan setiap tim terdiri dari 2 siswa/i dan mahasiswa/i yang berasal instansi yang sama.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Format penulisan sesuai dengan template yang disediakan</span>
+                    <span>Karya Tulis Ilmiah (KTI) yang diajukan orisinil dan belum pernah dilombakan dalam kompetisi manapun.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400 mt-1">•</span>
-                    <span>Maksimal 20 halaman (tidak termasuk lampiran)</span>
+                    <span>Buku pedoman Karya tulis Ilmiah (KTI) dapat diunduh di web gisunesa.com</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400 mt-1">•</span>
+                    <span>Subtema karya esai:<br/>
+                    • Pendidikan<br/>
+                    • Bioteknologi<br/>
+                    • Energi Terbarukan<br/>
+                    • Lingkungan
+                    </span>
                   </li>
                 </ul>
               </motion.div>
@@ -302,7 +314,8 @@ const DeskripsiLomba = () => {
                   <div className="w-16 h-16 flex items-center justify-center bg-purple-800 rounded-full mb-4 shadow-inner">
                     {benefit.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
+                  <h3 className="text-xl font-bold text-white mb-1">{benefit.title}</h3>
+                  <div className="text-purple-300 text-sm mb-2">{benefit.jenjang}</div>
                   <p className="text-purple-200">{benefit.description}</p>
                 </div>
               </motion.div>
