@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavDashUser from "../../Component/NavDashUser";
 import { FiUpload, FiFileText, FiAlertCircle, FiCheckCircle } from "react-icons/fi";
 import { motion } from "framer-motion";
@@ -7,8 +7,7 @@ function Jurnal() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState(null);
-  const [judul, setJudul] = useState('');
-  const [deskripsi, setDeskripsi] = useState('');
+  const [hasUploaded, setHasUploaded] = useState(false); // indikator permanen
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -50,14 +49,6 @@ function Jurnal() {
       return;
     }
 
-    if (!judul.trim()) {
-      setUploadStatus({
-        success: false,
-        message: "Judul jurnal tidak boleh kosong.",
-      });
-      return;
-    }
-
     setIsUploading(true);
 
     setTimeout(() => {
@@ -67,40 +58,52 @@ function Jurnal() {
         message: "Jurnal berhasil diunggah!",
       });
 
+      setHasUploaded(true); // tandai bahwa jurnal telah diunggah
       setSelectedFile(null);
-      setJudul("");
-      setDeskripsi("");
       document.getElementById("file-input").value = "";
     }, 2000);
   };
 
+  // Menghilangkan alert setelah 3 detik
+  useEffect(() => {
+    if (uploadStatus?.success) {
+      const timeout = setTimeout(() => {
+        setUploadStatus(null);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [uploadStatus]);
+
   return (
     <>
       <NavDashUser />
-      {/* Alert upload status di tengah layar */}
+
+      {/* Alert upload status di tengah layar, otomatis hilang */}
       {uploadStatus && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40">
+        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
           <div
-            className={
-              `p-4 rounded-xl shadow-2xl flex items-center gap-3 w-full max-w-md text-center border-2 ` +
-              (uploadStatus.success
-                ? "bg-gradient-to-r from-green-100 to-green-50 text-green-800 border-green-200"
-                : "bg-gradient-to-r from-red-100 to-red-50 text-red-800 border-red-200")
-            }
-            style={{ animation: "fadeInDown 0.5s" }}
+            className={`p-4 rounded-xl shadow-2xl flex items-center gap-3 w-full max-w-md text-center border-2 animate-fadeInDown ${
+              uploadStatus.success
+                ? "bg-green-100 text-green-800 border-green-300"
+                : "bg-red-100 text-red-800 border-red-300"
+            }`}
           >
             {uploadStatus.success ? (
-              <FiCheckCircle className="h-6 w-6 flex-shrink-0 text-green-500 animate-bounce" />
+              <FiCheckCircle className="h-6 w-6 text-green-500 animate-bounce" />
             ) : (
-              <FiAlertCircle className="h-6 w-6 flex-shrink-0 text-red-500 animate-pulse" />
+              <FiAlertCircle className="h-6 w-6 text-red-500 animate-pulse" />
             )}
             <span className="font-semibold">{uploadStatus.message}</span>
           </div>
+
           <style>
             {`
               @keyframes fadeInDown {
                 from { opacity: 0; transform: translateY(-20px);}
                 to { opacity: 1; transform: translateY(0);}
+              }
+              .animate-fadeInDown {
+                animation: fadeInDown 0.5s ease-out;
               }
             `}
           </style>
@@ -128,42 +131,15 @@ function Jurnal() {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="p-6">
-              {/* Judul */}
-              <div className="mb-6">
-                <label
-                  htmlFor="judul"
-                  className="block text-sm font-medium text-purple-800 mb-1"
-                >
-                  Judul Jurnal <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="judul"
-                  value={judul}
-                  onChange={(e) => setJudul(e.target.value)}
-                  className="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white"
-                  placeholder="Masukkan judul jurnal"
-                  required
-                />
-              </div>
-
-              {/* Deskripsi */}
-              <div className="mb-6">
-                <label
-                  htmlFor="deskripsi"
-                  className="block text-sm font-medium text-purple-800 mb-1"
-                >
-                  Deskripsi (Opsional)
-                </label>
-                <textarea
-                  id="deskripsi"
-                  value={deskripsi}
-                  onChange={(e) => setDeskripsi(e.target.value)}
-                  rows="3"
-                  className="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white"
-                  placeholder="Deskripsi singkat tentang jurnal Anda"
-                />
-              </div>
+              {/* Jika sudah upload, tampilkan info permanen */}
+              {hasUploaded && (
+                <div className="mb-6 bg-green-50 text-green-700 border border-green-200 p-4 rounded-lg flex items-center gap-2">
+                  <FiCheckCircle className="h-5 w-5 text-green-600" />
+                  <span className="text-sm font-medium">
+                    Jurnal sudah Anda upload.
+                  </span>
+                </div>
+              )}
 
               {/* File Upload */}
               <div className="mb-6">

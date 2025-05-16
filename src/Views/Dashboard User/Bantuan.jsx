@@ -106,6 +106,7 @@ function Bantuan() {
                 }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center justify-center w-full px-4 md:px-6 py-3 md:py-4 bg-purple-600 text-white font-medium rounded-lg md:rounded-xl shadow transition-all duration-300 space-x-2 text-sm md:text-base"
+                as="a" // pastikan framer-motion menggunakan tag <a>
               >
                 <motion.svg
                   className="w-5 h-5 md:w-6 md:h-6"
