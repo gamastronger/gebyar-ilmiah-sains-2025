@@ -203,7 +203,7 @@ function Bantuan() {
                 </motion.div>
                 
                 <motion.a
-                  href="https://wa.me/6281585616615"
+                  href="https://wa.me/6285746300668"
                   target="_blank"
                   rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 20 }}
