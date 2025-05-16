@@ -71,11 +71,11 @@ const Navbar = () => {
             Home
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a href="/kti" className="hover:text-[#A78BFA] transition duration-300 relative group">
+          <a href="/swc" className="hover:text-[#A78BFA] transition duration-300 relative group">
             Tentang SWC
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a href="/cbt" className="hover:text-[#A78BFA] transition duration-300 relative group">
+          <a href="/sc" className="hover:text-[#A78BFA] transition duration-300 relative group">
             Tentang SC
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
