@@ -30,7 +30,7 @@ const PrivateRoute = ({ isAuthenticated, allowedRoles, userRole, element }) => {
           return;
         }
         if (status === "pending" && location.pathname !== "/dashboard/pending") {
-          navigate("/dashboard/pending", { replace: true });
+          navigate("/dashboard/user", { replace: true });
           return;
         }
         if (status === "success" && location.pathname !== "/dashboard/user") {
