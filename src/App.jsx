@@ -19,6 +19,7 @@ import Invoice from "./Views/Dashboard User/Invoice";
 import CbtUser from "./Views/Dashboard User/CbtUser";
 import Kontak from "./Views/Kontak";
 import Jurnal from "./Views/Dashboard User/Jurnal";
+import SmartRoute from "./Component/SmartRoute";
 
 function App() {
   return (

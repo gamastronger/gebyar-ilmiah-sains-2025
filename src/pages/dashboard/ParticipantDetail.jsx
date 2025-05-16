@@ -42,7 +42,14 @@ import { participantsData } from "../../data/participantsData";
 import api from "../../configs/api";
 
 async function getParticipantById(id) {
-  const res = await fetch(`${api.URL_API}/participants/${id}`);
+  const res = await fetch(`${api.URL_API}/users/byAuth`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
   if (!res.ok) throw new Error("Gagal mengambil data peserta");
   return res.json();
 }

@@ -14,6 +14,7 @@ function Onboarding() {
   const [kota, setKota] = useState([]);
   const [selectedKota, setSelectedKota] = useState([]);
   const [data, setData] = useState({});
+  const [user, setUser] = useState({});
 
   const [dataPribadi, setDataPribadi] = useState({
     name: '',
@@ -22,7 +23,7 @@ function Onboarding() {
     alamat: '',
     provinsi_id: '',
     kabupaten_id: '',
-    no_whatsapp: '',
+    nomor_wa: '',
     link_twibbon: null
   });
 
@@ -65,7 +66,7 @@ function Onboarding() {
     if (dataPribadi.email) formData.append('email', dataPribadi.email);
     if (dataPribadi.nisn) formData.append('nisn', dataPribadi.nisn);
     if (dataPribadi.alamat) formData.append('alamat', dataPribadi.alamat);
-    if (dataPribadi.no_whatsapp) formData.append('jenis_lomba', dataPribadi.no_whatsapp);
+    if (dataPribadi.nomor_wa) formData.append('jenis_lomba', dataPribadi.nomor_wa);
     if (dataPribadi.provinsi_id) formData.append('provinsi_id', dataPribadi.provinsi_id);
     if (dataPribadi.kabupaten_id) formData.append('kabupaten_id', dataPribadi.kabupaten_id);
     if (dataPribadi.link_twibbon instanceof File) {
@@ -105,7 +106,7 @@ function Onboarding() {
             },
             body: JSON.stringify({
               user_id: data.id, // Assuming `data.id` contains the user ID
-              jenis_lomba: dataPribadi.jenis_lomba,
+              jenis_lomba: user.jenis_lomba,
             }),
           });
 
@@ -184,8 +185,8 @@ function Onboarding() {
               <input
                 type="text"
                 placeholder="No WhatsApp"
-                value={dataPribadi.no_whatsapp}
-                onChange={(e) => setDataPribadi({ ...dataPribadi, no_whatsapp: e.target.value })}
+                value={dataPribadi.nomor_wa}
+                onChange={(e) => setDataPribadi({ ...dataPribadi, nomor_wa: e.target.value })}
                 className="border border-gray-300 rounded-lg px-3 py-2 sm:px-4 sm:py-2.5 w-full focus:ring-2 focus:ring-purple-600 focus:outline-none text-sm sm:text-base"
               />
             </div>
@@ -459,7 +460,7 @@ function Onboarding() {
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">No WhatsApp</span>
-                  <span className="col-span-2">{dataPribadi.no_whatsapp || ':'}</span>
+                  <span className="col-span-2">{dataPribadi.nomor_wa || ':'}</span>
                 </div>
                 <div className="grid grid-cols-3">
                   <span className="font-medium">Alamat</span>
@@ -556,6 +557,7 @@ function Onboarding() {
     });
     const data = await response.json();
     setData(data);
+    setUser(data)
 
     if(data.status === 'pending') {
       alert('Anda sudah melakukan onboarding, silakan tunggu konfirmasi dari panitia');
@@ -574,12 +576,12 @@ function Onboarding() {
       alamat: data.alamat,
       provinsi_id: data.provinsi,
       kabupaten_id: data.kota,
-      no_whatsapp: data.no_whatsapp,
+      nomor_wa: data.nomor_wa,
     });
 
     setDataSekolah({
       ...dataSekolah,
-      asalSekolah: data.asalSekolah,
+      asal_sekolah: data.asal_sekolah,
       guru: data.guru,
       wa_guru: data.wa_guru,
       email_guru: data.email_guru
