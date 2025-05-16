@@ -88,6 +88,36 @@ function Invoice() {
     repeat: Infinity,
     repeatType: "reverse"
   };
+
+  // Function to get bank logo based on bank name
+  const getBankLogo = (bankName) => {
+    switch(bankName.toLowerCase()) {
+      case 'seabank':
+        return (
+          <div className="p-1 rounded-md flex items-center justify-center w-full h-full">
+            <img src="/src/assets/seabank.png" alt="SeaBank Logo" className="w-8 h-8"></img>
+          </div>
+        );
+      case 'bca':
+        return (
+          <div className="p-1 rounded-md flex items-center justify-center w-full h-full">
+            <img src="/src/assets/bca.png" alt="BCA Logo" className="w-8 h-8"></img>
+          </div>
+        );
+      case 'mandiri':
+        return (
+          <div className="p-1 rounded-md flex items-center justify-center w-full h-full">
+            <img src="/src/assets/mandiri.png" alt="Mandiri Logo" className="w-8 h-8"></img>
+          </div>
+        );
+      default:
+        return (
+          <div className="bg-purple-50 p-1 rounded-md flex items-center justify-center w-full h-full">
+            <div className="text-purple-600 font-bold text-sm">{bankName}</div>
+          </div>
+        );
+    }
+  };
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 overflow-x-hidden">
@@ -249,7 +279,8 @@ function Invoice() {
                     Peserta yang telah melakukan pembayaran dapat melakukan konfirmasi peserta melalui WhatsApp ke:
                   </p>
                   <ul className="list-disc pl-5 sm:pl-6 text-purple-700 text-sm sm:text-base">
-                    <li className="mb-1">Contact Person pada nomor 0XXXX (Dina) atau 0XXXX (Yuna)</li>
+                    <li className="mb-1">Contact Person Science Competition pada nomor 087876440866 (Nisa) atau 087758375435 (Zaky)</li>
+                    <li className='mb-1'>Contact Person Science Writing Competition pada nomor 085850817023 (Faudhotul) atau 08887060380 (Gita)</li>
                     <li className="mb-1">Mengirimkan foto bukti pembayaran</li>
                     <li>Mengirimkan foto bukti screenshot upload bukti pembayaran di aplikasi</li>
                   </ul>
@@ -299,8 +330,9 @@ function Invoice() {
                           className="w-full border border-purple-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         >
                           <option value="">Pilih metode pembayaran</option>
-                          <option value="Bank ABC">Bank ABC</option>
-                          <option value="Bank XYZ">Bank XYZ</option>
+                          <option value="Bank ABC">SeaBank</option>
+                          <option value="Bank XYZ">BCA</option>
+                          <option value="Bank DEF">Mandiri</option>
                         </select>
                       )
                     },
@@ -427,7 +459,7 @@ function Invoice() {
                   </table>
                 </div>
 
-                {/* Payment Methods - Responsive redesign */}
+                {/* Updated Payment Methods with Bank Logos */}
                 <div className="mt-6 sm:mt-8">
                   <h3 className="font-bold text-base sm:text-lg mb-3 sm:mb-4 text-purple-800 text-center">
                     Metode Pembayaran
@@ -435,14 +467,19 @@ function Invoice() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[
                       {
-                        rekening: "12345678",
-                        bank: "Bank ABC",
-                        nama: "MASYITA IKA SAHARA"
+                        rekening: "901360509500",
+                        bank: "SeaBank",
+                        nama: "ANANDA RIZKA CIPTA FAUZIA"
                       },
                       {
-                        rekening: "0987654321",
-                        bank: "Bank XYZ",
-                        nama: "MASYITA IKA SAHARA"
+                        rekening: "4720414983",
+                        bank: "BCA",
+                        nama: "ANANDA RIZKA CIPTA FAUZIA"
+                      },
+                      {
+                        rekening: "1780006887547",
+                        bank: "Mandiri",
+                        nama: "WILDA NAYLATUZ ZAHRO"
                       }
                     ].map((payment, index) => (
                       <motion.div 
@@ -451,11 +488,7 @@ function Invoice() {
                         whileHover={{ scale: windowWidth > 768 ? 1.01 : 1 }}
                       >
                         <div className="min-w-12 h-12 sm:min-w-16 sm:h-16 bg-white mr-3 sm:mr-4 flex items-center justify-center rounded-lg shadow-sm">
-                          <img 
-                            src="/src/assets/hmpti.png" 
-                            alt="Logo Bank" 
-                            className="w-8 h-8 sm:w-10 sm:h-10"
-                          />
+                          {getBankLogo(payment.bank)}
                         </div>
                         <div className="overflow-hidden">
                           <p className="text-purple-700 font-semibold text-xs sm:text-sm truncate">

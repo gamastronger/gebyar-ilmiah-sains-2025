@@ -22,7 +22,7 @@ const DeskripsiLomba = () => {
   {
     icon: <FiAward className="text-yellow-300 text-2xl" />,
     title: 'Juara I SMA/MA/SMK',
-    description: 'Trophy + Medali + Uang Pembinaan + Merchandise + Sertifikat Silver Ticket',
+    description: 'Trophy + Medali + Uang Pembinaan + Merchandise + Sertifikat + Silver Ticket',
   },
   {
     icon: <FiAward className="text-yellow-300 text-2xl" />,

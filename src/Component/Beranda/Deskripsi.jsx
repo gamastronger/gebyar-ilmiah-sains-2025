@@ -496,11 +496,11 @@ const Deskripsi = () => {
               title: "Pendaftaran Gelombang 2 (SC)",
               description: "Pendaftaran SC gelombang 2 dan pengumpulan karya SWC masih dibuka"
             },
-            {
-              date: "25 – 31 Agustus 2025",
-              title: "Perpanjangan Pendaftaran (SC & SWC)",
-              description: "Periode perpanjangan pendaftaran SC dan pengumpulan karya SWC"
-            },
+            // {
+            //   date: "25 – 31 Agustus 2025",
+            //   title: "Perpanjangan Pendaftaran (SC & SWC)",
+            //   description: "Periode perpanjangan pendaftaran SC dan pengumpulan karya SWC"
+            // },
             {
               date: "06 September 2025",
               title: "Technical Meeting Penyisihan SC",
@@ -609,7 +609,7 @@ const Deskripsi = () => {
               ),
               contacts: [
                 { name: "Nisa", role: "Koordinator", phone: "+6287876440866" },
-                { name: "Farid", role: "Wakil Koordinator", phone: "+62087758375435" },
+                { name: "Zaky", role: "Wakil Koordinator", phone: "+62087758375435" },
               ],
             },
           ].map((section, index) => (
@@ -791,7 +791,7 @@ const Deskripsi = () => {
   </div>
 </motion.div>
 
-      {/* Sponsors */}
+      {/* Sponsors
       <motion.div
         id="sponsors"
         className="max-w-screen-xl mx-auto"
@@ -824,7 +824,7 @@ const Deskripsi = () => {
         </div>
       </motion.div>
 
-      <MediaPartner />
+      <MediaPartner /> */}
       
 
       {/* FAQ Section */}

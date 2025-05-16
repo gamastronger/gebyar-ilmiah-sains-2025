@@ -207,7 +207,7 @@ const DeskripsiLomba = () => {
               >
                 <h3 className="text-2xl font-bold text-purple-300 mb-4">Deskripsi</h3>
                 <p className="text-purple-100 mb-4 leading-relaxed">
-                  Merupakan Lomba <span className="font-semibold">Karya Tulis Ilmiah</span> yang dapat diikuti oleh tingkat SMA/MA/SMK/Sederajat dan Mahasiswa/i. Yang bertujuan untuk untuk meningkatkan kemampuan bersaing siswa dan mahasiswa dalam Ilmu Pengetahuan dan Teknologi (IPTEK) dan melatih siswa dan mahasiswa  dalam bersaing inovasi di bidang Pendidikan, Bioteknologi, Energi Terbarukan, dan Lingkungan.
+                  Merupakan Lomba <span className="font-semibold">Karya Tulis Ilmiah</span> yang dapat diikuti oleh tingkat SMA/MA/SMK/Sederajat dan Mahasiswa/i. Yang bertujuan untuk meningkatkan kemampuan bersaing siswa dan mahasiswa dalam Ilmu Pengetahuan dan Teknologi (IPTEK) dan melatih siswa dan mahasiswa  dalam bersaing inovasi di bidang Pendidikan, Bioteknologi, Energi Terbarukan, dan Lingkungan.
                 </p>
 
               </motion.div>
