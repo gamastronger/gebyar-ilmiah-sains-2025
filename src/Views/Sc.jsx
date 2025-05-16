@@ -1,6 +1,6 @@
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
-import Judul2 from "../Component/Cbt/Judul2";
+import Judul2 from "../Component/SC/JudulSC";
 import ScrollToTop from "@/ScrollToTop";
 
 function Beranda() {

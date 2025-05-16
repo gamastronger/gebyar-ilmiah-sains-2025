@@ -5,6 +5,13 @@ import {
   Input,
   Button,
   Typography,
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+  Chip,
+  Progress,
 } from "@material-tailwind/react";
 import Sidenav from "../../widgets/layout/sidenav";
 import routes from "../../routes";
@@ -18,64 +25,148 @@ import {
   FiPhone,
   FiMail,
   FiSave, 
-  FiArrowLeft 
+  FiArrowLeft,
+  FiDownload,
+  FiUpload,
+  FiClock,
+  FiAward,
+  FiAlertCircle,
+  FiCalendar,
+  FiFileText,
+  FiCheckCircle,
+  FiTrash2,
+  FiMoreVertical
 } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { participantsData } from "../../data/participantsData";
 import api from "../../configs/api";
+
+async function getParticipantById(id) {
+  const res = await fetch(`${api.URL_API}/participants/${id}`);
+  if (!res.ok) throw new Error("Gagal mengambil data peserta");
+  return res.json();
+}
+
+async function updateParticipant(id, data) {
+  const res = await fetch(`${api.URL_API}/participants/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Gagal update data peserta");
+  return res.json();
+}
 
 export default function ParticipantDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    nomor_wa: "",
-    alamat: "",
-    asal_sekolah: "",
-    nisn: "",
-    kelas: "",
-    jenjang: "",
-    jenis_lomba: "",
+    name: "Budi",
+    email: "budi@email.com",
+    whatsapp: "08123456789",
+    alamat: "Jl. Mawar",
+    sekolah: "SMA 1",
+    nisn: "1234567890",
+    kelas: "12",
+    jenjang: "sma",
+    jenisLomba: "KTI",
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [activeSection, setActiveSection] = useState("participant");
+  const [fileUploads, setFileUploads] = useState([
+    { id: 1, name: "Kartu Pelajar", status: "completed", progress: 100, link: "#" },
+    { id: 2, name: "Form Pendaftaran", status: "completed", progress: 100, link: "#" },
+    { id: 3, name: "Abstract KTI", status: "pending", progress: 0, link: null },
+    { id: 4, name: "Bukti Pembayaran", status: "progress", progress: 65, link: null },
+    { id: 5, name: "Bukti Upload Twibbon", status: "pending", progress: 0, link: null },
+    { id: 6, name: "Bukti Transaksi", status: "pending", progress: 0, link: null },
+  ]);
+  const [scoreData, setScoreData] = useState({
+    originalitas: 85,
+    metodologi: 78,
+    penyajian: 90,
+    relevansi: 82,
+    total: 84,
+  });
+  const [activities, setActivities] = useState([
+    { 
+      id: 1, 
+      action: "Pendaftaran Berhasil", 
+      date: "2 hari yang lalu", 
+      status: "new", 
+      icon: <FiEdit2 className="text-white" />, 
+      colorClass: "from-purple-600 to-pink-500" 
+    },
+    { 
+      id: 2, 
+      action: "Berkas Diunggah", 
+      date: "4 hari yang lalu", 
+      status: "", 
+      icon: <FiFile className="text-gray-500" />, 
+      colorClass: "bg-gray-100" 
+    },
+    { 
+      id: 3, 
+      action: "Pembayaran Diverifikasi", 
+      date: "5 hari yang lalu", 
+      status: "", 
+      icon: <FiCheckCircle className="text-gray-500" />, 
+      colorClass: "bg-gray-100" 
+    },
+    { 
+      id: 4, 
+      action: "Akun Dibuat", 
+      date: "1 minggu yang lalu", 
+      status: "", 
+      icon: <FiUser className="text-gray-500" />, 
+      colorClass: "bg-gray-100" 
+    },
+  ]);
+  const [scheduleItems, setScheduleItems] = useState([
+    {
+      id: 1,
+      title: "Presentasi KTI",
+      date: "28 Mei 2025",
+      time: "09:00 - 11:00 WIB",
+      location: "Ruang Seminar Lt. 3",
+      status: "upcoming",
+    },
+    {
+      id: 2,
+      title: "Technical Meeting",
+      date: "20 Mei 2025",
+      time: "13:00 - 15:00 WIB",
+      location: "Zoom Meeting",
+      status: "upcoming",
+    }
+  ]);
+  const [documentsTab, setDocumentsTab] = useState("submissions");
 
-  // Fetch participant detail from API
   useEffect(() => {
-    setIsLoading(true);
-    const fetchParticipant = async () => {
+    const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const response = await fetch(`${api.URL_API}/api/users/${id}`, {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        const data = await response.json();
-        if (response.ok && data) {
+        const data = await getParticipantById(id);
+        if (data) {
           setFormData({
-            ...formData,
             ...data,
             name: data.name || data.nama || "",
-            nomor_wa: data.nomor_wa || "",
+            whatsapp: data.whatsapp || "",
             alamat: data.alamat || "",
-            asal_sekolah: data.asal_sekolah || "",
+            sekolah: data.sekolah || "",
             nisn: data.nisn || "",
             kelas: data.kelas || "",
             jenjang: data.jenjang || "",
-            jenis_lomba: data.jenis_lomba || "",
-            email: data.email || "",
+            jenisLomba: data.jenisLomba || "",
           });
         }
-      } catch (err) {
-        // Optional: tampilkan error
+      } catch (error) {
+        Swal.fire("Gagal", "Gagal mengambil data peserta.", "error");
       }
       setIsLoading(false);
     };
-    fetchParticipant();
-    // eslint-disable-next-line
+    fetchData();
   }, [id]);
 
   const handleChange = (e) => {
@@ -93,8 +184,8 @@ export default function ParticipantDetail() {
   const validateForm = () => {
     const newErrors = {};
     const requiredFields = [
-      "name", "email", "nomor_wa", 
-      "alamat", "asal_sekolah", "nisn", "kelas"
+      "name", "email", "whatsapp", 
+      "alamat", "sekolah", "nisn", "kelas"
     ];
     
     requiredFields.forEach(field => {
@@ -105,10 +196,10 @@ export default function ParticipantDetail() {
       newErrors.email = "Email tidak valid";
     }
     
-    if (formData.nomor_wa && !/^\d+$/.test(formData.nomor_wa)) {
-      newErrors.nomor_wa = "Nomor WhatsApp harus berupa angka";
-    } else if (formData.nomor_wa && !/^[+]?[\d\s-]{10,15}$/.test(formData.nomor_wa)) {
-      newErrors.nomor_wa = "Nomor telepon tidak valid";
+    if (formData.whatsapp && !/^\d+$/.test(formData.whatsapp)) {
+      newErrors.whatsapp = "Nomor WhatsApp harus berupa angka";
+    } else if (formData.whatsapp && !/^[+]?[\d\s-]{10,15}$/.test(formData.whatsapp)) {
+      newErrors.whatsapp = "Nomor telepon tidak valid";
     }
     
     if (formData.nisn && !/^\d+$/.test(formData.nisn)) {
@@ -119,7 +210,7 @@ export default function ParticipantDetail() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
@@ -131,7 +222,11 @@ export default function ParticipantDetail() {
         },
       });
 
-      setTimeout(() => {
+      try {
+        await updateParticipant(id, {
+          ...formData,
+          nama: formData.name,
+        });
         Swal.fire({
           title: "Berhasil!",
           text: "Perubahan profil telah disimpan.",
@@ -141,7 +236,14 @@ export default function ParticipantDetail() {
         }).then(() => {
           navigate("/admin/kti-admin");
         });
-      }, 1000);
+      } catch (error) {
+        Swal.fire({
+          title: "Gagal",
+          text: "Gagal menyimpan perubahan.",
+          icon: "error",
+          confirmButtonColor: "#9333EA",
+        });
+      }
     } else {
       Swal.fire({
         title: "Perhatian",
@@ -152,6 +254,97 @@ export default function ParticipantDetail() {
       });
     }
   };
+
+  const handleDeleteParticipant = () => {
+    Swal.fire({
+      title: "Hapus Peserta?",
+      text: "Data peserta akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Hapus",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#9333EA",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Sedang menghapus...",
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+        
+        setTimeout(() => {
+          // Simulate deletion
+          const index = participantsData.findIndex((item) => item.id === parseInt(id));
+          if (index !== -1) {
+            participantsData.splice(index, 1);
+          }
+          
+          Swal.fire({
+            title: "Berhasil Dihapus!",
+            text: "Data peserta telah dihapus dari sistem.",
+            icon: "success",
+            confirmButtonText: "Kembali ke Dashboard",
+            confirmButtonColor: "#9333EA",
+          }).then(() => {
+            navigate("/admin/kti-admin");
+          });
+        }, 1000);
+      }
+    });
+  };
+
+  const handleFileUpload = (fileId) => {
+    // Simulate file upload process
+    const updatedFiles = fileUploads.map(file => {
+      if (file.id === fileId && file.status !== "completed") {
+        return { ...file, status: "progress", progress: 1 };
+      }
+      return file;
+    });
+    
+    setFileUploads(updatedFiles);
+    
+    // Simulate upload progress
+    const fileToUpdate = updatedFiles.find(file => file.id === fileId);
+    if (fileToUpdate && fileToUpdate.status === "progress") {
+      const interval = setInterval(() => {
+        setFileUploads(prevFiles => {
+          const newFiles = prevFiles.map(file => {
+            if (file.id === fileId) {
+              const newProgress = file.progress + 5;
+              if (newProgress >= 100) {
+                clearInterval(interval);
+                return { ...file, progress: 100, status: "completed", link: "#" };
+              }
+              return { ...file, progress: newProgress };
+            }
+            return file;
+          });
+          return newFiles;
+        });
+      }, 150);
+    }
+  };
+
+  const SectionButton = ({ icon, title, active, onClick }) => (
+    <button
+      onClick={onClick}
+      className={`flex items-center w-full px-4 py-3 rounded-lg transition-all ${
+        active 
+          ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-md" 
+          : "bg-white text-gray-700 hover:bg-purple-50"
+      }`}
+    >
+      <div className={`p-2 mr-3 rounded-full ${active ? "bg-white bg-opacity-20" : "bg-purple-100"}`}>
+        {icon}
+      </div>
+      <span className="font-medium">{title}</span>
+      {active && <FiCheck className="ml-auto" />}
+    </button>
+  );
 
   const FormInput = ({ label, name, type = "text", value, placeholder, error }) => (
     <div className="mb-4">
@@ -175,13 +368,149 @@ export default function ParticipantDetail() {
     </div>
   );
 
+  const FileUploadCard = ({ file, onUpload }) => (
+    <div className="bg-white border border-gray-200 rounded-lg p-4 mb-3">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center">
+          <div className={`p-2 rounded-full ${file.status === "completed" ? "bg-green-100" : file.status === "progress" ? "bg-blue-100" : "bg-gray-100"}`}>
+            {file.status === "completed" ? (
+              <FiCheckCircle className="text-green-500" />
+            ) : file.status === "progress" ? (
+              <FiClock className="text-blue-500" />
+            ) : (
+              <FiFile className="text-gray-500" />
+            )}
+          </div>
+          <div className="ml-3">
+            <p className="font-medium text-gray-800 text-sm">{file.name}</p>
+            <p className="text-xs text-gray-500">
+              {file.status === "completed" 
+                ? "Berkas telah diunggah" 
+                : file.status === "progress" 
+                ? `Mengunggah (${file.progress}%)` 
+                : "Berkas belum diunggah"}
+            </p>
+          </div>
+        </div>
+        
+        {file.status === "completed" ? (
+          <a 
+            href={file.link} 
+            className="p-2 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-full transition-colors"
+          >
+            <FiDownload size={16} />
+          </a>
+        ) : (
+          <button 
+            className="p-2 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-full transition-colors"
+            onClick={() => onUpload(file.id)}
+          >
+            <FiUpload size={16} />
+          </button>
+        )}
+      </div>
+      
+      {file.status === "progress" && (
+        <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+          <div 
+            className="bg-gradient-to-r from-purple-600 to-pink-500 h-1.5 rounded-full transition-all duration-300" 
+            style={{ width: `${file.progress}%` }}
+          ></div>
+        </div>
+      )}
+    </div>
+  );
+
+  const ScoreCard = ({ title, score }) => (
+    <div className="bg-white border border-gray-200 rounded-lg p-4">
+      <div className="flex items-center justify-between mb-3">
+        <p className="font-medium text-gray-800">{title}</p>
+        <span className={`text-sm font-bold ${
+          score >= 90 ? "text-green-500" : 
+          score >= 75 ? "text-blue-500" : 
+          score >= 60 ? "text-yellow-500" : 
+          "text-red-500"
+        }`}>{score}/100</span>
+      </div>
+      <div className="w-full bg-gray-200 rounded-full h-2">
+        <div 
+          className={`h-2 rounded-full ${
+            score >= 90 ? "bg-green-500" : 
+            score >= 75 ? "bg-blue-500" : 
+            score >= 60 ? "bg-yellow-500" : 
+            "bg-red-500"
+          }`}
+          style={{ width: `${score}%` }}
+        ></div>
+      </div>
+    </div>
+  );
+
+  const ActivityCard = ({ activity }) => (
+    <div className="flex items-start p-3 bg-white rounded-lg border border-gray-100 hover:bg-purple-50 transition-colors">
+      <div className={`p-2 rounded-lg mr-3 ${activity.status === "new" ? `bg-gradient-to-r ${activity.colorClass}` : activity.colorClass}`}>
+        {activity.icon}
+      </div>
+      <div>
+        <div className="flex items-center gap-2">
+          <p className="font-medium text-gray-800">{activity.action}</p>
+          {activity.status === "new" && (
+            <span className="text-xs bg-green-100 text-green-600 py-0.5 px-2 rounded">Baru</span>
+          )}
+        </div>
+        <p className="text-xs text-gray-500 mt-1">{activity.date}</p>
+      </div>
+    </div>
+  );
+
+  const ScheduleCard = ({ item }) => (
+    <div className="bg-white border border-gray-200 rounded-lg p-4 mb-3 hover:border-purple-300 transition-colors">
+      <div className="flex items-start">
+        <div className="bg-purple-100 text-purple-600 p-3 rounded-lg mr-4">
+          <FiCalendar />
+        </div>
+        <div className="flex-1">
+          <div className="flex justify-between items-start mb-2">
+            <h4 className="font-medium text-gray-800">{item.title}</h4>
+            <Chip
+              size="sm"
+              variant="ghost"
+              value={item.status === "upcoming" ? "Akan Datang" : "Selesai"}
+              color={item.status === "upcoming" ? "blue" : "green"}
+              className="rounded-full text-xs"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            <div>
+              <p className="text-xs text-gray-500">Tanggal</p>
+              <p className="text-gray-800">{item.date}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">Waktu</p>
+              <p className="text-gray-800">{item.time}</p>
+            </div>
+            <div className="col-span-2">
+              <p className="text-xs text-gray-500">Lokasi</p>
+              <p className="text-gray-800">{item.location}</p>
+            </div>
+          </div>
+          <div className="mt-3 flex justify-end">
+            <button className="text-xs font-medium text-purple-600 hover:text-purple-800">
+              Lihat Detail
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
       <div className="hidden md:block">
         <Sidenav brandName="Admin Dashboard" routes={routes} />
       </div>
 
-      <div className="w-full">
+      <div className="w-full md:pl-10">
         {isLoading ? (
           <div className="flex justify-center items-center h-screen">
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-purple-600"></div>
@@ -193,311 +522,193 @@ export default function ParticipantDetail() {
             transition={{ duration: 0.4 }}
             className="max-w-7xl mx-auto px-4 py-6 md:px-6 lg:px-8"
           >
-            <div className="flex flex-wrap items-center justify-between mb-8">
-              <button
-                onClick={() => navigate(-1)}
-                className="flex items-center text-purple-600 hover:text-purple-800 transition-colors duration-200 mb-4 lg:mb-0"
-              >
-                <FiArrowLeft className="mr-2" /> Kembali ke Daftar Peserta
-              </button>
-              
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-500 w-full lg:w-auto order-first lg:order-none">
-                Detail Peserta
-              </h1>
-              
-              <Button
-                onClick={handleSubmit}
-                className="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 w-full lg:w-auto mt-4 lg:mt-0"
-              >
-                <FiSave className="text-lg" /> Simpan Perubahan
-              </Button>
-            </div>
-
-            {/* Unified Form Content */}
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              <form onSubmit={handleSubmit}>
-                {/* Personal Information */}
-                <div>
-                  <div className="border-b border-gray-100">
-                    <div className="px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-500">
-                      <h2 className="text-xl font-bold text-white flex items-center">
-                        <FiUser className="mr-2" /> Data Pribadi
-                      </h2>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="md:col-span-2">
-                        <FormInput 
-                          label="Nama Lengkap" 
-                          name="name" 
-                          value={formData.name}
-                          placeholder="Masukkan nama lengkap peserta"
-                          error={errors.name}
-                        />
-                      </div>
-                      
-                      <FormInput 
-                        label="Email" 
-                        name="email" 
-                        type="email"
-                        value={formData.email}
-                        placeholder="contoh@email.com"
-                        error={errors.email}
-                      />
-                      
-                      <FormInput 
-                        label="Nomor WhatsApp" 
-                        name="nomor_wa" 
-                        value={formData.nomor_wa}
-                        placeholder="08xxxxxxxxxx"
-                        error={errors.nomor_wa}
-                      />
-                      
-                      <div className="md:col-span-2">
-                        <FormInput 
-                          label="Alamat Lengkap" 
-                          name="alamat" 
-                          value={formData.alamat}
-                          placeholder="Masukkan alamat lengkap"
-                          error={errors.alamat}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Academic Information */}
-                <div>
-                  <div className="border-b border-gray-100">
-                    <div className="px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-500">
-                      <h2 className="text-xl font-bold text-white flex items-center">
-                        <FiBookOpen className="mr-2" /> Data Akademik
-                      </h2>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="md:col-span-2">
-                        <FormInput 
-                          label="Asal Sekolah" 
-                          name="asal_sekolah" 
-                          value={formData.asal_sekolah}
-                          placeholder="Masukkan nama sekolah"
-                          error={errors.asal_sekolah}
-                        />
-                      </div>
-                      
-                      <FormInput 
-                        label="NISN" 
-                        name="nisn" 
-                        value={formData.nisn}
-                        placeholder="Masukkan NISN"
-                        error={errors.nisn}
-                      />
-                      
-                      <FormInput 
-                        label="Kelas" 
-                        name="kelas" 
-                        value={formData.kelas}
-                        placeholder="Contoh: 10, 11, 12"
-                        error={errors.kelas}
-                      />
-                      
-                      <div className="mb-4">
-                        <label className="text-sm font-medium text-gray-700 mb-1 block">
-                          Jenjang Pendidikan
-                        </label>
-                        <select
-                          name="jenjang"
-                          value={formData.jenjang || ""}
-                          onChange={handleChange}
-                          className={`w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                            errors.jenjang ? "border-red-500" : "border-gray-300"
-                          }`}
-                        >
-                          <option value="">Pilih jenjang</option>
-                          <option value="sd">SD</option>
-                          <option value="smp">SMP</option>
-                          <option value="sma">SMA/SMK</option>
-                        </select>
-                        {errors.jenjang && (
-                          <p className="text-red-500 text-xs mt-1">{errors.jenjang}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Contest Information */}
-                <div>
-                  <div className="border-b border-gray-100">
-                    <div className="px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-500">
-                      <h2 className="text-xl font-bold text-white flex items-center">
-                        <FiBookOpen className="mr-2" /> Data Lomba
-                      </h2>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="mb-6">
-                      <label className="text-sm font-medium text-gray-700 mb-2 block">
-                        Jenis Lomba yang Diikuti
-                      </label>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button
-                          type="button"
-                          className={`flex items-center px-4 py-3 rounded-lg transition-all ${
-                            formData.jenis_lomba === "science-competition" 
-                              ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-md" 
-                              : "bg-purple-50 text-gray-700 hover:bg-purple-100 border border-purple-200"
-                          }`}
-                          onClick={() => setFormData({...formData, jenis_lomba: "science-competition"})}
-                        >
-                          <div className={`p-2 mr-3 rounded-full ${formData.jenis_lomba === "science-competition" ? "bg-white bg-opacity-20" : "bg-purple-100"}`}>
-                            <FiFile className={formData.jenis_lomba === "science-competition" ? "text-white" : "text-purple-500"} />
-                          </div>
-                          <div className="text-left">
-                            <span className="font-medium block">Science Competition</span>
-                            <span className="text-xs block opacity-80">Science Writing Competition</span>
-                          </div>
-                          {formData.jenis_lomba === "science-competition" && <FiCheck className="ml-auto" />}
-                        </button>
-                        
-                        <button
-                          type="button"
-                          className={`flex items-center px-4 py-3 rounded-lg transition-all ${
-                            formData.jenis_lomba === "science-writing-competition" 
-                              ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-md" 
-                              : "bg-purple-50 text-gray-700 hover:bg-purple-100 border border-purple-200"
-                          }`}
-                          onClick={() => setFormData({...formData, jenis_lomba: "science-writing-competition"})}
-                        >
-                          <div className={`p-2 mr-3 rounded-full ${formData.jenis_lomba === "science-writing-competition" ? "bg-white bg-opacity-20" : "bg-purple-100"}`}>
-                            <FiFile className={formData.jenis_lomba === "science-writing-competition" ? "text-white" : "text-purple-500"} />
-                          </div>
-                          <div className="text-left">
-                            <span className="font-medium block">Science Writing Competition</span>
-                            <span className="text-xs block opacity-80">Science Writing Competition</span>
-                          </div>
-                          {formData.jenis_lomba === "science-writing-competition" && <FiCheck className="ml-auto" />}
-                        </button>
-                      </div>
-                      {errors.jenis_lomba && (
-                        <p className="text-red-500 text-xs mt-2">{errors.jenis_lomba}</p>
-                      )}
-                    </div>
-                    
-                    <div className="bg-purple-50 border border-purple-100 rounded-lg p-4 mt-6">
-                      <div className="flex items-start">
-                        <div className="p-2 bg-gradient-to-r from-purple-600 to-pink-500 rounded-lg mr-3 mt-1">
-                          <FiEdit2 className="text-white" />
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-gray-800">Catatan Penting</h4>
-                          <p className="text-sm text-gray-600 mt-1">
-                            Perubahan jenis lomba akan memengaruhi kategori evaluasi dan penempatan peserta. Pastikan jenis lomba yang dipilih sudah benar.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-              
-              <div className="bg-gray-50 px-6 py-4 flex flex-col md:flex-row items-center justify-between">
-                <div className="flex items-center text-sm text-gray-500 mb-4 md:mb-0">
-                  <FiMapPin className="mr-1" /> ID Peserta: <span className="font-medium ml-1">{id}</span>
-                </div>
-                
-                <div className="flex space-x-3">
-                  <button
-                    type="button"
-                    onClick={() => navigate(-1)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    Batal
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSubmit}
-                    className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg hover:shadow-md transition-all"
-                  >
-                    Simpan
-                  </button>
-                </div>
-              </div>
-            </div>
             
-            {/* Card with contact information */}
-            <div className="bg-white rounded-xl shadow-sm mt-6 p-6">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Kontak Peserta</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center p-3 bg-purple-50 rounded-lg border border-purple-100">
-                  <div className="p-2 bg-gradient-to-r from-purple-600 to-pink-500 rounded-lg mr-3">
-                    <FiMail className="text-white" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">Email</p>
-                    <p className="font-medium text-gray-800">{formData.email || "-"}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center p-3 bg-purple-50 rounded-lg border border-purple-100">
-                  <div className="p-2 bg-gradient-to-r from-purple-600 to-pink-500 rounded-lg mr-3">
-                    <FiPhone className="text-white" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">Whatsapp</p>
-                    <p className="font-medium text-gray-800">{formData.nomor_wa || "-"}</p>
+
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              {/* Sidebar Navigation */}
+              <div className="lg:col-span-3">
+                <div className="bg-white rounded-xl shadow-sm p-5 sticky top-6">
+                  <div className="mb-6">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">Menu Navigasi</h3>
+                    <div className="space-y-2">
+                      <SectionButton 
+                        icon={<FiUser className="text-purple-600" />} 
+                        title="Data Peserta" 
+                        active={activeSection === "participant"}
+                        onClick={() => setActiveSection("participant")}
+                      />
+                      <SectionButton 
+                        icon={<FiFileText className="text-purple-600" />} 
+                        title="Dokumen & Berkas" 
+                        active={activeSection === "documents"}
+                        onClick={() => setActiveSection("documents")}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            {/* Additional Information */}
-            <div className="bg-white rounded-xl shadow-sm mt-6 p-6">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Informasi Tambahan</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg text-white">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold">Status Pendaftaran</h4>
-                    <span className="p-1.5 bg-white bg-opacity-20 rounded-full">
-                      <FiCheck className="text-white" />
-                    </span>
-                  </div>
-                  <p className="text-sm font-medium bg-white bg-opacity-20 py-1 px-3 rounded-full inline-block">
-                    Terverifikasi
-                  </p>
-                </div>
-                
-                <div className="p-4 bg-white border border-purple-100 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gray-800">Jenis Lomba</h4>
-                    <span className="p-1.5 bg-purple-100 rounded-full">
-                      <FiFile className="text-purple-500" />
-                    </span>
-                  </div>
-                  <p className="text-sm font-medium text-purple-600 bg-purple-50 py-1 px-3 rounded-full inline-block">
-                    {formData.jenis_lomba === "science-competition" ? "SC" : 
-                     formData.jenis_lomba === "science-writing-competition" ? "SWC" : "Belum dipilih"}
-                  </p>
-                </div>
-                
-                <div className="p-4 bg-white border border-purple-100 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gray-800">Jenjang</h4>
-                    <span className="p-1.5 bg-purple-100 rounded-full">
-                      <FiBookOpen className="text-purple-500" />
-                    </span>
-                  </div>
-                  <p className="text-sm font-medium text-purple-600 bg-purple-50 py-1 px-3 rounded-full inline-block">
-                    {formData.jenjang ? formData.jenjang.toUpperCase() : "Belum dipilih"}
-                  </p>
+
+              {/* Form Content */}
+              <div className="lg:col-span-9">
+                <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+                  <form onSubmit={handleSubmit}>
+                    {/* Data Peserta (Gabungan Data Pribadi, Akademik, Lomba) */}
+                    <div className={`${activeSection === "participant" ? "block" : "hidden"}`}>
+                      <div className="border-b border-gray-100">
+                        <div className="px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-500">
+                          <h2 className="text-xl font-bold text-white flex items-center">
+                            <FiUser className="mr-2" /> Detail Data Peserta
+                          </h2>
+                        </div>
+                      </div>
+                      <div className="p-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {/* Baris 1 */}
+                          <FormInput 
+                            label="Nama Lengkap" 
+                            name="name" 
+                            value={formData.name}
+                            placeholder="Masukkan nama lengkap peserta"
+                            error={errors.name}
+                          />
+                          <FormInput 
+                            label="Email" 
+                            name="email" 
+                            type="email"
+                            value={formData.email}
+                            placeholder="contoh@email.com"
+                            error={errors.email}
+                          />
+                          {/* Baris 2 */}
+                          <FormInput 
+                            label="Nomor WhatsApp" 
+                            name="whatsapp" 
+                            value={formData.whatsapp}
+                            placeholder="08xxxxxxxxxx"
+                            error={errors.whatsapp}
+                          />
+                          <FormInput 
+                            label="Alamat Lengkap" 
+                            name="alamat" 
+                            value={formData.alamat}
+                            placeholder="Masukkan alamat lengkap"
+                            error={errors.alamat}
+                          />
+                          {/* Baris 3 */}
+                          <FormInput 
+                            label="Asal Sekolah" 
+                            name="sekolah" 
+                            value={formData.sekolah}
+                            placeholder="Masukkan nama sekolah"
+                            error={errors.sekolah}
+                          />
+                          <FormInput 
+                            label="NISN" 
+                            name="nisn" 
+                            value={formData.nisn}
+                            placeholder="Masukkan NISN"
+                            error={errors.nisn}
+                          />
+                          {/* Baris 4: Jenis Lomba (full width) */}
+                          <div className="md:col-span-2">
+                            <FormInput 
+                              label="Jenis Lomba" 
+                              name="jenisLomba" 
+                              value={formData.jenisLomba}
+                              placeholder="Masukkan jenis lomba"
+                              error={errors.jenisLomba}
+                            />
+                          </div>
+                          {/* Baris 5 */}
+                          <FormInput 
+                            label="Kelas" 
+                            name="kelas" 
+                            value={formData.kelas}
+                            placeholder="Contoh: 10, 11, 12"
+                            error={errors.kelas}
+                          />
+                          <div>
+                            <label className="text-sm font-medium text-gray-700 mb-1 block">
+                              Jenjang Pendidikan
+                            </label>
+                            <select
+                              name="jenjang"
+                              value={formData.jenjang || ""}
+                              onChange={handleChange}
+                              className={`w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+                                errors.jenjang ? "border-red-500" : "border-gray-300"
+                              }`}
+                            >
+                              <option value="">Pilih jenjang</option>
+                              <option value="sd">SD</option>
+                              <option value="smp">SMP</option>
+                              <option value="sma">SMA/SMK</option>
+                            </select>
+                            {errors.jenjang && (
+                              <p className="text-red-500 text-xs mt-1">{errors.jenjang}</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Documents & Files */}
+                    <div className={`${activeSection === "documents" ? "block" : "hidden"}`}>
+                      <div className="border-b border-gray-100">
+                        <div className="px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-500">
+                          <h2 className="text-xl font-bold text-white flex items-center">
+                            <FiFileText className="mr-2" /> Dokumen & Berkas
+                          </h2>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {fileUploads.map((file) => (
+                            <FileUploadCard key={file.id} file={file} onUpload={handleFileUpload} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tombol aksi di bawah form */}
+                    <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-100 bg-gray-50">
+                      <Button
+                        color="green"
+                        className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-green-600 to-green-400 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+                        onClick={() => {
+                          Swal.fire({
+                            title: "Verifikasi Peserta?",
+                            text: "Pastikan semua berkas sudah lengkap sebelum verifikasi.",
+                            icon: "question",
+                            showCancelButton: true,
+                            confirmButtonText: "Verifikasi",
+                            cancelButtonText: "Batal",
+                            confirmButtonColor: "#22c55e",
+                            cancelButtonColor: "#9333EA",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              Swal.fire({
+                                title: "Terverifikasi!",
+                                text: "Peserta telah berhasil diverifikasi.",
+                                icon: "success",
+                                confirmButtonColor: "#9333EA",
+                              });
+                            }
+                          });
+                        }}
+                        type="button"
+                      >
+                        <FiCheckCircle className="text-lg" /> Verifikasi
+                      </Button>
+                      <Button
+                        type="submit"
+                        className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+                      >
+                        <FiSave className="text-lg" /> Simpan Perubahan
+                      </Button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>

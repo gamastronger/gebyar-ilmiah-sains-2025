@@ -1,25 +1,17 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Admin, Auth } from "@/layouts";
-import AddPortofolio from "./pages/Input/AddPortofolio";
-import AddLayanan from "./pages/Input/AddLayanan";
-import AddPaket from "./pages/Input/AddPaket";
-import AddPesanan from "./pages/Input/AddPesanan";
-import AddTestimoni from "./pages/Input/AddTestimoni";
-import AddTentangKami from "./pages/Input/AddTentangKami";
-import AddFAQ from "./pages/Input/AddFAQ";
-import AddBanner from "./pages/Input/AddBanner";
 import PrivateRoute from "./Component/PrivateRoute";
 import Beranda from "./Views/Beranda";
-import Kti from "./Views/Kti";
-import Cbt from "./Views/Cbt";
+import Kti from "./Views/Swc";
+import Cbt from "./Views/Sc";
 import Twibbon from "./Views/Twibbon";
 // import Login from "./Views/Login";
 // import RegisterPage from "./Views/Register";
 import Forgot from "./Component/Login/Forgot";
 import ParticipantDetail from "./pages/dashboard/ParticipantDetail";
 // import Daftar from "./pages/auth/Daftar";
-import KTIAdmin from "./pages/dashboard/KTI-Admin";
-import Judul from "./Component/Kti/Judul";
+import KTIAdmin from "./pages/dashboard/SWC-Admin";
+import Judul from "./Component/SWC/JudulSWC";
 import Onboarding from "./Views/Dashboard User/Onboarding";
 import Pending from "./Views/Dashboard User/Pending";
 import User from "./Views/Dashboard User/User";
@@ -42,8 +34,8 @@ function App() {
       <Route path="/forgot" element={<Forgot />} />
 
       { /* Untuk Guest */}
-      <Route path="/kti" element={<Kti />} />
-      <Route path="/cbt" element={<Cbt />} />
+      <Route path="/swc" element={<Kti />} />
+      <Route path="/sc" element={<Cbt />} />
       <Route path="/kontak" element={<Kontak />} />
       <Route path="/twibbon" element={<Twibbon />} />
 
@@ -189,6 +181,7 @@ function App() {
         }
       />
 
+      <Route path="/admin/kti-admin/:id" element={<ParticipantDetail />} />
 
       <Route path="/auth/forbidden" element={<h1>Forbidden</h1>} />
     </Routes>
