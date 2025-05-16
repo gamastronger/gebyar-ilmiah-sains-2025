@@ -53,7 +53,7 @@ function Invoice() {
   };
 
   const handleUpload = async () => {
-    if (!selectedInvoice || !selectedPaymentMethod || !uploadFile) {
+    if (!selectedInvoice || !uploadFile) {
       alert("Harap lengkapi metode pembayaran dan unggah bukti pembayaran.");
       return;
     }
@@ -428,19 +428,6 @@ function Invoice() {
                   {/* Input yang dapat diubah */}
                   <div>
                     <label className="block font-semibold text-purple-700 mb-1 sm:mb-2 text-sm sm:text-base">
-                      Metode Pembayaran
-                    </label>
-                    <select
-                      className="w-full border border-purple-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-                    >
-                      <option value="">Pilih metode pembayaran</option>
-                      <option value="Bank ABC">Bank ABC</option>
-                      <option value="Bank XYZ">Bank XYZ</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block font-semibold text-purple-700 mb-1 sm:mb-2 text-sm sm:text-base">
                       Bukti Pembayaran
                     </label>
                     <div className="border-2 border-dashed border-purple-200 rounded-lg p-4 text-center hover:border-purple-300 transition-colors">
@@ -528,7 +515,7 @@ function Invoice() {
                             <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">{index + 1}</td>
                             <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">{invoice.kode_bayar}</td>
                             <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">
-                              {invoice.status === null ? (
+                              {invoice.status === null || invoice.status === "" ? (
                                 <span className="text-amber-500 font-semibold">Menunggu</span>
                               ) : invoice.status === "pending" ? (
                                 <span className="text-amber-500 font-semibold">Segera Hubungi Admin</span>
@@ -543,7 +530,7 @@ function Invoice() {
                               {new Date(invoice.created_at).toLocaleDateString('id-ID')}
                             </td>
                             <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">
-                              {invoice.status === null && (
+                              {invoice.status === null || invoice.status === "" && (
                                 <button
                                   onClick={() => handleShowUploadForm(invoice)} // Fungsi untuk membuka form upload
                                   className="bg-purple-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded text-xs sm:text-sm hover:bg-purple-700 transition-colors"

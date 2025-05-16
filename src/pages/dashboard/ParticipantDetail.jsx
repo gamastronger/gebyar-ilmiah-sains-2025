@@ -42,7 +42,7 @@ import { participantsData } from "../../data/participantsData";
 import api from "../../configs/api";
 
 async function getParticipantById(id) {
-  const res = await fetch(`${api.URL_API}/api/users/byAuth`, {
+  const res = await fetch(`${api.URL_API}/api/users/${id}`, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -55,9 +55,13 @@ async function getParticipantById(id) {
 }
 
 async function updateParticipant(id, data) {
-  const res = await fetch(`${api.URL_API}/participants/${id}`, {
+  const res = await fetch(`${api.URL_API}/api/users/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    headers: { 
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Gagal update data peserta");
@@ -67,81 +71,12 @@ async function updateParticipant(id, data) {
 export default function ParticipantDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "Budi",
-    email: "budi@email.com",
-    whatsapp: "08123456789",
-    alamat: "Jl. Mawar",
-    sekolah: "SMA 1",
-    nisn: "1234567890",
-    kelas: "12",
-    jenjang: "sma",
-    jenisLomba: "KTI",
-  });
+  const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("participant");
   const [fileUploads, setFileUploads] = useState([]);
-  const [scoreData, setScoreData] = useState({
-    originalitas: 85,
-    metodologi: 78,
-    penyajian: 90,
-    relevansi: 82,
-    total: 84,
-  });
-  const [activities, setActivities] = useState([
-    { 
-      id: 1, 
-      action: "Pendaftaran Berhasil", 
-      date: "2 hari yang lalu", 
-      status: "new", 
-      icon: <FiEdit2 className="text-white" />, 
-      colorClass: "from-purple-600 to-pink-500" 
-    },
-    { 
-      id: 2, 
-      action: "Berkas Diunggah", 
-      date: "4 hari yang lalu", 
-      status: "", 
-      icon: <FiFile className="text-gray-500" />, 
-      colorClass: "bg-gray-100" 
-    },
-    { 
-      id: 3, 
-      action: "Pembayaran Diverifikasi", 
-      date: "5 hari yang lalu", 
-      status: "", 
-      icon: <FiCheckCircle className="text-gray-500" />, 
-      colorClass: "bg-gray-100" 
-    },
-    { 
-      id: 4, 
-      action: "Akun Dibuat", 
-      date: "1 minggu yang lalu", 
-      status: "", 
-      icon: <FiUser className="text-gray-500" />, 
-      colorClass: "bg-gray-100" 
-    },
-  ]);
-  const [scheduleItems, setScheduleItems] = useState([
-    {
-      id: 1,
-      title: "Presentasi KTI",
-      date: "28 Mei 2025",
-      time: "09:00 - 11:00 WIB",
-      location: "Ruang Seminar Lt. 3",
-      status: "upcoming",
-    },
-    {
-      id: 2,
-      title: "Technical Meeting",
-      date: "20 Mei 2025",
-      time: "13:00 - 15:00 WIB",
-      location: "Zoom Meeting",
-      status: "upcoming",
-    }
-  ]);
-  const [documentsTab, setDocumentsTab] = useState("submissions");
+  const [invoice, setInvoice] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -151,15 +86,20 @@ export default function ParticipantDetail() {
         const data = await getParticipantById(id);
         if (data) {
           setFormData({
-            ...data,
-            name: data.name || data.nama || "",
-            whatsapp: data.whatsapp || "",
+            name: data.name || "",
+            email: data.email || "",
+            nomor_wa: data.nomor_wa || "",
             alamat: data.alamat || "",
-            sekolah: data.sekolah || "",
+            asal_sekolah: data.asal_sekolah || "",
             nisn: data.nisn || "",
             kelas: data.kelas || "",
             jenjang: data.jenjang || "",
-            jenisLomba: data.jenisLomba || "",
+            jenis_lomba: data.jenis_lomba || "",
+            guru: data.guru || "",
+            wa_guru: data.wa_guru || "",
+            email_guru: data.email_guru || "",
+            link_twibbon: data.link_twibbon || "",
+            status: data.status || "",
           });
         }
         // Fetch dokumen peserta
@@ -173,6 +113,19 @@ export default function ParticipantDetail() {
           setFileUploads(files);
         } else {
           setFileUploads([]);
+        }
+
+        // Fetch invoice peserta
+        const invoiceRes = await fetch(`${api.URL_API}/api/invoices/${id}`, {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (invoiceRes.ok) {
+          const invoiceData = await invoiceRes.json();
+          setInvoice(invoiceData && invoiceData.length > 0 ? invoiceData[0] : null);
+        } else {
+          setInvoice(null);
         }
       } catch (error) {
         Swal.fire("Gagal", "Gagal mengambil data peserta atau dokumen.", "error");
@@ -197,8 +150,8 @@ export default function ParticipantDetail() {
   const validateForm = () => {
     const newErrors = {};
     const requiredFields = [
-      "name", "email", "whatsapp", 
-      "alamat", "sekolah", "nisn", "kelas"
+      "name", "email", "nomor_wa", 
+      "alamat", "asal_sekolah", "nisn"
     ];
     
     requiredFields.forEach(field => {
@@ -209,10 +162,10 @@ export default function ParticipantDetail() {
       newErrors.email = "Email tidak valid";
     }
     
-    if (formData.whatsapp && !/^\d+$/.test(formData.whatsapp)) {
-      newErrors.whatsapp = "Nomor WhatsApp harus berupa angka";
-    } else if (formData.whatsapp && !/^[+]?[\d\s-]{10,15}$/.test(formData.whatsapp)) {
-      newErrors.whatsapp = "Nomor telepon tidak valid";
+    if (formData.nomor_wa && !/^\d+$/.test(formData.nomor_wa)) {
+      newErrors.nomor_wa = "Nomor WhatsApp harus berupa angka";
+    } else if (formData.nomor_wa && !/^[+]?[\d\s-]{10,15}$/.test(formData.nomor_wa)) {
+      newErrors.nomor_wa = "Nomor telepon tidak valid";
     }
     
     if (formData.nisn && !/^\d+$/.test(formData.nisn)) {
@@ -247,7 +200,7 @@ export default function ParticipantDetail() {
           confirmButtonText: "Kembali ke Dashboard",
           confirmButtonColor: "#9333EA",
         }).then(() => {
-          navigate("/admin/kti-admin");
+          navigate("/admin");
         });
       } catch (error) {
         Swal.fire({
@@ -386,89 +339,6 @@ export default function ParticipantDetail() {
     </div>
   );
 
-  const ScoreCard = ({ title, score }) => (
-    <div className="bg-white border border-gray-200 rounded-lg p-4">
-      <div className="flex items-center justify-between mb-3">
-        <p className="font-medium text-gray-800">{title}</p>
-        <span className={`text-sm font-bold ${
-          score >= 90 ? "text-green-500" : 
-          score >= 75 ? "text-blue-500" : 
-          score >= 60 ? "text-yellow-500" : 
-          "text-red-500"
-        }`}>{score}/100</span>
-      </div>
-      <div className="w-full bg-gray-200 rounded-full h-2">
-        <div 
-          className={`h-2 rounded-full ${
-            score >= 90 ? "bg-green-500" : 
-            score >= 75 ? "bg-blue-500" : 
-            score >= 60 ? "bg-yellow-500" : 
-            "bg-red-500"
-          }`}
-          style={{ width: `${score}%` }}
-        ></div>
-      </div>
-    </div>
-  );
-
-  const ActivityCard = ({ activity }) => (
-    <div className="flex items-start p-3 bg-white rounded-lg border border-gray-100 hover:bg-purple-50 transition-colors">
-      <div className={`p-2 rounded-lg mr-3 ${activity.status === "new" ? `bg-gradient-to-r ${activity.colorClass}` : activity.colorClass}`}>
-        {activity.icon}
-      </div>
-      <div>
-        <div className="flex items-center gap-2">
-          <p className="font-medium text-gray-800">{activity.action}</p>
-          {activity.status === "new" && (
-            <span className="text-xs bg-green-100 text-green-600 py-0.5 px-2 rounded">Baru</span>
-          )}
-        </div>
-        <p className="text-xs text-gray-500 mt-1">{activity.date}</p>
-      </div>
-    </div>
-  );
-
-  const ScheduleCard = ({ item }) => (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 mb-3 hover:border-purple-300 transition-colors">
-      <div className="flex items-start">
-        <div className="bg-purple-100 text-purple-600 p-3 rounded-lg mr-4">
-          <FiCalendar />
-        </div>
-        <div className="flex-1">
-          <div className="flex justify-between items-start mb-2">
-            <h4 className="font-medium text-gray-800">{item.title}</h4>
-            <Chip
-              size="sm"
-              variant="ghost"
-              value={item.status === "upcoming" ? "Akan Datang" : "Selesai"}
-              color={item.status === "upcoming" ? "blue" : "green"}
-              className="rounded-full text-xs"
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <div>
-              <p className="text-xs text-gray-500">Tanggal</p>
-              <p className="text-gray-800">{item.date}</p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500">Waktu</p>
-              <p className="text-gray-800">{item.time}</p>
-            </div>
-            <div className="col-span-2">
-              <p className="text-xs text-gray-500">Lokasi</p>
-              <p className="text-gray-800">{item.location}</p>
-            </div>
-          </div>
-          <div className="mt-3 flex justify-end">
-            <button className="text-xs font-medium text-purple-600 hover:text-purple-800">
-              Lihat Detail
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
       <div className="hidden md:block">
@@ -487,9 +357,6 @@ export default function ParticipantDetail() {
             transition={{ duration: 0.4 }}
             className="max-w-7xl mx-auto px-4 py-6 md:px-6 lg:px-8"
           >
-            
-
-
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* Sidebar Navigation */}
               <div className="lg:col-span-3">
@@ -548,10 +415,10 @@ export default function ParticipantDetail() {
                           {/* Baris 2 */}
                           <FormInput 
                             label="Nomor WhatsApp" 
-                            name="whatsapp" 
-                            value={formData.whatsapp}
+                            name="nomor_wa" 
+                            value={formData.nomor_wa}
                             placeholder="08xxxxxxxxxx"
-                            error={errors.whatsapp}
+                            error={errors.nomor_wa}
                           />
                           <FormInput 
                             label="Alamat Lengkap" 
@@ -563,10 +430,10 @@ export default function ParticipantDetail() {
                           {/* Baris 3 */}
                           <FormInput 
                             label="Asal Sekolah" 
-                            name="sekolah" 
-                            value={formData.sekolah}
+                            name="asal_sekolah" 
+                            value={formData.asal_sekolah}
                             placeholder="Masukkan nama sekolah"
-                            error={errors.sekolah}
+                            error={errors.asal_sekolah}
                           />
                           <FormInput 
                             label="NISN" 
@@ -579,10 +446,10 @@ export default function ParticipantDetail() {
                           <div className="md:col-span-2">
                             <FormInput 
                               label="Jenis Lomba" 
-                              name="jenisLomba" 
-                              value={formData.jenisLomba}
+                              name="jenis_lomba" 
+                              value={formData.jenis_lomba}
                               placeholder="Masukkan jenis lomba"
-                              error={errors.jenisLomba}
+                              error={errors.jenis_lomba}
                             />
                           </div>
                           {/* Baris 5 */}
@@ -614,6 +481,35 @@ export default function ParticipantDetail() {
                               <p className="text-red-500 text-xs mt-1">{errors.jenjang}</p>
                             )}
                           </div>
+                          {/* Baris 6 */}
+                          <FormInput 
+                            label="Guru Pembimbing" 
+                            name="guru" 
+                            value={formData.guru}
+                            placeholder="Nama guru pembimbing"
+                            error={errors.guru}
+                          />
+                          <FormInput 
+                            label="WA Guru" 
+                            name="wa_guru" 
+                            value={formData.wa_guru}
+                            placeholder="Nomor WA guru"
+                            error={errors.wa_guru}
+                          />
+                          <FormInput 
+                            label="Email Guru" 
+                            name="email_guru" 
+                            value={formData.email_guru}
+                            placeholder="Email guru"
+                            error={errors.email_guru}
+                          />
+                          <FormInput 
+                            label="Status" 
+                            name="status" 
+                            value={formData.status}
+                            placeholder="Status peserta"
+                            error={errors.status}
+                          />
                         </div>
                       </div>
                     </div>
@@ -628,16 +524,57 @@ export default function ParticipantDetail() {
                         </div>
                       </div>
                       <div className="p-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          {fileUploads.length > 0 ? (
-                            fileUploads.map((file) => (
-                              <FileUploadCard key={file.id} file={file} />
-                            ))
-                          ) : (
-                            <div className="col-span-2 text-center text-gray-400">
-                              Belum ada dokumen yang diunggah.
-                            </div>
-                          )}
+                        {/* Tampilkan gambar/link twibbon dan bukti pembayaran */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        {formData.link_twibbon ? (
+                          <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg p-4">
+                            <span className="font-semibold mb-2">Twibbon</span>
+                            <a
+                              href={api.URL_API + "/storage/" + formData.link_twibbon}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <img
+                                src={api.URL_API + "/storage/" + formData.link_twibbon}
+                                alt="Twibbon"
+                                className="max-h-40 rounded-lg border border-gray-100 object-contain"
+                                onError={(e) => {
+                                  e.target.style.display = "none";
+                                }}
+                              />
+                            </a>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg p-4">
+                            <span className="font-semibold mb-2">Twibbon</span>
+                            <p className="text-gray-500">Belum ada twibbon yang diunggah.</p>
+                          </div>
+                        )}
+
+                        {invoice && invoice.upload_bukti ? (
+                          <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg p-4">
+                            <span className="font-semibold mb-2">Bukti Pembayaran</span>
+                            <a
+                              href={api.URL_API + "/storage/" + invoice.upload_bukti}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <img
+                                src={api.URL_API + "/storage/" + invoice.upload_bukti}
+                                alt="Bukti Pembayaran"
+                                className="max-h-40 rounded-lg border border-gray-100 object-contain"
+                                onError={(e) => {
+                                  e.target.style.display = "none";
+                                }}
+                              />
+                            </a>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg p-4">
+                            <span className="font-semibold mb-2">Bukti Pembayaran</span>
+                            <p className="text-gray-500">Belum ada bukti pembayaran yang diunggah.</p>
+                          </div>
+                        )}
                         </div>
                       </div>
                     </div>
@@ -647,7 +584,7 @@ export default function ParticipantDetail() {
                       <Button
                         color="green"
                         className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-green-600 to-green-400 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
-                        onClick={() => {
+                        onClick={async () => {
                           Swal.fire({
                             title: "Verifikasi Peserta?",
                             text: "Pastikan semua berkas sudah lengkap sebelum verifikasi.",
@@ -657,14 +594,42 @@ export default function ParticipantDetail() {
                             cancelButtonText: "Batal",
                             confirmButtonColor: "#22c55e",
                             cancelButtonColor: "#9333EA",
-                          }).then((result) => {
+                          }).then(async (result) => {
                             if (result.isConfirmed) {
                               Swal.fire({
-                                title: "Terverifikasi!",
-                                text: "Peserta telah berhasil diverifikasi.",
-                                icon: "success",
-                                confirmButtonColor: "#9333EA",
+                                title: "Memverifikasi...",
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                  Swal.showLoading();
+                                },
                               });
+                              try {
+                                const res = await fetch(`${api.URL_API}/api/users/verifSuccess/${id}`, {
+                                  method: "PUT",
+                                  credentials: "include",
+                                  headers: {
+                                    "Content-Type": "application/json",
+                                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                                  },
+                                });
+                                if (!res.ok) throw new Error("Gagal verifikasi peserta");
+                                await res.json();
+                                Swal.fire({
+                                  title: "Terverifikasi!",
+                                  text: "Peserta telah berhasil diverifikasi.",
+                                  icon: "success",
+                                  confirmButtonColor: "#9333EA",
+                                }).then(() => {
+                                  window.location.reload();
+                                });
+                              } catch (error) {
+                                Swal.fire({
+                                  title: "Gagal",
+                                  text: "Gagal memverifikasi peserta.",
+                                  icon: "error",
+                                  confirmButtonColor: "#9333EA",
+                                });
+                              }
                             }
                           });
                         }}
