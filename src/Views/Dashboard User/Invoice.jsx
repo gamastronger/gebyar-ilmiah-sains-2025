@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../configs/api'; // Import API configuration
+import NavDashUser from '../../Component/NavDashUser';
 
 function Invoice() {
   const [showUploadForm, setShowUploadForm] = useState(false);
@@ -177,7 +178,7 @@ function Invoice() {
       case 'bca':
         return (
           <div className="p-1 rounded-md flex items-center justify-center w-full h-full">
-            <img src="/src/assets/bca.png" alt="BCA Logo" className="w-8 h-8"></img>
+            <img src="/src/assets/bca.png" alt="BCA Logo" className="w-11 h-8"></img>
           </div>
         );
       case 'mandiri':
@@ -197,6 +198,7 @@ function Invoice() {
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 overflow-x-hidden">
+      <NavDashUser />
       {/* Decorative Elements - Responsive */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <motion.div 
@@ -210,81 +212,6 @@ function Invoice() {
           transition={{...bgTransition, delay: 2}}
         />
       </div>
-
-      {/* Fixed Navigation Bar - Responsive */}
-      <motion.nav 
-        className="fixed top-0 left-0 right-0 bg-white shadow-md z-50"
-        initial={{ y: -20 }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-between items-center py-3 md:py-4">
-            <div className="flex items-center">
-              <Link to="/" className="font-bold text-lg sm:text-xl text-purple-800 flex items-center">
-                <img 
-                  src="/src/assets/logomascot.png" 
-                  alt="Logo GIS" 
-                  className="w-8 h-8 sm:w-10 sm:h-10 mr-2"
-                />
-                <span className="hidden xs:inline">Gebyar Ilmiah Sains</span>
-                <span className="xs:hidden">Gebyar Ilmiah Sains</span>
-              </Link>
-            </div>
-            <div className="hidden md:flex items-center space-x-3 lg:space-x-8">
-              {["invoice", "bantuan", "cbt"].map((item) => (
-                <Link 
-                  key={item}
-                  to={`/dashboard/user/${item}`} 
-                  className={`text-sm lg:text-base text-purple-800 hover:text-purple-600 font-medium transition duration-300 ease-in-out ${
-                    item === "invoice" ? "border-b-2 border-purple-600" : ""
-                  }`}
-                >
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
-                </Link>
-              ))}
-            </div>
-            <div className="md:hidden flex items-center">
-              <button 
-                className="outline-none mobile-menu-button"
-                onClick={toggleMenu}
-                aria-label="Toggle menu"
-              >
-                <svg className="w-6 h-6 text-purple-800" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-                  <path d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        {/* Mobile Menu - Improved animation */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div 
-              className="md:hidden bg-white shadow-inner"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="flex flex-col space-y-2 px-4 py-2">
-                {["invoice", "bantuan", "cbt"].map((item) => (
-                  <Link 
-                    key={item}
-                    to={`/dashboard/user/${item}`} 
-                    className={`text-purple-800 hover:text-purple-600 font-medium py-2 border-b border-gray-100 ${
-                      item === "invoice" ? "border-l-4 border-l-purple-600 pl-2" : ""
-                    }`}
-                  >
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
 
       {/* Main Content - Responsive padding */}
       <motion.div 

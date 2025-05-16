@@ -6,7 +6,7 @@ import {
   Typography,
   IconButton,
 } from "@material-tailwind/react";
-import brandImg from "../../assets/logokabinet.png";
+import brandImg from "../../assets/logogis.png";
 
 export function Sidenav({
   brandName = "Admin GIS",

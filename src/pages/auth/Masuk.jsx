@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../Component/Navbar"; // Pastikan path ini benar
-import illustrationImg from "../../assets/docfotbar1.jpg"; // Gambar bisa disesuaikan
+import illustrationImg from "../../assets/imglogin.jpg"; // Gambar bisa disesuaikan
 import api from "@/configs/api";
 
 export function Masuk() {

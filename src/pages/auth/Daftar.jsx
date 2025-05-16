@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import illustrationImg from "../../assets/docfotbar1.jpg";
+import illustrationImg from "../../assets/imgdaftar.jpg"; // Gambar bisa disesuaikan
 import { motion } from "framer-motion";
 import Navbar from "../../Component/Navbar";
 import { toast, ToastContainer } from 'react-toastify';

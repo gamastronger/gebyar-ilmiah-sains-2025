@@ -39,7 +39,7 @@ export function Layanan() {
     const getUsers = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${api.URL_API}/api/users`, {
+        const response = await fetch(`${api.URL_API}/api/users?jenis_lomba=science-competition`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -49,7 +49,7 @@ export function Layanan() {
         });
         const data = await response.json();
         if (response.ok) {
-          setParticipants(data?.participants || []);
+          setParticipants(data || []);
         } else {
           console.error("Error fetching participants:", data);
         }
@@ -341,7 +341,7 @@ export function Layanan() {
                               idx % 2 === 0 ? "bg-white" : "bg-purple-50"
                             } hover:bg-purple-100 transition-colors duration-150`}
                           >
-                            <td className="py-3 px-4 border-b border-purple-100">{participant.id}</td>
+                            <td className="py-3 px-4 border-b border-purple-100">{idx + 1}</td>
                             <td className="py-3 px-4 border-b border-purple-100 font-medium">{participant.name}</td>
                             <td className="py-3 px-4 border-b border-purple-100 text-gray-600">{participant.email}</td>
                             <td className="py-3 px-4 border-b border-purple-100">

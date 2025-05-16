@@ -15,6 +15,7 @@ import { participantsData } from "../../data/participantsData";
 import api from "@/configs/api";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import Swal from "sweetalert2"; // Tambahkan import ini jika belum ada
 import "dayjs/locale/id"; // Bahasa Indonesia
 
 dayjs.extend(localizedFormat);
@@ -44,7 +45,7 @@ export function Portofolio() {
   // Perbarui data saat komponen dimuat ulang
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetch(`${api.URL_API}/api/users`, {
+      const response = await fetch(`${api.URL_API}/api/users?jenis_lomba=science-writing`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -67,6 +68,40 @@ export function Portofolio() {
 
   const handleDetail = (id) => {
     navigate(`/dashboard/participant-detail/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Hapus Peserta?",
+      text: "Data peserta akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Hapus",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#9333EA",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await fetch(`${api.URL_API}/api/users/${id}`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          if (res.ok) {
+            setParticipants((prev) => prev.filter((p) => p.id !== id));
+            Swal.fire("Berhasil!", "Data peserta telah dihapus.", "success");
+          } else {
+            Swal.fire("Gagal", "Gagal menghapus peserta.", "error");
+          }
+        } catch (err) {
+          Swal.fire("Gagal", "Terjadi kesalahan saat menghapus.", "error");
+        }
+      }
+    });
   };
 
   const handleSearch = (e) => {
@@ -201,102 +236,117 @@ export function Portofolio() {
             <FaFilter className="mr-2" /> Filter Data
           </Button>
 
-          {/* Filter Popup with animation */}
+          {/* Filter Popup with improved layout and animations */}
           <AnimatePresence>
             {showFilterPopup && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                transition={{ duration: 0.2 }}
-                className="absolute right-0 top-12 w-72 bg-white shadow-xl rounded-lg p-4 z-50 border border-purple-100"
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="absolute right-0 top-12 w-80 bg-white shadow-2xl rounded-xl overflow-hidden z-50 border border-purple-200"
               >
-                <div className="flex flex-col gap-4">
-                  <Typography variant="small" className="font-bold text-purple-800 border-b border-purple-100 pb-2">
+                {/* Header with gradient background and icon */}
+                <div className="bg-gradient-to-r from-purple-600 to-indigo-600 px-4 py-3 flex items-center gap-2">
+                  <span className="bg-white bg-opacity-20 rounded-full p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-7 7V21a1 1 0 01-1.447.894l-4-2A1 1 0 017 19v-5.293l-7-7A1 1 0 013 4z" /></svg>
+                  </span>
+                  <Typography variant="small" className="font-bold text-white">
                     Filter Data Peserta
                   </Typography>
-                  
-                  {/* Filter Jenjang */}
-                  <div>
-                    <Typography variant="small" className="font-semibold text-gray-700 mb-1">
-                      Jenjang Pendidikan
-                    </Typography>
-                    <Select
-                      value={selectedFilters.jenjang}
-                      onChange={(value) => handleFilterChange("jenjang", value)}
-                      className="text-sm"
-                      labelProps={{
-                        className: "hidden",
-                      }}
-                    >
-                      <Option value="all">Semua Jenjang</Option>
-                      <Option value="SMA/MA/SMK">SMA/MA/SMK</Option>
-                      <Option value="Mahasiswa/i">Mahasiswa/i</Option>
-                    </Select>
-                  </div>
+                </div>
+                
+                <div className="p-5">
+                  <div className="flex flex-col gap-5">
+                    {/* Filter Jenjang */}
+                    <div>
+                      <Typography variant="small" className="font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H6m6 0h6" /></svg>
+                        Jenjang Pendidikan
+                      </Typography>
+                      <Select
+                        value={selectedFilters.jenjang}
+                        onChange={(value) => handleFilterChange("jenjang", value)}
+                        className="text-sm"
+                        labelProps={{ className: "hidden" }}
+                        menuProps={{ className: "p-1" }}
+                        containerProps={{ className: "min-w-full" }}
+                      >
+                        <Option value="all" className="text-sm py-1.5">Semua Jenjang</Option>
+                        <Option value="SMA/MA/SMK" className="text-sm py-1.5">SMA/MA/SMK</Option>
+                        <Option value="Mahasiswa/i" className="text-sm py-1.5">Mahasiswa/i</Option>
+                      </Select>
+                    </div>
 
-                  {/* Filter Status */}
-                  <div>
-                    <Typography variant="small" className="font-semibold text-gray-700 mb-1">
-                      Status Verifikasi
-                    </Typography>
-                    <Select
-                      value={selectedFilters.status}
-                      onChange={(value) => handleFilterChange("status", value)}
-                      className="text-sm"
-                      labelProps={{
-                        className: "hidden",
-                      }}
-                    >
-                      <Option value="all">Semua Status</Option>
-                      <Option value="verified">Terverifikasi</Option>
-                      <Option value="pending">Pending</Option>
-                      <Option value="failed">Gagal</Option>
-                    </Select>
-                  </div>
+                    {/* Filter Status */}
+                    <div>
+                      <Typography variant="small" className="font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Status Verifikasi
+                      </Typography>
+                      <Select
+                        value={selectedFilters.status}
+                        onChange={(value) => handleFilterChange("status", value)}
+                        className="text-sm"
+                        labelProps={{ className: "hidden" }}
+                        menuProps={{ className: "p-1" }}
+                        containerProps={{ className: "min-w-full" }}
+                      >
+                        <Option value="all" className="text-sm py-1.5">Semua Status</Option>
+                        <Option value="verified" className="text-sm py-1.5">Terverifikasi</Option>
+                        <Option value="pending" className="text-sm py-1.5">Pending</Option>
+                        <Option value="failed" className="text-sm py-1.5">Gagal</Option>
+                      </Select>
+                    </div>
 
-                  {/* Filter Waktu */}
-                  <div>
-                    <Typography variant="small" className="font-semibold text-gray-700 mb-1">
-                      Waktu Diverifikasi
-                    </Typography>
-                    <Select
-                      value={selectedFilters.waktu}
-                      onChange={(value) => handleFilterChange("waktu", value)}
-                      className="text-sm"
-                      labelProps={{
-                        className: "hidden",
-                      }}
-                    >
-                      <Option value="all">Semua Waktu</Option>
-                      <Option value="verified">Sudah Diverifikasi</Option>
-                      <Option value="not_verified">Belum Diverifikasi</Option>
-                    </Select>
-                  </div>
+                    {/* Filter Waktu */}
+                    <div>
+                      <Typography variant="small" className="font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        Waktu Diverifikasi
+                      </Typography>
+                      <Select
+                        value={selectedFilters.waktu}
+                        onChange={(value) => handleFilterChange("waktu", value)}
+                        className="text-sm"
+                        labelProps={{ className: "hidden" }}
+                        menuProps={{ className: "p-1" }}
+                        containerProps={{ className: "min-w-full" }}
+                      >
+                        <Option value="all" className="text-sm py-1.5">Semua Waktu</Option>
+                        <Option value="verified" className="text-sm py-1.5">Sudah Diverifikasi</Option>
+                        <Option value="not_verified" className="text-sm py-1.5">Belum Diverifikasi</Option>
+                      </Select>
+                    </div>
 
-                  <div className="flex justify-between gap-2 mt-2">
-                    <Button
-                      color="red"
-                      size="sm"
-                      onClick={() => {
-                        setSelectedFilters({
-                          jenjang: "all",
-                          status: "all",
-                          waktu: "all",
-                        });
-                      }}
-                      className="w-1/2 py-2"
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      color="purple"
-                      size="sm"
-                      onClick={() => setShowFilterPopup(false)}
-                      className="w-1/2 py-2 bg-gradient-to-r from-purple-600 to-indigo-600"
-                    >
-                      Terapkan
-                    </Button>
+                    {/* Action buttons */}
+                    <div className="flex justify-between gap-3 mt-2">
+                      <Button
+                        color="red"
+                        size="sm"
+                        variant="outlined"
+                        onClick={() => {
+                          setSelectedFilters({
+                            jenjang: "all",
+                            status: "all",
+                            waktu: "all",
+                          });
+                        }}
+                        className="w-1/2 py-2 flex items-center justify-center gap-1 hover:bg-red-50 transition-colors"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                        Reset
+                      </Button>
+                      <Button
+                        color="purple"
+                        size="sm"
+                        onClick={() => setShowFilterPopup(false)}
+                        className="w-1/2 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-md transition-all flex items-center justify-center gap-1"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Terapkan
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -345,7 +395,7 @@ export function Portofolio() {
                               idx % 2 === 0 ? "bg-white" : "bg-purple-50"
                             } hover:bg-purple-100 transition-colors duration-150`}
                           >
-                            <td className="py-3 px-4 border-b border-purple-100">{participant.id}</td>
+                            <td className="py-3 px-4 border-b border-purple-100">{idx + 1}</td>
                             <td className="py-3 px-4 border-b border-purple-100 font-medium">{participant.name}</td>
                             <td className="py-3 px-4 border-b border-purple-100 text-gray-600">{participant.email}</td>
                             <td className="py-3 px-4 border-b border-purple-100">
@@ -379,13 +429,22 @@ export function Portofolio() {
                               </span>
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100 text-center">
-                              <Button
-                                color="purple"
-                                onClick={() => handleDetail(participant.id)}
-                                className="rounded-md text-xs px-4 py-2 normal-case bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-md transition-all duration-300"
-                              >
-                                Detail
-                              </Button>
+                              <div className="flex justify-center items-center gap-2">
+                                <Button
+                                  color="purple"
+                                  onClick={() => handleDetail(participant.id)}
+                                  className="rounded-md text-xs px-4 py-2 normal-case bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-md transition-all duration-300 min-w-[80px] h-9 flex items-center justify-center"
+                                >
+                                  Detail
+                                </Button>
+                                <Button
+                                  color="red"
+                                  onClick={() => handleDelete(participant.id)}
+                                  className="rounded-md text-xs px-4 py-2 normal-case bg-gradient-to-r from-red-500 to-pink-500 hover:shadow-md transition-all duration-300 min-w-[80px] h-9 flex items-center justify-center"
+                                >
+                                  Hapus
+                                </Button>
+                              </div>
                             </td>
                           </motion.tr>
                         ))
