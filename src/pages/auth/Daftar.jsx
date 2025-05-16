@@ -1,18 +1,29 @@
 "use client";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import illustrationImg from "../../assets/bgsementararegister.jpg";
+import illustrationImg from "../../assets/docfotbar1.jpg";
 import { motion } from "framer-motion";
 import Navbar from "../../Component/Navbar";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from "@/configs/api";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+
 // Input Component
-const Input = ({ label, type = "text", name, value, onChange, error }) => (
-  <div>
+const Input = ({
+  label,
+  type = "text",
+  name,
+  value,
+  onChange,
+  error,
+  showPassword,
+  toggleShowPassword,
+}) => (
+  <div className="relative">
     <label className="block font-medium text-gray-700 mb-2">{label}</label>
     <input
-      type={type}
+      type={type === "password" && showPassword ? "text" : type}
       name={name}
       placeholder={label}
       value={value}
@@ -20,7 +31,19 @@ const Input = ({ label, type = "text", name, value, onChange, error }) => (
       className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm ${
         error ? "border-red-500" : "border-gray-300"
       }`}
+      autoComplete={type === "password" ? "new-password" : undefined}
     />
+    {type === "password" && (
+      <span
+        className="absolute right-3 top-10 cursor-pointer text-xl text-gray-500"
+        onClick={toggleShowPassword}
+        tabIndex={0}
+        role="button"
+        aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
+      >
+        {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+      </span>
+    )}
     {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
   </div>
 );
@@ -34,8 +57,9 @@ const Daftar = () => {
     password: "",
     konfirmasi: "",
   });
-
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showKonfirmasi, setShowKonfirmasi] = useState(false);
 
   const fadeIn = {
     initial: { opacity: 0, y: 30, filter: "blur(8px)" },
@@ -54,7 +78,6 @@ const Daftar = () => {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -69,7 +92,6 @@ const Daftar = () => {
       ...prev,
       jenjang: ""
     }));
-    // Clear jenis lomba error when user selects an option
     if (errors.jenisLomba) {
       setErrors(prev => ({
         ...prev,
@@ -82,29 +104,24 @@ const Daftar = () => {
     e.preventDefault();
     const newErrors = {};
 
-    // Validate required fields
     ["nama", "email", "password", "konfirmasi"].forEach((key) => {
       if (!formData[key]) {
         newErrors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} harus diisi`;
       }
     });
 
-    // Validate email format
     if (formData.email && !/^\S+@\S+\.\S+$/.test(formData.email)) {
       newErrors.email = "Format email tidak valid";
     }
 
-    // Check if jenis lomba is selected
     if (!jenisLomba) {
       newErrors.jenisLomba = "Pilih jenis lomba";
     }
 
-    // Check if jenjang is selected
     if (!formData.jenjang) {
       newErrors.jenjang = "Pilih jenjang";
     }
 
-    // Check password match
     if (formData.password !== formData.konfirmasi) {
       newErrors.konfirmasi = "Konfirmasi password tidak cocok";
     }
@@ -113,14 +130,6 @@ const Daftar = () => {
 
     if (Object.keys(newErrors).length === 0) {
       try {
-        // Send data to the API
-        console.log("Sending data to API:", {
-            name: formData.nama,
-            email: formData.email,
-            jenjang: formData.jenjang,
-            password: formData.password,
-            jenis_lomba: jenisLomba,
-        });
         const response = await fetch(`${api.URL_API}/api/register`, {
           method: 'POST',
           headers: {
@@ -137,8 +146,7 @@ const Daftar = () => {
         });
 
         if (response.ok) {
-          // Show success toast with animation
-          toast.success('Pendaftaran berhasil! Anda akan diarahkan le login.', {
+          toast.success('Pendaftaran berhasil! Anda akan diarahkan ke login.', {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -150,7 +158,6 @@ const Daftar = () => {
           });
 
           setTimeout(() => {
-            console.log("Navigating to login page...");
             window.location.href = "/auth/masuk";
           }, 5000);
         } else {
@@ -297,12 +304,12 @@ const Daftar = () => {
                     <option value="">Pilih jenjang</option>
                     {jenisLomba === "science-competition" ? (
                       <>
-                        <option value="sd">SD</option>
-                        <option value="smp">SMP</option>
+                        <option value="sd">SD/MI</option>
+                        <option value="smp">SMP/MTS</option>
                       </>
                     ) : jenisLomba === "science-writing" ? (
                       <>
-                        <option value="sma">SMA</option>
+                        <option value="sma">SMA/SMK/MA Sederajat</option>
                         <option value="mahasiswa">Mahasiswa/i</option>
                       </>
                     ) : null}
@@ -321,6 +328,8 @@ const Daftar = () => {
                   value={formData.password} 
                   onChange={handleChange} 
                   error={errors.password} 
+                  showPassword={showPassword}
+                  toggleShowPassword={() => setShowPassword((prev) => !prev)}
                 />
                 <Input 
                   label="Konfirmasi Password" 
@@ -329,6 +338,8 @@ const Daftar = () => {
                   value={formData.konfirmasi} 
                   onChange={handleChange} 
                   error={errors.konfirmasi} 
+                  showPassword={showKonfirmasi}
+                  toggleShowPassword={() => setShowKonfirmasi((prev) => !prev)}
                 />
               </div>
 

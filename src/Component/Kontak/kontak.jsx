@@ -31,7 +31,7 @@ const Kontak = () => {
       title: "Science Competition",
       contacts: [
         { name: "Nisa", role: "Koordinator", phone: "+6287876440866" },
-        { name: "Farid", role: "Wakil Koordinator", phone: "+62087758375435" }
+        { name: "Dzaky", role: "Wakil Koordinator", phone: "+62087758375435" }
       ]
     }
   ];
@@ -210,12 +210,9 @@ const Kontak = () => {
                       <div className="bg-gradient-to-r from-purple-800/60 to-indigo-800/60 rounded-xl p-6 backdrop-blur-sm">
                         <h4 className="text-xl font-semibold text-white mb-3">Jam Operasional</h4>
                         <div className="grid grid-cols-2 gap-2">
-                          <div className="text-purple-200">Senin - Jumat</div>
+                          <div className="text-purple-200">Senin - Minggu</div>
                           <div className="text-white">08:00 - 17:00 WIB</div>
-                          <div className="text-purple-200">Sabtu</div>
-                          <div className="text-white">09:00 - 15:00 WIB</div>
-                          <div className="text-purple-200">Minggu</div>
-                          <div className="text-white">Tutup</div>
+                          
                         </div>
                       </div>
                     </div>

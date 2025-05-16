@@ -13,7 +13,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Beranda, Profil, Tabel, Portofolio, Layanan, Paket, Pesanan, Testimoni, Faq } from "@/pages/dashboard";
 import { Daftar, Masuk } from "@/pages/auth";
-import ParticipantDetail2 from "./pages/dashboard/ParticipantDetail2";
+
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -40,14 +40,14 @@ export const routes = [
       },
       {
         icon: <Squares2X2Icon {...icon} />,
-        name: "KTI",
-        path: "/KTI-Admin",
+        name: "SWC",
+        path: "/SWC-Admin",
         element: <Portofolio />,
       },
       {
         icon: <ClipboardDocumentCheckIcon {...icon} />,
-        name: "CBT",
-        path: "/CBT-Admin",
+        name: "SC",
+        path: "/SC-Admin",
         element: <Layanan />,
       },
       
