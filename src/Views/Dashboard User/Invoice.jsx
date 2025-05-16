@@ -9,6 +9,10 @@ function Invoice() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [invoices, setInvoices] = useState([]);
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const [uploadFile, setUploadFile] = useState(null);
 
   // Handle window resize
   useEffect(() => {
@@ -38,25 +42,70 @@ function Invoice() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleShowUploadForm = () => {
+  const handleShowUploadForm = (invoice) => {
+    setSelectedInvoice(invoice);
     setShowUploadForm(true);
   };
 
   const handleBackToInvoice = () => {
     setShowUploadForm(false);
+    setSelectedInvoice(null);
   };
 
-  const handleUpload = () => {
-    setShowUploadForm(false);
-    setShowConfirmationPage(true);
+  const handleUpload = async () => {
+    if (!selectedInvoice || !selectedPaymentMethod || !uploadFile) {
+      alert("Harap lengkapi metode pembayaran dan unggah bukti pembayaran.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("_method", "PUT"); // Spoofing method
+    formData.append("user_id", selectedInvoice.user_id); // Tambahkan user_id jika diperlukan
+    formData.append("kode_bayar", selectedInvoice.kode_bayar);
+    formData.append("status", "pending"); // Status diubah menjadi "pending"
+    formData.append("total_pembayaran", selectedInvoice.total_pembayaran);
+    formData.append("upload_bukti", uploadFile);
+
+    try {
+      const response = await fetch(`${api.URL_API}/api/invoices/${selectedInvoice.id}`, {
+        method: "POST", // Ganti dari PUT ke POST
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        const updatedInvoice = await response.json();
+        alert("Bukti pembayaran berhasil diunggah!");
+        setShowUploadForm(false);
+        setShowConfirmationPage(true);
+
+        // Perbarui data invoice di state
+        setInvoices((prevInvoices) =>
+          prevInvoices.map((invoice) =>
+            invoice.id === updatedInvoice.id ? updatedInvoice : invoice
+          )
+        );
+      } else {
+        const errorData = await response.json();
+        console.error("Gagal mengunggah bukti pembayaran:", errorData);
+        alert("Gagal mengunggah bukti pembayaran. Silakan coba lagi.");
+      }
+    } catch (error) {
+      console.error("Terjadi kesalahan saat mengunggah bukti pembayaran:", error);
+      alert("Terjadi kesalahan. Silakan coba lagi.");
+    }
   };
 
   const handleCloseConfirmation = () => {
     setShowConfirmationPage(false);
+    window.location.href = '/dashboard/user/invoice';
   };
 
   const handleBackToHome = () => {
     setShowConfirmationPage(false);
+    window.location.href = '/dashboard/user/invoice';
   };
 
   const getInvoices = async () => {
@@ -240,12 +289,13 @@ function Invoice() {
                 </div>
                 
                 {/* Responsive Table */}
+                {selectedInvoice && (
                 <div className="overflow-x-auto bg-white rounded-lg shadow">
                   <table className="w-full border-collapse rounded-lg overflow-hidden">
                     <thead className="bg-purple-700 text-white">
                       <tr>
-                        <th className="border p-2 sm:p-3 text-xs sm:text-sm">No</th>
                         <th className="border p-2 sm:p-3 text-xs sm:text-sm">Kode Bayar</th>
+                        <th className="border p-2 sm:p-3 text-xs sm:text-sm">Total Bayar</th>
                         <th className="border p-2 sm:p-3 text-xs sm:text-sm">Status</th>
                         <th className="border p-2 sm:p-3 text-xs sm:text-sm">Tanggal Upload</th>
                         <th className="border p-2 sm:p-3 text-xs sm:text-sm">Opsi</th>
@@ -253,12 +303,12 @@ function Invoice() {
                     </thead>
                     <tbody>
                       <tr className="hover:bg-purple-50 transition-colors">
-                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">1</td>
-                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">INV001</td>
+                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">{selectedInvoice.kode_bayar}</td>
+                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">Rp {selectedInvoice.total_pembayaran.toLocaleString()}</td>
                         <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">
-                          <span className="text-green-600 font-semibold">Terupload</span>
+                          <span className="text-amber-500 font-semibold">{selectedInvoice.status || "Menunggu"}</span>
                         </td>
-                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">20/04/2025</td>
+                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">{new Date(selectedInvoice.created_at).toLocaleDateString('id-ID')}</td>
                         <td className="border p-2 sm:p-3 text-center">
                           <button className="bg-purple-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded text-xs sm:text-sm hover:bg-purple-700 transition-colors">
                             Hubungi Admin
@@ -268,6 +318,7 @@ function Invoice() {
                     </tbody>
                   </table>
                 </div>
+                )}
                 
                 {/* Info Card - Improved styling */}
                 <div className="bg-purple-50 p-4 sm:p-6 rounded-lg shadow-md border border-purple-100">
@@ -294,7 +345,7 @@ function Invoice() {
                   </motion.button>
                 </div>
               </motion.div>
-            ) : showUploadForm ? (
+            ) : showUploadForm && selectedInvoice ? (
               // Upload Form - Responsive
               <motion.div
                 key="uploadForm"
@@ -308,58 +359,68 @@ function Invoice() {
                   Upload Bukti Pembayaran
                 </h2>
                 <div className="space-y-3 sm:space-y-4">
-                  {[
-                    {
-                      label: "Total Pembayaran",
-                      component: (
-                        <input
-                          type="text"
-                          className="w-full border border-purple-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                          placeholder="Masukkan total pembayaran"
-                        />
-                      )
-                    },
-                    {
-                      label: "Metode Pembayaran",
-                      component: (
-                        <select
-                          className="w-full border border-purple-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        >
-                          <option value="">Pilih metode pembayaran</option>
-                          <option value="Bank ABC">Bank ABC</option>
-                          <option value="Bank XYZ">Bank XYZ</option>
-                        </select>
-                      )
-                    },
-                    {
-                      label: "Tanggal Pembayaran",
-                      component: (
-                        <input
-                          type="datetime-local"
-                          className="w-full border border-purple-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        />
-                      )
-                    },
-                    {
-                      label: "Bukti Pembayaran",
-                      component: (
-                        <div className="border-2 border-dashed border-purple-200 rounded-lg p-4 text-center hover:border-purple-300 transition-colors">
-                          <input
-                            type="file"
-                            className="w-full text-sm text-gray-500"
-                          />
-                          <p className="text-xs text-gray-500 mt-2">Upload file dalam format JPG, PNG, atau PDF (max 2MB)</p>
-                        </div>
-                      )
-                    }
-                  ].map((field, index) => (
-                    <div key={index}>
-                      <label className="block font-semibold text-purple-700 mb-1 sm:mb-2 text-sm sm:text-base">
-                        {field.label}
-                      </label>
-                      {field.component}
+                  {/* Informasi yang tidak dapat diubah */}
+                  <div>
+                    <label className="block font-semibold text-purple-700 mb-1 sm:mb-2 text-sm sm:text-base">
+                      Kode Bayar
+                    </label>
+                    <input
+                      type="text"
+                      value={selectedInvoice.kode_bayar}
+                      readOnly
+                      className="w-full border border-purple-200 p-2 rounded-lg bg-gray-100 text-gray-700"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-purple-700 mb-1 sm:mb-2 text-sm sm:text-base">
+                      Total Pembayaran
+                    </label>
+                    <input
+                      type="text"
+                      value={`Rp ${selectedInvoice.total_pembayaran.toLocaleString()}`}
+                      readOnly
+                      className="w-full border border-purple-200 p-2 rounded-lg bg-gray-100 text-gray-700"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-purple-700 mb-1 sm:mb-2 text-sm sm:text-base">
+                      Tanggal Dibuat
+                    </label>
+                    <input
+                      type="text"
+                      value={new Date(selectedInvoice.created_at).toLocaleDateString('id-ID')}
+                      readOnly
+                      className="w-full border border-purple-200 p-2 rounded-lg bg-gray-100 text-gray-700"
+                    />
+                  </div>
+
+                  {/* Input yang dapat diubah */}
+                  <div>
+                    <label className="block font-semibold text-purple-700 mb-1 sm:mb-2 text-sm sm:text-base">
+                      Metode Pembayaran
+                    </label>
+                    <select
+                      className="w-full border border-purple-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+                    >
+                      <option value="">Pilih metode pembayaran</option>
+                      <option value="Bank ABC">Bank ABC</option>
+                      <option value="Bank XYZ">Bank XYZ</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-purple-700 mb-1 sm:mb-2 text-sm sm:text-base">
+                      Bukti Pembayaran
+                    </label>
+                    <div className="border-2 border-dashed border-purple-200 rounded-lg p-4 text-center hover:border-purple-300 transition-colors">
+                      <input
+                        type="file"
+                        className="w-full text-sm text-gray-500"
+                        onChange={(e) => setUploadFile(e.target.files[0])}
+                      />
+                      <p className="text-xs text-gray-500 mt-2">Upload file dalam format JPG, PNG, atau PDF (max 2MB)</p>
                     </div>
-                  ))}
+                  </div>
                 </div>
                 <div className="flex justify-between mt-6 gap-3">
                   <motion.button
@@ -425,31 +486,58 @@ function Invoice() {
                         <th className="border p-2 sm:p-3 text-xs sm:text-sm">Kode Bayar</th>
                         <th className="border p-2 sm:p-3 text-xs sm:text-sm">Status</th>
                         <th className="border p-2 sm:p-3 text-xs sm:text-sm">Total Pembayaran</th>
-                        <th className="border p-2 sm:p-3 text-xs sm:text-sm">Upload Bukti</th>
+                        <th className="border p-2 sm:p-3 text-xs sm:text-sm">Tanggal Dibuat</th>
+                        <th className="border p-2 sm:p-3 text-xs sm:text-sm">Opsi</th> {/* Tambahkan kolom untuk opsi */}
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="hover:bg-purple-50 transition-colors">
-                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">1</td>
-                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">INV001</td>
-                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">
-                          <span className="text-amber-500 font-semibold">
-                            Menunggu
-                          </span>
-                        </td>
-                        <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">Rp 500.000</td>
-                        <td className="border p-2 sm:p-3 text-center">
-                          <motion.button
-                            onClick={handleShowUploadForm}
-                            className="bg-purple-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded text-xs sm:text-sm hover:bg-purple-700 transition-colors"
-                            whileHover={{ scale: windowWidth > 768 ? 1.03 : 1 }}
-                            whileTap={{ scale: 0.97 }}
-                            transition={{ type: "spring", stiffness: 400 }}
-                          >
-                            Upload Bukti
-                          </motion.button>
-                        </td>
-                      </tr>
+                      {invoices.length > 0 ? (
+                        invoices.map((invoice, index) => (
+                          <tr key={invoice.id} className="hover:bg-purple-50 transition-colors">
+                            <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">{index + 1}</td>
+                            <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">{invoice.kode_bayar}</td>
+                            <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">
+                              {invoice.status === null ? (
+                                <span className="text-amber-500 font-semibold">Menunggu</span>
+                              ) : invoice.status === "pending" ? (
+                                <span className="text-amber-500 font-semibold">Segera Hubungi Admin</span>
+                              ) : invoice.status === "approved" ? (
+                                <span className="text-green-600 font-semibold">Diterima</span>
+                              ) : (
+                                <span className="text-gray-500 font-semibold">Status Tidak Diketahui</span>
+                              )}
+                            </td>
+                            <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">Rp {invoice.total_pembayaran.toLocaleString()}</td>
+                            <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">
+                              {new Date(invoice.created_at).toLocaleDateString('id-ID')}
+                            </td>
+                            <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">
+                              {invoice.status === null && (
+                                <button
+                                  onClick={() => handleShowUploadForm(invoice)} // Fungsi untuk membuka form upload
+                                  className="bg-purple-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded text-xs sm:text-sm hover:bg-purple-700 transition-colors"
+                                >
+                                  Upload Bukti
+                                </button>
+                              )}
+                              {invoice.status === "pending" && (
+                                <button
+                                  onClick={() => alert("Silakan hubungi admin untuk konfirmasi pembayaran.")}
+                                  className="bg-amber-500 text-white px-2 py-1 sm:px-4 sm:py-2 rounded text-xs sm:text-sm hover:bg-amber-600 transition-colors"
+                                >
+                                  Hubungi Admin
+                                </button>
+                              )}
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="6" className="border p-2 sm:p-3 text-center text-xs sm:text-sm">
+                            Tidak ada data invoice.
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>

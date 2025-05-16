@@ -1,3 +1,4 @@
+import api from "./../../configs/api";
 import React, { useEffect, useState } from "react";
 import {
   CartesianGrid,
@@ -18,7 +19,6 @@ export function Profil() {
     terverifikasi: 0,
     pendapatan: 0,
   });
-
   const [karyaData, setKaryaData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [animatedValues, setAnimatedValues] = useState({
@@ -27,6 +27,7 @@ export function Profil() {
     terverifikasi: 0,
     pendapatan: 0,
   });
+  const [users, setUsers] = useState([]);
 
   // Data pendapatan per kategori dan gelombang
   const [pendapatanKategori, setPendapatanKategori] = useState([
@@ -35,55 +36,98 @@ export function Profil() {
     { kategori: "Mahasiswa", gelombang1: 2000000, gelombang2: 1700000, total: 3700000 },
   ]);
 
-  // Data untuk animasi counter
+  // Ambil data users dan invoices sekali saja saat komponen mount
   useEffect(() => {
-    // Mock data kompetisi
-    const finalData = {
-      peserta: 420,
-      karyaMasuk: 385,
-      terverifikasi: 310,
-      pendapatan: 9100000, // total dari semua kategori dan gelombang
-    };
-    
-    setSummary(finalData);
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-    // Animasi counter
-    const duration = 2000; // 2 detik
-    const steps = 50;
+        // Ambil users
+        const userRes = await fetch(`${api.URL_API}/api/users`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const users = await userRes.json();
+
+        // Ambil invoices
+        const invoiceRes = await fetch(`${api.URL_API}/api/invoices`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const invoices = await invoiceRes.json();
+
+        // Hitung statistik
+        const peserta = users.length;
+        const terverifikasi = users.filter((u) => u.status === "success").length;
+        const pendapatan = invoices
+          .filter((inv) => inv.status === "success")
+          .reduce((total, inv) => total + inv.total_pembayaran, 0);
+
+        setUsers(users);
+        setSummary({
+          peserta,
+          terverifikasi,
+          pendapatan,
+          karyaMasuk: 2, // Ganti kalau ada data asli
+        });
+
+        // Set data karyaData di sini, supaya tidak looping
+        setKaryaData([
+          { name: "Jan", karya: 30 },
+          { name: "Feb", karya: 45 },
+          { name: "Mar", karya: 65 },
+          { name: "Apr", karya: 85 },
+          { name: "Mei", karya: 160 },
+        ]);
+
+        setIsLoaded(true);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [api.URL_API]);
+
+  // Animasi counter berjalan kalau summary sudah berubah dan bukan 0 semua
+  useEffect(() => {
+    const { peserta, karyaMasuk, terverifikasi, pendapatan } = summary;
+
+    if (peserta === 0 && karyaMasuk === 0 && terverifikasi === 0 && pendapatan === 0) {
+      return; // Jangan animasi kalau semua 0
+    }
+
+    const duration = 2000; // 2 detik animasi
+    const steps = 20;
     const interval = duration / steps;
-    
+
     let currentStep = 0;
     const timer = setInterval(() => {
       currentStep++;
-      
       if (currentStep <= steps) {
         const progress = currentStep / steps;
         setAnimatedValues({
-          peserta: Math.round(finalData.peserta * progress),
-          karyaMasuk: Math.round(finalData.karyaMasuk * progress),
-          terverifikasi: Math.round(finalData.terverifikasi * progress),
-          pendapatan: Math.round(finalData.pendapatan * progress),
+          peserta: Math.round(peserta * progress),
+          karyaMasuk: Math.round(karyaMasuk * progress),
+          terverifikasi: Math.round(terverifikasi * progress),
+          pendapatan: Math.round(pendapatan * progress),
         });
       } else {
         clearInterval(timer);
       }
     }, interval);
 
-    setKaryaData([
-      { name: "Jan", karya: 30 },
-      { name: "Feb", karya: 45 },
-      { name: "Mar", karya: 65 },
-      { name: "Apr", karya: 85 },
-      { name: "Mei", karya: 160 },
-    ]);
-
-    // Delay rendering for animation
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, 300);
-
     return () => clearInterval(timer);
-  }, []);
+  }, [summary]);
+
+  useEffect(() => {
+    console.log("Updated summary:", summary);
+    console.log("Updated animatedValues:", animatedValues);
+  }, [summary, animatedValues]);
 
   // Custom Tooltip untuk grafik
   const CustomTooltip = ({ active, payload, label }) => {

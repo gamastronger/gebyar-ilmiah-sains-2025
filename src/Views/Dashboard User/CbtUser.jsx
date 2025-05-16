@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import { Clock, ExternalLink, Rocket, Sparkles, Zap } from "lucide-react"
-
+import { Clock, Rocket, Sparkles, Zap } from "lucide-react"
 function CbtUser() {
   const targetDate = new Date("2025-09-21T00:00:00")
   const [timeLeft, setTimeLeft] = useState({
@@ -12,7 +11,6 @@ function CbtUser() {
   })
 
   useEffect(() => {
-    console.log("Target Date:", timeLeft)
     const calculateTimeLeft = () => {
       const difference = targetDate.getTime() - new Date().getTime()
 
@@ -23,7 +21,6 @@ function CbtUser() {
           minutes: Math.floor((difference / 1000 / 60) % 60),
           seconds: Math.floor((difference / 1000) % 60),
         })
-        console.log("Target Date:", timeLeft)
       }
     }
 
@@ -34,13 +31,13 @@ function CbtUser() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 flex flex-col items-center justify-center p-4 text-white overflow-hidden relative">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 flex flex-col items-center justify-center p-4 text-white overflow-hidden relative">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute rounded-full bg-blue-500/10 blur-xl"
+            className="absolute rounded-full bg-indigo-500/10 blur-xl"
             style={{
               width: `${Math.random() * 300 + 50}px`,
               height: `${Math.random() * 300 + 50}px`,
@@ -57,13 +54,13 @@ function CbtUser() {
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <div className="bg-white/10 backdrop-blur-md p-3 rounded-full">
-              <Rocket className="h-10 w-10 text-cyan-400" />
+              <Rocket className="h-10 w-10 text-indigo-100" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400">
+          <h1 className="text-4xl md:text-6xl font-bold mb-2 bg-clip-text text-white bg-gradient-to-r from-indigo-400 to-purple-400">
             AKSES AKAN SEGERA DIBUKA
           </h1>
-          <div className="flex items-center justify-center gap-2 text-cyan-300 mb-6">
+          <div className="flex items-center justify-center gap-2 text-indigo-200 mb-6">
             <Sparkles className="h-5 w-5" />
             <p className="text-lg md:text-xl">Science Competition GIS UNESA</p>
             <Sparkles className="h-5 w-5" />
@@ -71,9 +68,9 @@ function CbtUser() {
         </div>
 
         {/* Futuristic countdown */}
-        <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 mb-8 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
+        <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 mb-8 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
           <h2 className="text-xl md:text-2xl font-medium text-center mb-6 flex items-center justify-center gap-2">
-            <Clock className="h-5 w-5 text-cyan-400" />
+            <Clock className="h-5 w-5 text-indigo-100" />
             <span>COUNTDOWN MENUJU 21 SEPTEMBER</span>
           </h2>
 
@@ -85,14 +82,14 @@ function CbtUser() {
               { label: "DETIK", value: timeLeft.seconds },
             ].map((item) => (
               <div key={item.label} className="flex flex-col items-center">
-                <div className="bg-gradient-to-b from-blue-900 to-blue-950 rounded-lg border border-cyan-500/30 w-full py-4 px-2 mb-2 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-cyan-400/5 rounded-lg"></div>
+                <div className="bg-gradient-to-b from-indigo-900 to-indigo-950 rounded-lg border border-indigo-500/30 w-full py-4 px-2 mb-2 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-indigo-400/5 rounded-lg"></div>
                   <div className="text-3xl md:text-5xl font-bold text-center text-white">
                     {String(item.value).padStart(2, "0")}
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 to-purple-500"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-400 to-purple-500"></div>
                 </div>
-                <div className="text-xs md:text-sm font-medium text-cyan-300">{item.label}</div>
+                <div className="text-xs md:text-sm font-medium text-indigo-100">{item.label}</div>
               </div>
             ))}
           </div>
@@ -100,13 +97,13 @@ function CbtUser() {
 
         <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-cyan-500/20 p-2 rounded-lg">
-              <Zap className="h-6 w-6 text-cyan-400" />
+            <div className="bg-indigo-500/20 p-2 rounded-lg">
+              <Zap className="h-6 w-6 text-indigo-100" />
             </div>
             <h3 className="text-xl font-medium">Sistem Sedang Dipersiapkan</h3>
           </div>
           <p className="text-white/80 mb-4">
-            Kami sedang mempersiapkan sistem Science Competition dengan teknologi terbaru untuk memberikan
+            Kami sedang mempersiapkan sistem dengan teknologi terbaru untuk memberikan
             pengalaman ujian yang optimal. Akses akan dibuka pada tanggal 21 September.
           </p>
           <div className="flex flex-wrap gap-3 text-sm">
