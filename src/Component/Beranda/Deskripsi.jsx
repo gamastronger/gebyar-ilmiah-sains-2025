@@ -17,7 +17,7 @@ import backgroundImage from "../../assets/bgsementara2.jpg";
 // import sponsor3 from "../../assets/gimage.jpeg";
 // import sponsor4 from "../../assets/gimage.jpeg";
 // import sponsor5 from "../../assets/gimage.jpeg";
-import poster from "../../assets/Pamflet GIS 2024.png";
+import poster from "../../assets/pamfletutama.jpg";
 import FAQ from '../FAQ/FAQ';
 // import MediaPartner from "../FAQ/MediaPartner";
 import scienceCompetitionImg from "../../assets/sc.jpg"; 
@@ -173,7 +173,7 @@ const EnhancedPosterSection = () => {
           <img
             src={poster}
             alt="GIS Unesa Poster"
-            className="w-full h-[250px] sm:h-[350px] md:h-[500px] object-contain rounded-lg"
+            className="w-full xs:h-[220px] sm:h-[250px] md:h-[350px] lg:h-[500px] object-contain rounded-lg"
           />
         </TiltCard>
 
