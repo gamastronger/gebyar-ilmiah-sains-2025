@@ -18,7 +18,7 @@ import backgroundImage from "../../assets/bgsementara2.jpg";
 // import sponsor4 from "../../assets/gimage.jpeg";
 // import sponsor5 from "../../assets/gimage.jpeg";
 import poster from "../../assets/pamfletutama.jpg";
-import FAQ from '../FAQ/FAQ';
+// import FAQ from '../FAQ/FAQ';
 // import MediaPartner from "../FAQ/MediaPartner";
 import scienceCompetitionImg from "../../assets/sc.jpg"; 
 import scienceWritingImg from "../../assets/swc.jpg";
@@ -826,7 +826,7 @@ const Deskripsi = () => {
       
 
       {/* FAQ Section */}
-      <FAQ />
+      {/* <FAQ /> */}
 
       {/* CTA Section */}
       <motion.div
