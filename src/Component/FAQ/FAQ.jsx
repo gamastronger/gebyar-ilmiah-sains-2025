@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import panduanVideo from "../../assets/amelio.mp4"; // Adjust the path as necessary
+// import panduanVideo from "../../assets/amelio.mp4"; // Adjust the path as necessary
 
 const FAQ = () => {
 
@@ -20,13 +20,13 @@ const FAQ = () => {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <div className="text-center mb-10">
+      <div className="text-center mb-8">
         
-        <h2 className="mt-12 text-4xl md:text-5xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-purple-400">
+        <h2 className="mt-10 text-4xl md:text-5xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-purple-400">
           Panduan
         </h2>
         <h5 className="md-4 text-purple-300 font-medium tracking-wider uppercase mb-3">
-          Lihat Video Panduan dan Download Buku Panduan
+          Lihat buku panduan untuk informasi lebih lanjut
         </h5>
         <div className="h-1 w-24 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
       </div>
@@ -40,13 +40,13 @@ const FAQ = () => {
       >
         <div className="flex flex-col items-center space-y-12"> {/* Changed from gap-4 to space-y-6 */}
           {/* Download Button */}
-          <video 
+          {/* <video 
             src={panduanVideo}
             controls
             className="rounded-lg shadow-xl w-full max-w-2xl"
           >
             Your browser does not support the video tag.
-          </video>
+          </video> */}
           <a 
             href="https://unesa.me/BukuPanduan13thGIS"  
             target="_blank" 
