@@ -24,6 +24,7 @@ import {
   FiCheckCircle,
   FiImage,
   FiX,
+  FiArrowLeft,
 } from "react-icons/fi";
 import { motion } from "framer-motion";
 import api from "../../configs/api";
@@ -122,6 +123,9 @@ export default function ParticipantDetail() {
   const [activeSection, setActiveSection] = useState("participant");
   const [fileUploads, setFileUploads] = useState([]);
   const [invoice, setInvoice] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [openImageDialog, setOpenImageDialog] = useState(false);
 
   // ===================== FORM HANDLER =====================
 
@@ -132,39 +136,84 @@ export default function ParticipantDetail() {
       setIsLoading(true);
       try {
         const data = await getParticipantById(id);
-        if (data) {
-          setFormData({
-            name: data.name || "",
-            email: data.email || "",
-            nomor_wa: data.nomor_wa || "",
-            alamat: data.alamat || "",
-            asal_sekolah: data.asal_sekolah || "",
-            nisn: data.nisn || "",
-            kelas: data.kelas || "",
-            jenjang: data.jenjang || "",
-            jenis_lomba: data.jenis_lomba || "",
-            guru: data.guru || "",
-            wa_guru: data.wa_guru || "",
-            email_guru: data.email_guru || "",
-            link_twibbon: data.link_twibbon || "",
-            status: data.status || "",
-          });
-          // Fetch file uploads (replace with your API if needed)
-          setFileUploads(data.files || []);
-        }
-
-        // Fetch invoice peserta
-        const invoiceRes = await fetch(`${api.URL_API}/api/invoices/${id}`, {
+        let invoiceData = null;
+        let invoiceRes = await fetch(`${api.URL_API}/api/invoices/${id}`, {
           headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`,
           },
         });
         if (invoiceRes.ok) {
-          const invoiceData = await invoiceRes.json();
-          setInvoice(invoiceData && invoiceData.length > 0 ? invoiceData[0] : null);
+          const invoiceArr = await invoiceRes.json();
+          invoiceData = invoiceArr && invoiceArr.length > 0 ? invoiceArr[0] : null;
+          setInvoice(invoiceData);
         } else {
           setInvoice(null);
         }
+
+        // Fetch karya peserta
+        let karyaData = null;
+        try {
+          const karyaRes = await fetch(`${api.URL_API}/api/karya/${id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          if (karyaRes.ok) {
+            karyaData = await karyaRes.json();
+          }
+        } catch (e) {
+          karyaData = null;
+        }
+
+        setFormData({
+          name: data.name || "",
+          email: data.email || "",
+          nomor_wa: data.nomor_wa || "",
+          alamat: data.alamat || "",
+          asal_sekolah: data.asal_sekolah || "",
+          nisn: data.nisn || "",
+          kelas: data.kelas || "",
+          jenjang: data.jenjang || "",
+          jenis_lomba: data.jenis_lomba || "",
+          guru: data.guru || "",
+          wa_guru: data.wa_guru || "",
+          email_guru: data.email_guru || "",
+          link_twibbon: data.link_twibbon || "",
+          status: data.status || "",
+        });
+
+        // Set fileUploads sesuai response
+        const uploads = [];
+        if (data.link_twibbon) {
+          uploads.push({
+            id: "twibbon",
+            name: "Bukti Upload Twibbon",
+            url: `${api.URL_API}/gis-backend-v2/storage/app/public/${data.link_twibbon}`,
+            status: "completed",
+            type: "image",
+          });
+        }
+        if (invoiceData && invoiceData.upload_bukti) {
+          uploads.push({
+            id: "bukti_pembayaran",
+            name: "Bukti Pembayaran",
+            url: `${api.URL_API}/gis-backend-v2/storage/app/public/${invoiceData.upload_bukti}`,
+            status: "completed",
+            type: "image",
+          });
+        }
+        // Tambahkan karya jika ada
+        if (karyaData && karyaData.link_karya) {
+          uploads.push({
+            id: "karya",
+            name: "File Karya/Jurnal",
+            url: `${api.URL_API}/gis-backend-v2/storage/app/public/${karyaData.link_karya}`,
+            status: "completed",
+            type: "file",
+          });
+        }
+        setFileUploads(uploads);
+
       } catch (error) {
         Swal.fire("Gagal", "Gagal mengambil data peserta.", "error");
       }
@@ -448,7 +497,7 @@ export default function ParticipantDetail() {
             <img
               src={file.url}
               alt={file.name}
-              className="w-full h-40 object-cover"
+              className="w-full max-h-96 object-contain bg-gray-50"
               style={isNoPreview ? { cursor: "default" } : { cursor: "pointer" }}
             />
           </div>
@@ -525,6 +574,17 @@ export default function ParticipantDetail() {
               {/* Form Content */}
               <div className="lg:col-span-9">
                 <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+                  {/* Tombol Back */}
+                  <div className="px-6 pt-6 pb-2">
+                    <button
+                      type="button"
+                      onClick={() => navigate(-1)}
+                      className="flex items-center gap-2 text-purple-600 hover:text-purple-800 font-medium transition-colors"
+                    >
+                      <FiArrowLeft className="h-5 w-5" />
+                      Kembali
+                    </button>
+                  </div>
                   <form onSubmit={handleSubmit}>
                     {/* Data Peserta */}
                     <div className={activeSection === "participant" ? "block" : "hidden"}>
@@ -720,7 +780,7 @@ export default function ParticipantDetail() {
                         <Button
                           color="green"
                           className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-green-600 to-green-400 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
-                          onClick={() => {
+                          onClick={async () => {
                             Swal.fire({
                               title: "Verifikasi Peserta?",
                               text: "Pastikan semua berkas sudah lengkap sebelum verifikasi.",
@@ -730,17 +790,33 @@ export default function ParticipantDetail() {
                               cancelButtonText: "Batal",
                               confirmButtonColor: "#22c55e",
                               cancelButtonColor: "#9333EA",
-                            }).then((result) => {
+                            }).then(async (result) => {
                               if (result.isConfirmed) {
-                                Swal.fire({
-                                  title: "Terverifikasi!",
-                                  text: "Peserta telah berhasil diverifikasi.",
-                                  icon: "success",
-                                  showConfirmButton: false,
-                                  timer: 1500,
-                                }).then(() => {
-                                  navigate("/admin/swc-admin");
-                                });
+                                try {
+                                  await fetch(`${api.URL_API}/api/users/verifSuccess/${id}`, {
+                                    method: "PUT",
+                                    headers: {
+                                      "Content-Type": "application/json",
+                                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                                    },
+                                  });
+                                  Swal.fire({
+                                    title: "Terverifikasi!",
+                                    text: "Peserta telah berhasil diverifikasi.",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                  }).then(() => {
+                                    navigate("/admin/swc-admin");
+                                  });
+                                } catch (error) {
+                                  Swal.fire({
+                                    title: "Gagal",
+                                    text: "Gagal melakukan verifikasi.",
+                                    icon: "error",
+                                    confirmButtonColor: "#9333EA",
+                                  });
+                                }
                               }
                             });
                           }}

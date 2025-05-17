@@ -30,13 +30,9 @@ export function Profil() {
   const [users, setUsers] = useState([]);
 
   // Data pendapatan per kategori dan gelombang
-  const [pendapatanKategori, setPendapatanKategori] = useState([
-    { kategori: "SMP", gelombang1: 1200000, gelombang2: 900000, total: 2100000 },
-    { kategori: "SMA", gelombang1: 1800000, gelombang2: 1500000, total: 3300000 },
-    { kategori: "Mahasiswa", gelombang1: 2000000, gelombang2: 1700000, total: 3700000 },
-  ]);
+  const [pendapatanKategori, setPendapatanKategori] = useState([]);
 
-  // Ambil data users dan invoices sekali saja saat komponen mount
+  // Ambil data users, invoices, dan karya sekali saja saat komponen mount
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,22 +56,58 @@ export function Profil() {
         });
         const invoices = await invoiceRes.json();
 
+        // Ambil karya
+        const karyaRes = await fetch(`${api.URL_API}/api/karya`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const karyaList = await karyaRes.json();
+
         // Hitung statistik
         const peserta = users.length;
         const terverifikasi = users.filter((u) => u.status === "success").length;
         const pendapatan = invoices
           .filter((inv) => inv.status === "success")
           .reduce((total, inv) => total + inv.total_pembayaran, 0);
+        const karyaMasuk = Array.isArray(karyaList) ? karyaList.length : 0;
 
         setUsers(users);
         setSummary({
           peserta,
           terverifikasi,
           pendapatan,
-          karyaMasuk: 2, // Ganti kalau ada data asli
+          karyaMasuk,
         });
 
-        // Set data karyaData di sini, supaya tidak looping
+        // Hitung jumlah peserta & pendapatan per jenjang
+        const jenjangList = ["sd", "smp", "sma", "mahasiswa"];
+        const kategoriMap = {
+          sd: "SD",
+          smp: "SMP",
+          sma: "SMA",
+          mahasiswa: "Mahasiswa",
+        };
+
+        const pendapatanKategori = jenjangList.map(jenjang => {
+          // Peserta per jenjang
+          const peserta = users.filter(u => u.jenjang === jenjang).length;
+          // Invoice sukses per jenjang
+          const invoiceSukses = invoices.filter(inv => 
+            inv.status === "success" && users.find(u => u.id === inv.user_id && u.jenjang === jenjang)
+          );
+          const totalPendapatan = invoiceSukses.reduce((sum, inv) => sum + inv.total_pembayaran, 0);
+
+          return {
+            kategori: kategoriMap[jenjang],
+            peserta,
+            pendapatan: totalPendapatan,
+          };
+        });
+
+        setPendapatanKategori(pendapatanKategori);
+
         setKaryaData([
           { name: "Jan", karya: 30 },
           { name: "Feb", karya: 45 },
@@ -274,15 +306,11 @@ export function Profil() {
                   {isLoaded && (
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart 
-                        data={[
-                          { name: "SMP", peserta: 120 },
-                          { name: "SMA", peserta: 180 },
-                          { name: "Mahasiswa", peserta: 120 },
-                        ]} 
+                        data={pendapatanKategori} 
                         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                       >
                         <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                        <XAxis dataKey="name" stroke="#6B7280" />
+                        <XAxis dataKey="kategori" stroke="#6B7280" />
                         <YAxis stroke="#6B7280" />
                         <Tooltip content={<CustomTooltip />} />
                         <defs>
@@ -363,91 +391,29 @@ export function Profil() {
                   <thead>
                     <tr className="bg-amber-50">
                       <th className="px-4 py-3 font-medium text-amber-900 border-b">Kategori</th>
-                      <th className="px-4 py-3 font-medium text-amber-900 border-b">Gelombang 1</th>
-                      <th className="px-4 py-3 font-medium text-amber-900 border-b">Gelombang 2</th>
-                      <th className="px-4 py-3 font-medium text-amber-900 border-b">Total</th>
+                      <th className="px-4 py-3 font-medium text-amber-900 border-b">Peserta</th>
+                      <th className="px-4 py-3 font-medium text-amber-900 border-b">Pendapatan</th>
                     </tr>
                   </thead>
                   <tbody>
                     {pendapatanKategori.map((row, idx) => (
                       <tr key={idx} className="border-b hover:bg-amber-50 transition-colors duration-200">
                         <td className="px-4 py-3 font-medium text-amber-900">{row.kategori}</td>
-                        <td className="px-4 py-3 text-amber-800">Rp{row.gelombang1.toLocaleString('id-ID')}</td>
-                        <td className="px-4 py-3 text-amber-800">Rp{row.gelombang2.toLocaleString('id-ID')}</td>
-                        <td className="px-4 py-3 font-bold text-amber-900">Rp{row.total.toLocaleString('id-ID')}</td>
+                        <td className="px-4 py-3 text-amber-800">{row.peserta} Peserta</td>
+                        <td className="px-4 py-3 font-bold text-amber-900">
+                          Rp{row.pendapatan.toLocaleString("id-ID")}
+                        </td>
                       </tr>
                     ))}
                     <tr className="bg-amber-50">
-                      <td className="px-4 py-3 font-medium text-amber-900">Total Keseluruhan</td>
-                      <td className="px-4 py-3 font-medium text-amber-900">Rp{pendapatanKategori.reduce((sum, item) => sum + item.gelombang1, 0).toLocaleString('id-ID')}</td>
-                      <td className="px-4 py-3 font-medium text-amber-900">Rp{pendapatanKategori.reduce((sum, item) => sum + item.gelombang2, 0).toLocaleString('id-ID')}</td>
-                      <td className="px-4 py-3 font-bold text-amber-900">Rp{pendapatanKategori.reduce((sum, item) => sum + item.total, 0).toLocaleString('id-ID')}</td>
+                      <td className="px-4 py-3 font-medium text-amber-900">Total</td>
+                      <td className="px-4 py-3 font-medium text-amber-900">
+                        {pendapatanKategori.reduce((sum, item) => sum + item.peserta, 0)} Peserta
+                      </td>
+                      <td className="px-4 py-3 font-bold text-amber-900">
+                        Rp{pendapatanKategori.reduce((sum, item) => sum + item.pendapatan, 0).toLocaleString("id-ID")}
+                      </td>
                     </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tabel Aktivitas Terakhir */}
-        <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.9s", animationFillMode: "forwards" }}>
-          <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="p-5">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg text-purple-800 font-semibold">
-                  Aktivitas Terakhir
-                </h3>
-                <div className="text-purple-500">
-                  <i className="fas fa-history"></i>
-                </div>
-              </div>
-              <div className="overflow-x-auto rounded-lg">
-                <table className="w-full text-left table-auto">
-                  <thead>
-                    <tr className="bg-purple-50">
-                      <th className="px-4 py-3 font-medium text-purple-900 border-b">Tanggal</th>
-                      <th className="px-4 py-3 font-medium text-purple-900 border-b">Nama Peserta</th>
-                      <th className="px-4 py-3 font-medium text-purple-900 border-b">Aksi</th>
-                      <th className="px-4 py-3 font-medium text-purple-900 border-b">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      { date: "20 Apr 2025", name: "Ahmad Zaki", action: "Mengirim Karya", status: "success" },
-                      { date: "20 Apr 2025", name: "Nadia Salma", action: "Edit Biodata", status: "info" },
-                      { date: "19 Apr 2025", name: "Doni Wijaya", action: "Submit Jawaban CBT", status: "warning" },
-                      { date: "19 Apr 2025", name: "Sinta Dewi", action: "Verifikasi Email", status: "success" },
-                      { date: "18 Apr 2025", name: "Rendi Pratama", action: "Pendaftaran Baru", status: "success" },
-                    ].map((item, idx) => (
-                      <tr key={idx} className="border-b hover:bg-purple-50 transition-colors duration-200">
-                        <td className="px-4 py-3 text-gray-700">{item.date}</td>
-                        <td className="px-4 py-3 font-medium text-gray-900">
-                          <div className="flex items-center">
-                            <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mr-2 font-bold">
-                              {item.name.charAt(0)}
-                            </div>
-                            {item.name}
-                          </div>
-                        </td>
-                        <td className="px-4 py-3 text-gray-700">{item.action}</td>
-                        <td className="px-4 py-3">
-                          <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${
-                            item.status === 'success' ? 'bg-green-100 text-green-800' : 
-                            item.status === 'info' ? 'bg-blue-100 text-blue-800' : 
-                            'bg-amber-100 text-amber-800'
-                          }`}>
-                            <span className={`w-2 h-2 mr-1 rounded-full ${
-                              item.status === 'success' ? 'bg-green-600' : 
-                              item.status === 'info' ? 'bg-blue-600' : 
-                              'bg-amber-600'
-                            }`}></span>
-                            {item.status === 'success' ? 'Selesai' : 
-                             item.status === 'info' ? 'Diproses' : 'Menunggu'}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
                   </tbody>
                 </table>
               </div>

@@ -8,6 +8,28 @@ function CbtUser() {
   const [counter, setCounter] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
   const [stars, setStars] = useState([]);
+  const [user, setUser] = useState(null); // state untuk user
+
+  // Ambil data user dari api/users/byAuth
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch(`${api.URL_API}/api/users/byAuth`, {
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (!res.ok) throw new Error("Gagal mengambil data user");
+        const data = await res.json();
+        setUser(data);
+      } catch (error) {
+        setUser(null);
+      }
+    };
+    fetchUser();
+  }, []);
   
   // Create initial stars
   useEffect(() => {
@@ -127,41 +149,42 @@ function CbtUser() {
 
         {/* Main content container */}
         <div className="mt-10 relative z-10 max-w-4xl mx-auto text-center">
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <Atom size={80} className="text-white opacity-90" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-10 h-10 rounded-full bg-blue-400 animate-pulse opacity-50" />
+          {user?.jenis_lomba === "science-competition" && user?.status === "success" ? (
+            <>
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <Atom size={80} className="text-white opacity-90" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-blue-400 animate-pulse opacity-50" />
+                  </div>
+                </div>
               </div>
+              
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Science Competition Portal
+              </h1>
+              
+              <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 shadow-lg mb-8">
+                <h2 className="text-2xl font-semibold text-white mb-4">
+                  Maintenance
+                </h2>
+                <p className="text-lg text-white/90 mb-4">
+                  Halo, Sahabat Sains!
+                  Saat ini halaman Science Competition sedang dalam proses pengembangan supaya dapat memperoleh pengalaman terbaik anda
+                </p>
+                <div className="flex flex-wrap justify-center gap-4 mb-6">
+                  <Beaker className="text-blue-200 animate-bounce" size={32} />
+                  <Stars className="text-yellow-200 animate-pulse" size={32} />
+                  <Rocket className="text-red-200 animate-bounce" size={32} />
+                  <Zap className="text-green-200 animate-pulse" size={32} />
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="bg-white/80 rounded-xl p-8 shadow text-gray-700 font-semibold text-xl">
+              Halaman ini hanya untuk peserta Science Competition yang sudah terverifikasi.
             </div>
-          </div>
-          
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Science Competition Portal
-          </h1>
-          
-          <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 shadow-lg mb-8">
-            <h2 className="text-2xl font-semibold text-white mb-4">
-              Maintenance
-            </h2>
-            <p className="text-lg text-white/90 mb-4">
-              Halo, Sahabat Sains!
-              Saat ini halaman Science Competition sedang dalam proses pengembangan supaya dapat memperoleh pengalaman terbaik anda
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 mb-6">
-              <Beaker className="text-blue-200 animate-bounce" size={32} />
-              <Stars className="text-yellow-200 animate-pulse" size={32} />
-              <Rocket className="text-red-200 animate-bounce" size={32} />
-              <Zap className="text-green-200 animate-pulse" size={32} />
-            </div>
-            
-          </div>
-
-          
-
-          
-
-          
+          )}
         </div>
 
         {/* CSS animations */}

@@ -446,7 +446,7 @@ function Invoice() {
                                 <span className="text-amber-500 font-semibold">Menunggu</span>
                               ) : invoice.status === "pending" ? (
                                 <span className="text-amber-500 font-semibold">Segera Hubungi Admin</span>
-                              ) : invoice.status === "approved" ? (
+                              ) : invoice.status === "success" ? (
                                 <span className="text-green-600 font-semibold">Diterima</span>
                               ) : (
                                 <span className="text-gray-500 font-semibold">Status Tidak Diketahui</span>
@@ -457,7 +457,7 @@ function Invoice() {
                               {new Date(invoice.created_at).toLocaleDateString('id-ID')}
                             </td>
                             <td className="border p-2 sm:p-3 text-center text-xs sm:text-sm">
-                              {invoice.status === null || invoice.status === "" && (
+                              {(invoice.status === null || invoice.status === "") && (
                                 <button
                                   onClick={() => handleShowUploadForm(invoice)} // Fungsi untuk membuka form upload
                                   className="bg-purple-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded text-xs sm:text-sm hover:bg-purple-700 transition-colors"
@@ -471,6 +471,14 @@ function Invoice() {
                                   className="bg-amber-500 text-white px-2 py-1 sm:px-4 sm:py-2 rounded text-xs sm:text-sm hover:bg-amber-600 transition-colors"
                                 >
                                   Hubungi Admin
+                                </button>
+                              )}
+                              {invoice.status === "success" && (
+                                <button
+                                  onClick={() => window.location.href = "/dashboard/user/jurnal"}
+                                  className="bg-green-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded text-xs sm:text-sm hover:bg-green-700 transition-colors"
+                                >
+                                  Upload Jurnal
                                 </button>
                               )}
                             </td>
