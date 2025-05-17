@@ -25,6 +25,7 @@ import scienceWritingImg from "../../assets/swc.jpg";
 import InstagramIcon1 from "../../assets/instagram.png";
 import InstagramIcon2 from '../../assets/instagram.png'; 
 import TikTokIcon from '../../assets/tiktok.png'; 
+import FAQ from "../FAQ/FAQ";
 
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -826,7 +827,7 @@ const Deskripsi = () => {
       
 
       {/* FAQ Section */}
-      {/* <FAQ /> */}
+      <FAQ />
 
       {/* CTA Section */}
       <motion.div
