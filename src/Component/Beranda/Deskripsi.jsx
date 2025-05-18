@@ -24,8 +24,7 @@ import scienceCompetitionImg from "../../assets/sc.jpg";
 import scienceWritingImg from "../../assets/swc.jpg";
 import InstagramIcon1 from "../../assets/instagram.png";
 import InstagramIcon2 from '../../assets/instagram.png'; 
-import TikTokIcon from '../../assets/tiktok.png'; 
-import FAQ from "../FAQ/FAQ";
+import TikTokIcon from '../../assets/tiktok.png';
 
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
