@@ -18,7 +18,7 @@ import backgroundImage from "../../assets/bgsementara2.jpg";
 // import sponsor4 from "../../assets/gimage.jpeg";
 // import sponsor5 from "../../assets/gimage.jpeg";
 import poster from "../../assets/pamfletutama.jpg";
-// import FAQ from '../FAQ/FAQ';
+import FAQ from '../FAQ/FAQ';
 // import MediaPartner from "../FAQ/MediaPartner";
 import scienceCompetitionImg from "../../assets/sc.jpg"; 
 import scienceWritingImg from "../../assets/swc.jpg";
@@ -67,7 +67,22 @@ const TiltCard = ({ children }) => {
         transformStyle: "preserve-3d",
         transform,
       }}
-      className="relative h-[550px] w-[400px] rounded-xl bg-gradient-to-br from-[#31004d] to-[#A78BFA]"
+      className="
+      relative
+      /* Default (mobile first) */
+      h-[410px] w-[300px] max-w-xs
+
+      /* Responsive: small screen (>=640px) */
+      sm:h-[40px] sm:w-[350px]
+
+      /* Responsive: medium screen (>=768px) */
+      md:h-[439px] md:w-[400px]
+
+      /* Umum (berlaku di semua layar) */
+      rounded-xl
+      bg-gradient-to-br from-[#31004d] to-[#A78BFA]
+      mx-auto
+    "
     >
       <div
         style={{
@@ -107,12 +122,12 @@ const GradientButton = ({ children, onClick, primary = true }) => {
 const SectionTitle = ({ children, subtitle }) => {
   return (
     <div className="text-center mb-10">
-      <h2 className="text-4xl font-bold text-white mb-4 relative inline-block">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 relative inline-block">
         {children}
         <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#A78BFA] to-[#31004d] transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
       </h2>
       {subtitle && (
-        <p className="text-white/70 text-lg max-w-2xl mx-auto">
+        <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
           {subtitle}
         </p>
       )}
@@ -143,7 +158,7 @@ const EnhancedPosterSection = () => {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
     >
-      <div className="flex flex-col md:flex-row items-center md:items-stretch justify-center gap-8 md:gap-16">
+      <div className="flex flex-col md:flex-row items-center md:items-stretch justify-center gap-6 md:gap-16">
         {/* Left side info */}
         <motion.div 
           className="md:w-64 space-y-6 md:self-center text-center md:text-right"
@@ -213,46 +228,46 @@ const EnhancedPosterSection = () => {
 
 const SocialLinks = () => {
   return (
-    <div className="flex justify-center gap-6 mt-8">
-  {/* Instagram 1 */}
-  <a
-    href="https://www.instagram.com/gisfmipaunesa/"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Instagram GIS Unesa"
-    className="hover:scale-110 transition-transform flex flex-col items-center mx-5"
-  >
-    <img src={InstagramIcon1} alt="Instagram GIS Unesa" width={36} height={36} />
-    <span className="text-white text-sm mt-2">@gisfmipaunesa</span>
-  </a>
+    <div className="flex flex-row justify-center mt-8 gap-4">
+      {/* Instagram 1 */}
+      <a
+        href="https://instagram.com/gisfmipaunesa/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram GIS Unesa"
+        className="hover:scale-110 transition-transform flex flex-col items-center"
+      >
+        <img src={InstagramIcon1} alt="Instagram GIS Unesa" width={36} height={36} />
+        <span className="text-white text-sm mt-2">@gisfmipaunesa</span>
+      </a>
 
-  {/* Instagram 2 */}
-  <a
-    href="https://instagram.com/hmppipaunesa"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Instagram HMP IPA Unesa"
-    className="hover:scale-110 transition-transform flex flex-col items-center mx-5"
-  >
-    <img src={InstagramIcon2} alt="Instagram HMP IPA Unesa" width={36} height={36} />
-    <span className="text-white text-sm mt-2">@hmppipaunesa</span>
-  </a>
+      {/* Instagram 2 */}
+      <a
+        href="https://instagram.com/hmppipaunesa"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram HMP IPA Unesa"
+        className="hover:scale-110 transition-transform flex flex-col items-center"
+      >
+        <img src={InstagramIcon2} alt="Instagram HMP IPA Unesa" width={36} height={36} />
+        <span className="text-white text-sm mt-2">@hmppipaunesa</span>
+      </a>
 
-  {/* TikTok */}
-  <a
-    href="https://www.tiktok.com/@gisfmipaunesa"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="TikTok GIS Unesa"
-    className="hover:scale-110 transition-transform flex flex-col items-center mx-5"
-  >
-    <img src={TikTokIcon} alt="TikTok GIS Unesa" width={36} height={36} />
-    <span className="text-white text-sm mt-2">@gisfmipaunesa</span>
-  </a>
-</div>
-
+      {/* TikTok */}
+      <a
+        href="https://tiktok.com/@gisfmipaunesa"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="TikTok GIS Unesa"
+        className="hover:scale-110 transition-transform flex flex-col items-center"
+      >
+        <img src={TikTokIcon} alt="TikTok GIS Unesa" width={36} height={36} />
+        <span className="text-white text-sm mt-2">@gisfmipaunesa</span>
+      </a>
+    </div>
   );
 };
+
 
 // Ganti bagian Poster Section di dalam Deskripsi dengan EnhancedPosterSection
 const Deskripsi = () => {
@@ -340,7 +355,7 @@ const Deskripsi = () => {
         <div>
           {/* KTI Tab Content */}
           <div className={`${activeTab === 'kti' ? 'block' : 'hidden'}`}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-20">
               {/* Gambar KTI */}
               <div className="relative rounded-xl overflow-hidden group shadow-2xl">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-60"></div>
@@ -362,7 +377,7 @@ const Deskripsi = () => {
                 <h1 className="font-bold text-4xl md:text-5xl leading-tight mb-4 text-white">
                 Science <span className="text-[#A78BFA]">Writing</span> Competition
                 </h1>
-                <p className="text-lg mb-8 text-white/90 leading-relaxed">
+                <p className="text-l mb-8 text-white/90 leading-relaxed">
                 Merupakan Lomba Karya Tulis Ilmiah yang dapat diikuti oleh tingkat SMA/SMK/Sederajat dan Mahasiswa/i. Yang bertujuan untuk untuk meningkatkan kemampuan bersaing siswa dan mahasiswa dalam Ilmu Pengetahuan dan Teknologi (IPTEK) dan melatih siswa dan mahasiswa  dalam bersaing inovasi di bidang Pendidikan, Bioteknologi, Energi Terbarukan, dan Lingkungan.
 
                 </p>
@@ -403,7 +418,7 @@ const Deskripsi = () => {
 
           {/* CBT Tab Content */}
           <div className={`${activeTab === 'cbt' ? 'block' : 'hidden'}`}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-20">
               {/* Gambar CBT */}
               <div className="relative rounded-xl overflow-hidden group shadow-2xl order-1">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-60"></div>
@@ -412,12 +427,7 @@ const Deskripsi = () => {
                   alt="Science Competition"
                   className="w-full h-[300px] object-cover rounded-xl"
                 />
-                {/* <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <div className="w-2 h-2 rounded-full bg-[#A78BFA]"></div>
-                    <span className="text-sm font-medium text-[#A78BFA]">Pendaftaran Dibuka</span>
-                  </div>
-                </div> */}
+                
               </div>
 
               {/* Teks CBT */}
@@ -425,7 +435,7 @@ const Deskripsi = () => {
                 <h1 className="font-bold text-4xl md:text-5xl leading-tight mb-4 text-white">
                   Science Competition
                 </h1>
-                <p className="text-lg mb-8 text-white/90 leading-relaxed">
+                <p className="text-l mb-8 text-white/90 leading-relaxed">
                   adalah salah satu cabang lomba unggulan dalam rangkaian Gebyar Ilmiah Sains yang diselenggarakan setiap tahun. Kompetisi ini berbentuk Olimpiade IPA yang ditujukan untuk siswa SD/MI dan SMP/MTs sederajat. SC terdiri dari tiga babak menantang: Penyisihan, Semifinal, dan Final. Melalui ajang ini, peserta diajak untuk menunjukkan kemampuan terbaik mereka dalam bidang Ilmu Pengetahuan Alam, berpikir kritis, dan bersaing secara sportif dalam suasana yang edukatif dan menyenangkan.
                 </p>
                 
@@ -467,110 +477,121 @@ const Deskripsi = () => {
       </div>
 
       {/* Timeline */}
-      <motion.div
-        id="timeline"
-        className="max-w-screen-xl mx-auto mb-32"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+<motion.div
+  id="timeline"
+  className="max-w-screen-xl mx-auto mb-32"
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+>
+  <SectionTitle subtitle="Jadwal kegiatan GIS Unesa 2025 dari awal hingga akhir">
+    Timeline Kegiatan
+  </SectionTitle>
+
+  <div className="relative">
+    {/* Vertical line – hanya untuk DESKTOP */}
+    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#31004d] to-[#A78BFA]" />
+
+    {/* Timeline items */}
+    {[
+      {
+        date: "17 Mei – 12 Juli 2025",
+        title: "Pendaftaran Gelombang 1 (SC & SWC)",
+        description: "Pendaftaran peserta SC dan pengumpulan karya SWC dimulai"
+      },
+      {
+        date: "13 Juli – 24 Agustus 2025",
+        title: "Pendaftaran Gelombang 2 (SC)",
+        description: "Pendaftaran SC gelombang 2 dan pengumpulan karya SWC masih dibuka"
+      },
+      {
+        date: "06 September 2025",
+        title: "Technical Meeting Penyisihan SC",
+        description: "Penjelasan teknis babak penyisihan SC kepada peserta"
+      },
+      {
+        date: "14 September 2025",
+        title: "Simulasi SC",
+        description: "Simulasi pelaksanaan SC bagi peserta"
+      },
+      {
+        date: "20 September 2025",
+        title: "Penyisihan SC",
+        description: "Babak penyisihan SC dilaksanakan secara online"
+      },
+      {
+        date: "01 – 14 September 2025",
+        title: "Penilaian Karya SWC",
+        description: "Karya peserta SWC dinilai oleh dewan juri"
+      },
+      {
+        date: "23 September 2025",
+        title: "Pengumuman 5 Besar (SC & SWC)",
+        description: "Pengumuman peserta yang lolos ke babak semi final SC dan 5 besar SWC"
+      },
+      {
+        date: "25 September 2025",
+        title: "Technical Meeting Semi Final & Final",
+        description: "Penjelasan teknis pelaksanaan semi final dan final untuk SC dan SWC"
+      },
+      {
+        date: "04 Oktober 2025",
+        title: "Final SC & SWC",
+        description: "Babak final SC dan presentasi karya terbaik SWC"
+      }
+    ].map((item, index) => (
+      <motion.div 
+        key={index}
+        className={`
+          relative flex flex-col 
+          md:flex-row ${index % 2 === 0 ? "md:flex-row-reverse" : ""}
+          md:items-center mb-12
+        `}
+        initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
       >
-        <SectionTitle subtitle="Jadwal kegiatan GIS Unesa 2025 dari awal hingga akhir">
-          Timeline Kegiatan
-        </SectionTitle>
 
-        <div className="relative">
-          {/* Vertical line - only visible on medium screens and up */}
-          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#31004d] to-[#A78BFA]"></div>
+        {/* Spacer kiri/kanan – hanya untuk DESKTOP */}
+        <div className="hidden md:block w-1/2" />
 
-          {/* Timeline items */}
-          {[
-            {
-              date: "17 Mei – 12 Juli 2025",
-              title: "Pendaftaran Gelombang 1 (SC & SWC)",
-              description: "Pendaftaran peserta SC dan pengumpulan karya SWC dimulai"
-            },
-            {
-              date: "13 Juli – 24 Agustus 2025",
-              title: "Pendaftaran Gelombang 2 (SC)",
-              description: "Pendaftaran SC gelombang 2 dan pengumpulan karya SWC masih dibuka"
-            },
-            // {
-            //   date: "25 – 31 Agustus 2025",
-            //   title: "Perpanjangan Pendaftaran (SC & SWC)",
-            //   description: "Periode perpanjangan pendaftaran SC dan pengumpulan karya SWC"
-            // },
-            {
-              date: "06 September 2025",
-              title: "Technical Meeting Penyisihan SC",
-              description: "Penjelasan teknis babak penyisihan SC kepada peserta"
-            },
-            {
-              date: "14 September 2025",
-              title: "Simulasi SC",
-              description: "Simulasi pelaksanaan SC bagi peserta"
-            },
-            {
-              date: "20 September 2025",
-              title: "Penyisihan SC",
-              description: "Babak penyisihan SC dilaksanakan secara online"
-            },
-            {
-              date: "01 – 14 September 2025",
-              title: "Penilaian Karya SWC",
-              description: "Karya peserta SWC dinilai oleh dewan juri"
-            },
-            {
-              date: "23 September 2025",
-              title: "Pengumuman 5 Besar (SC & SWC)",
-              description: "Pengumuman peserta yang lolos ke babak semi final SC dan 5 besar SWC"
-            },
-            {
-              date: "25 September 2025",
-              title: "Technical Meeting Semi Final & Final",
-              description: "Penjelasan teknis pelaksanaan semi final dan final untuk SC dan SWC"
-            },
-            {
-              date: "04 Oktober 2025",
-              title: "Final SC & SWC",
-              description: "Babak final SC dan presentasi karya terbaik SWC"
-            }
-          ].map((item, index) => (
-            <motion.div 
-              key={index}
-              className={`relative flex md:items-center mb-12 ${
-                index % 2 === 0 ? "md:flex-row-reverse" : ""
-              }`}
-              initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              {/* For desktop layout */}
-              <div className="hidden md:block w-1/2"></div>
-            
-              {/* Center point - visible on all screens */}
-              <div className="absolute left-4 md:left-1/2 top-0 md:top-1/2 transform md:-translate-x-1/2 md:-translate-y-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-[#31004d] to-[#A78BFA] border-4 border-[#31004d] z-10"></div>
-            
-              {/* Content section */}
-              <div className={`md:w-1/2 pl-12 md:pl-12 md:pr-12 ${index % 2 === 0 ? "md:pr-12 md:pl-0" : "md:pl-12 md:pr-0"}`}>
-                <motion.div
-                  className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/20 transition-all duration-300"
-                  whileHover={{ y: -5 }}
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="bg-[#A78BFA]/20 px-3 py-1 rounded-full">
-                      <p className="text-[#A78BFA] font-medium text-sm">{item.date}</p>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-white/70">{item.description}</p>
-                </motion.div>
+        {/* Titik Tengah – Mobile & Desktop */}
+        <div className="
+          absolute 
+          left-1/2 transform -translate-x-1/2 
+          md:left-1/2 md:top-1/2 md:-translate-y-1/2 
+          w-6 h-6 rounded-full 
+          bg-gradient-to-r from-[#31004d] to-[#A78BFA] 
+          border-4 border-[#31004d] z-10
+        " />
+
+        {/* Konten kartu timeline */}
+        <div className={`
+          md:w-1/2 
+          mt-8 md:mt-0 
+          px-6 md:px-12
+          ${index % 2 === 0 ? "md:pl-0 md:pr-12" : "md:pl-12 md:pr-0"}
+        `}>
+          <motion.div
+            className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/20 transition-all duration-300"
+            whileHover={{ y: -5 }}
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="bg-[#A78BFA]/20 px-3 py-1 rounded-full">
+                <p className="text-[#A78BFA] font-medium text-sm">{item.date}</p>
               </div>
-            </motion.div>
-          ))}
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+            <p className="text-white/70">{item.description}</p>
+          </motion.div>
         </div>
       </motion.div>
+    ))}
+  </div>
+</motion.div>
+
 
       {/* Contact Person Section */}
       <motion.div
@@ -661,134 +682,134 @@ const Deskripsi = () => {
       </motion.div>
 
       {/* Event Gallery */}
-<motion.div
-  id="gallery"
-  className="max-w-screen-xl mx-auto mb-32"
-  initial={{ opacity: 0, y: 30 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true, amount: 0.2 }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
->
-  <SectionTitle subtitle="Dokumentasi kegiatan GIS Unesa dari tahun-tahun sebelumnya">
-    Galeri Kegiatan
-  </SectionTitle>
+      <motion.div
+        id="gallery"
+        className="max-w-screen-xl mx-auto mb-32"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <SectionTitle subtitle="Dokumentasi kegiatan GIS Unesa dari tahun-tahun sebelumnya">
+          Galeri Kegiatan
+        </SectionTitle>
 
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div className="grid gap-6">
-      <motion.div 
-        className="relative h-80 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
-        whileHover={{ y: -5 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
-          <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Science Writing Competition 2024</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">dokumentasi kegiatan GIS Unesa 2024</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid gap-6">
+            <motion.div 
+              className="relative h-80 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
+                <div className="p-6 w-full">
+                  <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Science Writing Competition 2024</h3>
+                  <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">dokumentasi kegiatan GIS Unesa 2024</p>
+                </div>
+              </div>
+              <img
+                src={kegiatan1}
+                alt="GIS Unesa Event 1"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </motion.div>
+            
+            <motion.div 
+              className="relative h-64 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
+                <div className="p-6 w-full">
+                  <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Persentasi Peserta SWC 2024</h3>
+                  <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Persentasi Peserta SWC pada GIS Unesa 2024</p>
+                </div>
+              </div>
+              <img
+                src={kegiatan2}
+                alt="GIS Unesa Event 2"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </motion.div>
+          </div>
+          
+          <div className="grid gap-6">
+            <motion.div 
+              className="relative h-64 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
+                <div className="p-6 w-full">
+                  <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">The Winner</h3>
+                  <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Juara dan finalis GIS Unesa 2024</p>
+                </div>
+              </div>
+              <img
+                src={kegiatan3}
+                alt="GIS Unesa Event 3"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </motion.div>
+            
+            <motion.div 
+              className="relative h-80 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
+                <div className="p-6 w-full">
+                  <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Science Competition 2024</h3>
+                  <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Dokumentasi Science Competition pada GIS Unesa 2024 </p>
+                </div>
+              </div>
+              <img
+                src={kegiatan4}
+                alt="GIS Unesa Event 4"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </motion.div>
+          </div>
+          
+          <div className="grid gap-6">
+            <motion.div 
+              className="relative h-80 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
+                <div className="p-6 w-full">
+                  <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Peserta Science Competition 2024</h3>
+                  <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Peserta Science Competition pada GIS Unesa 2024</p>
+                </div>
+              </div>
+              <img
+                src={kegiatan5}
+                alt="GIS Unesa Event 5"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </motion.div>
+            
+            <motion.div 
+              className="relative h-64 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
+                <div className="p-6 w-full">
+                  <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">The Winner</h3>
+                  <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Juara lomba SWC tingkat Mahasiswa</p>
+                </div>
+              </div>
+              <img
+                src={kegiatan6}
+                alt="GIS Unesa Event 6"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </motion.div>
           </div>
         </div>
-        <img
-          src={kegiatan1}
-          alt="GIS Unesa Event 1"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
       </motion.div>
-      
-      <motion.div 
-        className="relative h-64 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
-        whileHover={{ y: -5 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
-          <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Persentasi Peserta SWC 2024</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Persentasi Peserta SWC pada GIS Unesa 2024</p>
-          </div>
-        </div>
-        <img
-          src={kegiatan2}
-          alt="GIS Unesa Event 2"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </motion.div>
-    </div>
-    
-    <div className="grid gap-6">
-      <motion.div 
-        className="relative h-64 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
-        whileHover={{ y: -5 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
-          <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">The Winner</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Juara dan finalis GIS Unesa 2024</p>
-          </div>
-        </div>
-        <img
-          src={kegiatan3}
-          alt="GIS Unesa Event 3"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </motion.div>
-      
-      <motion.div 
-        className="relative h-80 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
-        whileHover={{ y: -5 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
-          <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Science Competition 2024</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Dokumentasi Science Competition pada GIS Unesa 2024 </p>
-          </div>
-        </div>
-        <img
-          src={kegiatan4}
-          alt="GIS Unesa Event 4"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </motion.div>
-    </div>
-    
-    <div className="grid gap-6">
-      <motion.div 
-        className="relative h-80 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
-        whileHover={{ y: -5 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
-          <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Peserta Science Competition 2024</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Peserta Science Competition pada GIS Unesa 2024</p>
-          </div>
-        </div>
-        <img
-          src={kegiatan5}
-          alt="GIS Unesa Event 5"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </motion.div>
-      
-      <motion.div 
-        className="relative h-64 overflow-hidden rounded-lg shadow-xl group cursor-pointer"
-        whileHover={{ y: -5 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#31004d]/80 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-10 flex items-end">
-          <div className="p-6 w-full">
-            <h3 className="text-xl font-bold text-white mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">The Winner</h3>
-            <p className="text-white/80 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">Juara lomba SWC tingkat Mahasiswa</p>
-          </div>
-        </div>
-        <img
-          src={kegiatan6}
-          alt="GIS Unesa Event 6"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </motion.div>
-    </div>
-  </div>
-</motion.div>
 
       {/* Sponsors
       <motion.div
@@ -837,7 +858,7 @@ const Deskripsi = () => {
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="bg-gradient-to-r from-[#31004d]/50 to-[#A78BFA]/50 p-10 md:p-16 rounded-3xl backdrop-blur-sm border border-white/10">
+        <div className="bg-gradient-to-r from-[#31004d]/50 to-[#A78BFA]/50 p-6 sm:p-10 md:p-16 rounded-3xl backdrop-blur-sm border border-white/10">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Siap Untuk Bergabung di GIS Unesa 2025?
           </h2>

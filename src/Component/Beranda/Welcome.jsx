@@ -167,7 +167,7 @@ const Welcome = () => {
           backgroundRepeat: "no-repeat",
           height: "100vh",
         }}
-        className="relative px-6 py-16 lg:py-24 flex flex-col items-center justify-center overflow-hidden"
+        className="relative flex flex-col items-center justify-center overflow-hidden px-4 py-12 sm:px-6 sm:py-16 lg:py-24 w-full min-h-screen"
       >
         <GlitchEffect />
         <Particles />
@@ -200,7 +200,20 @@ const Welcome = () => {
           </motion.div>
 
           <motion.h1
-            className="text-3xl sm:text-5xl lg:text-8xl text-white font-bold mb-2 leading-tight flex flex-wrap justify-center"
+            className="
+              /* mobile default */
+              text-6xl 
+
+              /* tablet ≥640px */
+              sm:text-5xl 
+
+              /* desktop ≥1024px */
+              lg:text-8xl 
+
+              text-white font-bold mb-2 leading-tight
+              flex flex-wrap justify-center
+            "
+
             variants={wordContainer}
             initial="hidden"
             animate="visible"
@@ -260,7 +273,7 @@ const Welcome = () => {
             />
             
             <motion.p
-              className="text-lg lg:text-xl text-gray-200 px-4 lg:px-8 leading-relaxed tracking-wide whitespace-pre-wrap"
+              className="text-l lg:text-xl text-gray-200 px-4 lg:px-8 leading-relaxed tracking-wide whitespace-pre-wrap"
               variants={wordContainer}
               initial="hidden"
               animate="visible" 
@@ -270,7 +283,7 @@ const Welcome = () => {
                 <motion.span
                   key={index}
                   variants={wordItem}
-                  className="inline-block mx-[0.15rem]"
+                  className="inline-block mx-[0.10rem]"
                   style={{ whiteSpace: 'pre-wrap' }}
                 >
                   {word}

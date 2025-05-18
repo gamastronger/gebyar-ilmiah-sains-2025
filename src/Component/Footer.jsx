@@ -67,14 +67,14 @@ tiktok: (
       
 
       <motion.div 
-        className="max-w-screen-xl mx-auto py-16 px-6 lg:px-8 relative z-10"
+        className="max-w-screen-xl mx-auto py-16 px-4 sm:px-6 lg:px-8 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={containerAnimation}
       >
         
-        <motion.div variants={itemAnimation} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16">
+        <motion.div variants={itemAnimation} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
           {/* About Column */}
           <div className="space-y-6">
             <div>
@@ -194,15 +194,18 @@ tiktok: (
           className="my-12 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent"
         ></motion.div>
 
-        {/* Footer Bottom */}
-        <motion.div variants={itemAnimation} className="text-sm flex md:flex-row items-center gap-80">
+        {/* Footer Bottom - responsive flex */}
+        <motion.div 
+          variants={itemAnimation} 
+          className="text-sm flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0"
+        >
           {/* Copyright */}
-          <div className="text-purple-200/70 text-sm">
+          <div className="text-purple-200/70 text-sm text-center md:text-left">
             © 2025 GIS Unesa. All rights reserved.
           </div>
 
           {/* Social Media with improved hover effects */}
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center justify-center">
             {[
               { name: "Instagram", icon: socialIcons.instagram, url: "https://instagram.com/gisfmipaunesa" },
               { name: "Instagram", icon: socialIcons.instagram, url: "https://instagram.com/hmppipaunesa" },
@@ -220,8 +223,6 @@ tiktok: (
               </a>
             ))}
           </div>
-
-          
         </motion.div>
       </motion.div>
       

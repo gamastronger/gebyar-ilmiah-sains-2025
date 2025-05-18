@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiCalendar, FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
 import foto4 from '../../assets/postersc.jpg';
+import guidebook from '../../assets/sc.jpg';
 
 const DeskripsiLomba = () => {
   const fadeUp = {
@@ -84,7 +85,7 @@ const DeskripsiLomba = () => {
                 
               </motion.p>
               
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link
                   to="../../auth/daftar"
                   className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-8 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-purple-900 hover:-translate-y-1 transition-all duration-300"
@@ -95,14 +96,17 @@ const DeskripsiLomba = () => {
                     transition={{ repeat: Infinity, duration: 1.5 }}
                   >→</motion.span>
                 </Link>
-                <Link 
-                  to="https://unesa.me/BukuPanduan13thGIS" 
-                  className="bg-transparent border-2 border-purple-400 text-purple-200 px-8 py-3 rounded-lg font-semibold hover:bg-purple-900 hover:bg-opacity-30 transition-colors duration-300 flex items-center justify-center gap-2"
+                <a
+                  href={guidebook}
+                  download
+                  className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-8 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-purple-900 hover:-translate-y-1 transition-all duration-300"
                 >
-                  <FiFileText />
                   <span>Download Guidebook</span>
-                </Link>
-              </div>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v12m0 0l-4-4m4 4l4-4m-4 4V4" />
+                  </svg>
+                </a>
+              </div>              
               
               <div className="flex flex-wrap gap-6 text-purple-200">
                 {/* <div className="flex items-center gap-2">
