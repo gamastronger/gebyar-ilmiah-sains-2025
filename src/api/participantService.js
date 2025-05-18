@@ -8,6 +8,7 @@ export async function getParticipantById(id) {
 
 export async function updateParticipant(id, data) {
   const res = await fetch(`${api.URL_API}/participants/${id}`, {
+    credentials: "include",
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

@@ -60,6 +60,7 @@ async function updateParticipant(id, data) {
 async function deleteParticipant(id) {
   const res = await fetch(`${api.URL_API}/participants/${id}`, {
     method: "DELETE",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,

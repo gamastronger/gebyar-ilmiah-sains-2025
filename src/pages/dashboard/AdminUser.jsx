@@ -9,6 +9,7 @@ import {
   Option,
 } from "@material-tailwind/react";
 import Swal from "sweetalert2";
+import api from "../../configs/api"; // pastikan path ini benar
 
 export function Pesanan() {
   const [admins, setAdmins] = useState([]);
@@ -22,42 +23,35 @@ export function Pesanan() {
   const [isEditing, setIsEditing] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Dummy data untuk testing
-  const dummyData = [
-    {
-      id: 1,
-      full_name: "Budi Santoso",
-      email: "budi@example.com",
-      role: "Admin",
-      status: "Active",
-    },
-    {
-      id: 2,
-      full_name: "Siti Aminah",
-      email: "siti@example.com",
-      role: "Super Admin",
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      full_name: "Ahmad Rizki",
-      email: "ahmad@example.com",
-      role: "Admin",
-      status: "Active",
-    },
-  ];
-
-  // Simulasi fetch data dummy
-  const fetchAllAdmins = () => {
-    setAdmins(dummyData);
+  // Fetch all admins from backend
+  const fetchAllAdmins = async () => {
+    try {
+      const res = await fetch(`${api.URL_API}/api/users?role=admin`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setAdmins(data);
+      } else {
+        Swal.fire("Gagal", data.message || "Gagal mengambil data admin", "error");
+      }
+    } catch (err) {
+      Swal.fire("Gagal", "Tidak dapat terhubung ke server", "error");
+    }
   };
 
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = () => {
+  // Submit (add or update)
+  const handleSubmit = async () => {
     if (!formData.full_name || !formData.email) {
       Swal.fire({
         title: "Gagal!",
@@ -72,42 +66,54 @@ export function Pesanan() {
       return;
     }
 
-    if (isEditing) {
-      setAdmins((prev) =>
-        prev.map((admin) =>
-          admin.id === formData.id ? { ...admin, ...formData } : admin
-        )
-      );
-      Swal.fire({
-        title: "Berhasil!",
-        text: "Data admin berhasil diperbarui.",
-        icon: "success",
-        confirmButtonText: "OK",
-        buttonsStyling: false,
-        customClass: {
-          confirmButton: "bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-all",
-        },
-      });
-    } else {
-      const newAdmin = {
-        ...formData,
-        id: Date.now(),
-      };
-      setAdmins((prev) => [...prev, newAdmin]);
-      Swal.fire({
-        title: "Berhasil!",
-        text: "Data admin berhasil ditambahkan.",
-        icon: "success",
-        confirmButtonText: "OK",
-        buttonsStyling: false,
-        customClass: {
-          confirmButton: "bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-all",
-        },
-      });
+    try {
+      let res, data;
+      if (isEditing) {
+        res = await fetch(`${api.URL_API}/api/admins/${formData.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        });
+        data = await res.json();
+      } else {
+        res = await fetch(`${api.URL_API}/api/admins`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        });
+        data = await res.json();
+      }
+
+      if (res.ok) {
+        Swal.fire({
+          title: "Berhasil!",
+          text: isEditing ? "Data admin berhasil diperbarui." : "Data admin berhasil ditambahkan.",
+          icon: "success",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-all",
+          },
+        });
+        fetchAllAdmins();
+        resetForm();
+      } else {
+        Swal.fire("Gagal", data.message || "Gagal menyimpan data admin", "error");
+      }
+    } catch (err) {
+      Swal.fire("Gagal", "Tidak dapat terhubung ke server", "error");
     }
-    resetForm();
   };
 
+  // Reset form
   const resetForm = () => {
     setFormData({
       id: null,
@@ -119,15 +125,15 @@ export function Pesanan() {
     setIsEditing(false);
   };
 
+  // Edit admin
   const handleEdit = (data) => {
     setFormData(data);
     setIsEditing(true);
-    
-    // Scroll to form
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id) => {
+  // Delete admin
+  const handleDelete = async (id) => {
     Swal.fire({
       title: "Konfirmasi Hapus",
       text: "Apakah Anda yakin ingin menghapus data ini? Data yang dihapus tidak dapat dikembalikan.",
@@ -141,25 +147,42 @@ export function Pesanan() {
       },
       confirmButtonText: "Hapus",
       cancelButtonText: "Batal",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        setAdmins((prev) => prev.filter((admin) => admin.id !== id));
-        Swal.fire({
-          title: "Berhasil!",
-          text: "Data admin berhasil dihapus.",
-          icon: "success",
-          confirmButtonText: "OK",
-          buttonsStyling: false,
-          customClass: {
-            confirmButton: "bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-all",
-          },
-        });
+        try {
+          const res = await fetch(`${api.URL_API}/api/admins/${id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+            credentials: "include",
+          });
+          const data = await res.json();
+          if (res.ok) {
+            Swal.fire({
+              title: "Berhasil!",
+              text: "Data admin berhasil dihapus.",
+              icon: "success",
+              confirmButtonText: "OK",
+              buttonsStyling: false,
+              customClass: {
+                confirmButton: "bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-all",
+              },
+            });
+            fetchAllAdmins();
+          } else {
+            Swal.fire("Gagal", data.message || "Gagal menghapus admin", "error");
+          }
+        } catch (err) {
+          Swal.fire("Gagal", "Tidak dapat terhubung ke server", "error");
+        }
       }
     });
   };
 
   // Filter admins based on search term
-  const filteredAdmins = admins.filter((admin) => 
+  const filteredAdmins = admins.filter((admin) =>
     admin.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     admin.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     admin.role.toLowerCase().includes(searchTerm.toLowerCase()) ||

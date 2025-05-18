@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import api from "@/configs/api";
+import Swal from "sweetalert2"; // Tambahkan import ini jika belum ada
 
 export function Layanan() {
   const [participants, setParticipants] = useState([]);
@@ -143,6 +144,41 @@ export function Layanan() {
       textColor: "text-gray-800",
       borderColor: "border-gray-200",
     },
+  };
+
+  // Tambahkan fungsi handleDelete
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Hapus Peserta?",
+      text: "Data peserta akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Hapus",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#9333EA",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await fetch(`${api.URL_API}/api/users/${id}`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          if (res.ok) {
+            setParticipants((prev) => prev.filter((p) => p.id !== id));
+            Swal.fire("Berhasil!", "Data peserta telah dihapus.", "success");
+          } else {
+            Swal.fire("Gagal", "Gagal menghapus peserta.", "error");
+          }
+        } catch (err) {
+          Swal.fire("Gagal", "Terjadi kesalahan saat menghapus.", "error");
+        }
+      }
+    });
   };
 
   return (
@@ -363,13 +399,22 @@ export function Layanan() {
                               {participant.verifiedAt || "—"}
                             </td>
                             <td className="py-3 px-4 border-b border-purple-100 text-center">
-                              <Button
-                                color="purple"
-                                onClick={() => handleDetail(participant.id)}
-                                className="rounded-md text-xs px-4 py-2 normal-case bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-md transition-all duration-300"
-                              >
-                                Detail
-                              </Button>
+                              <div className="flex justify-center items-center gap-2">
+                                <Button
+                                  color="purple"
+                                  onClick={() => handleDetail(participant.id)}
+                                  className="rounded-md text-xs px-4 py-2 normal-case bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-md transition-all duration-300 min-w-[80px] h-9 flex items-center justify-center"
+                                >
+                                  Detail
+                                </Button>
+                                <Button
+                                  color="red"
+                                  onClick={() => handleDelete(participant.id)}
+                                  className="rounded-md text-xs px-4 py-2 normal-case bg-gradient-to-r from-red-500 to-pink-500 hover:shadow-md transition-all duration-300 min-w-[80px] h-9 flex items-center justify-center"
+                                >
+                                  Hapus
+                                </Button>
+                              </div>
                             </td>
                           </motion.tr>
                         ))

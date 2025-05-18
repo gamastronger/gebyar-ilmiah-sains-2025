@@ -70,6 +70,7 @@ function Invoice() {
     try {
       const response = await fetch(`${api.URL_API}/api/invoices/${selectedInvoice.id}`, {
         method: "POST", // Ganti dari PUT ke POST
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -113,6 +114,7 @@ function Invoice() {
     try {
       const response = await fetch(`${api.URL_API}/api/invoices/byAuth`, {
         method: 'GET',
+        
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',

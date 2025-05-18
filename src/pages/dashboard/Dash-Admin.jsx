@@ -39,7 +39,8 @@ export function Profil() {
         const token = localStorage.getItem("token");
 
         // Ambil users
-        const userRes = await fetch(`${api.URL_API}/api/users`, {
+        const userRes = await fetch(`${api.URL_API}/api/users`,{
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiCalendar, FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
 import foto4 from '../../assets/postersc.jpg';
-import guidebook from '../../assets/sc.jpg';
+import guidebook from '../../assets/bukpansc.pdf';
 
 const DeskripsiLomba = () => {
   const fadeUp = {
