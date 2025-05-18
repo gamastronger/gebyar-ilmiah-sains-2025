@@ -32,9 +32,9 @@ export function Masuk() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
       localStorage.setItem('status', data.user.status); // Simpan data user ke localStorage
-      console.log("Navigating to /admin");
+      
       navigate("/admin/Dash-Admin");
-      console.log("Navigating to /admin hahhhh");
+      
     } catch (err) {
       setError(err.message);
     }

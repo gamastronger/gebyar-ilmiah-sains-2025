@@ -60,8 +60,7 @@ function Onboarding() {
   const kirimData = async () => {
     const formData = new FormData();
 
-    console.log("Data Pribadi", dataPribadi);
-    console.log("Data Sekolah", dataSekolah);
+    
     // Data Pribadi
     if (dataPribadi.name) formData.append('name', dataPribadi.name);
     if (dataPribadi.email) formData.append('email', dataPribadi.email);
@@ -82,10 +81,7 @@ function Onboarding() {
     if (dataSekolah.email_guru) formData.append('email_guru', dataSekolah.email_guru);
 
     try {
-      console.log("Isi FormData:");
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
+      
 
       const response = await fetch(`${api.URL_API}/api/participants`, {
         method: 'POST',
@@ -545,19 +541,19 @@ function Onboarding() {
     const response = await fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')
     const data = await response.json()
     setProvinsi(data);
-    console.log('provinsi', data);
+    
   }
 
   useEffect(() => {
     getProvinsi();
-    console.log('provinsi', provinsi);
+    
   }, []);
 
   const getKota = async (provinsiId) => {
     const response = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`)
     const data = await response.json()
     setKota(data);
-    console.log('kota', data);
+    
   }
 
   useEffect(() => {

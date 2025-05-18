@@ -156,10 +156,7 @@ export function Profil() {
     return () => clearInterval(timer);
   }, [summary]);
 
-  useEffect(() => {
-    console.log("Updated summary:", summary);
-    console.log("Updated animatedValues:", animatedValues);
-  }, [summary, animatedValues]);
+  
 
   // Custom Tooltip untuk grafik
   const CustomTooltip = ({ active, payload, label }) => {

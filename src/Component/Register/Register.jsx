@@ -62,9 +62,7 @@ const RegisterPage = () => {
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      console.log('Form submitted:', formData);
-    }
+    
   };
 
   return (
