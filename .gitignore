@@ -1,5 +1,6 @@
- # production
+# production
 /dist
+dist.zip
 
 # local env files
 .env
