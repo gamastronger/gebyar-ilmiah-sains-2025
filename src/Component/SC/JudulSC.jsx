@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiCalendar, FiUsers, FiAward, FiFileText, FiClipboard } from 'react-icons/fi';
 import foto4 from '../../assets/postersc.jpg';
-import guidebook from '../../assets/bukpansc.pdf';
 
 const DeskripsiLomba = () => {
   const fadeUp = {
@@ -97,7 +96,8 @@ const DeskripsiLomba = () => {
                   >→</motion.span>
                 </Link>
                 <a
-                  href={guidebook}
+                  href="https://gis-backend.karyavisual.com/bukpansc.pdf"
+                  target="_blank"
                   download
                   className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-8 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-purple-900 hover:-translate-y-1 transition-all duration-300"
                 >
