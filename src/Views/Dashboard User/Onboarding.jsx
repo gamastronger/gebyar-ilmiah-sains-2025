@@ -170,7 +170,7 @@ function Onboarding() {
             <div className="col-span-1">
               <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1 sm:mb-2">NISN</label>
               <input
-                type="text"
+                type="number"
                 placeholder="NISN"
                 value={dataPribadi.nisn}
                 onChange={(e) => setDataPribadi({ ...dataPribadi, nisn: e.target.value })}
@@ -181,7 +181,7 @@ function Onboarding() {
             <div className="col-span-1">
               <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1 sm:mb-2">No WhatsApp</label>
               <input
-                type="text"
+                type="number"
                 placeholder="No WhatsApp"
                 value={dataPribadi.nomor_wa}
                 onChange={(e) => setDataPribadi({ ...dataPribadi, nomor_wa: e.target.value })}

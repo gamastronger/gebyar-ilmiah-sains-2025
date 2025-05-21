@@ -252,14 +252,14 @@ const Navbar = () => {
               ) : (
                 <div className="flex flex-col gap-3">
                   <Link
-                    to="/masuk"
+                    to="/auth/masuk"
                     onClick={handleSidebar}
                     className="w-full px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition duration-300 text-white text-center text-sm"
                   >
                     Masuk
                   </Link>
                   <Link
-                    to="/daftar"
+                    to="/auth/daftar"
                     onClick={handleSidebar}
                     className="w-full px-4 py-2 bg-[#A78BFA] hover:bg-[#9061F9] rounded-lg transition duration-300 text-white text-center text-sm"
                   >

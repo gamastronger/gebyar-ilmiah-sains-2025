@@ -22,7 +22,7 @@ export function Sidenav({
       localStorage.removeItem("token");
       localStorage.removeItem("role");
       localStorage.removeItem("status");
-      navigate("/login");
+      navigate("/auth/masuk");
     }
   };
 

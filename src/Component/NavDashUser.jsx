@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+
 
 function NavDashUser() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+   const navigate = useNavigate();
+  const submitlogout = () => {
+    if (window.confirm("Apakah Anda yakin untuk keluar sebagai admin?")) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("status");
+      navigate("/auth/masuk");
+    }
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,7 +64,7 @@ function NavDashUser() {
             <Link to="/" className="font-bold text-lg sm:text-xl text-slate-800 flex items-center">
               <div className="relative overflow-hidden rounded-lg">
                 <motion.img 
-                  src="/src/assets/logomascot.png" 
+                  src="/img/logomascot.png" 
                   alt="Logo GIS" 
                   className="w-12 h-12 sm:w-14 sm:h-14 object-contain"
                   whileHover={{ scale: 1.05 }}
@@ -170,7 +180,7 @@ function NavDashUser() {
                 <Link 
                   to="/" 
                   className="block text-center bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-800 transition-all duration-200"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={submitlogout}
                 >
                   Logout
                 </Link>

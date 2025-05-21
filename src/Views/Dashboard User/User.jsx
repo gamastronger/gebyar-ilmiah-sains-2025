@@ -1,4 +1,3 @@
-import React from 'react';
 import DashboardUserLayout from '../../Component/NavDashUser';
 import { motion } from 'framer-motion';
 
@@ -23,7 +22,7 @@ function User() {
               <div className="relative mb-6">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full blur-md opacity-70"></div>
                 <img 
-                  src="/src/assets/logogis.png" 
+                  src="/img/logogis.png" 
                   alt="Logo GIS" 
                   className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-white shadow-lg object-cover"
                 />

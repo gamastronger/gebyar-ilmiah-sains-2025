@@ -34,7 +34,7 @@ const SmartRoute = ({ element, authOnly = false, allowedRoles = [] }) => {
             navigate("/onboarding", { replace: true });
             return;
           } else if (status === "pending") {
-            navigate("/dashboard/pending", { replace: true });
+            navigate("/dashboard/user", { replace: true });
             return;
           } else if (status === "success") {
             navigate("/dashboard/user", { replace: true });
@@ -68,7 +68,7 @@ const SmartRoute = ({ element, authOnly = false, allowedRoles = [] }) => {
           navigate("/onboarding", { replace: true });
           return;
         } else if (status === "pending") {
-          navigate("/dashboard/pending", { replace: true });
+          navigate("/dashboard/user", { replace: true });
           return;
         } else if (status === "success") {
           navigate("/dashboard/user", { replace: true });
