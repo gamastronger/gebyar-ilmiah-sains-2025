@@ -8,7 +8,7 @@ export function Footer({ brandName, brandLink }) {
   return (
     <footer className="py-2">
       <div className="flex w-full items-center justify-center px-2">
-        <Typography variant="small" className="font-normal text-center text-inherit">
+        {/* <Typography variant="small" className="font-normal text-center text-inherit">
           &copy; {year}, made with{" "}
           <HeartIcon className="-mt-0.5 inline-block h-3.5 w-3.5 text-red-600" /> by{" "}
           <a
@@ -19,7 +19,7 @@ export function Footer({ brandName, brandLink }) {
             {brandName}
           </a>{" "}
           for a better web.
-        </Typography>
+        </Typography> */}
       </div>
     </footer>
   );

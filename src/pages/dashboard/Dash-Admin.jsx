@@ -169,101 +169,9 @@ export function Profil() {
           ))}
         </div>
 
-        {/* Row 1: Grafik */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Grafik Pengumpulan Karya */}
-          <div className="opacity-0 animate-slide-left" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
-            <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="p-5">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg text-purple-800 font-semibold">
-                    Perkembangan Pengumpulan Karya
-                  </h3>
-                  <div className="text-purple-500">
-                    <i className="fas fa-chart-line"></i>
-                  </div>
-                </div>
-                <div className="h-64">
-                  {isLoaded && (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={karyaData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                        <defs>
-                          <linearGradient id="colorKarya" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0}/>
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                        <XAxis dataKey="name" stroke="#6B7280" />
-                        <YAxis stroke="#6B7280" />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Area 
-                          type="monotone" 
-                          dataKey="karya" 
-                          stroke="#8B5CF6" 
-                          fillOpacity={1} 
-                          fill="url(#colorKarya)" 
-                          strokeWidth={3} 
-                          activeDot={{ r: 6, stroke: '#8B5CF6', strokeWidth: 2, fill: '#ffffff' }}
-                        />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
+        
 
-          {/* Distribusi peserta per jenjang */}
-          <div className="opacity-0 animate-slide-right" style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}>
-            <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="p-5">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg text-indigo-800 font-semibold">
-                    Peserta per Jenjang
-                  </h3>
-                  <div className="text-indigo-500">
-                    <i className="fas fa-chart-bar"></i>
-                  </div>
-                </div>
-                <div className="h-64">
-                  {isLoaded && (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart 
-                        data={[
-                          { name: "SMP", peserta: 120 },
-                          { name: "SMA", peserta: 180 },
-                          { name: "Mahasiswa", peserta: 120 },
-                        ]} 
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                        <XAxis dataKey="name" stroke="#6B7280" />
-                        <YAxis stroke="#6B7280" />
-                        <Tooltip content={<CustomTooltip />} />
-                        <defs>
-                          <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#6366F1" stopOpacity={1} />
-                            <stop offset="100%" stopColor="#8B5CF6" stopOpacity={1} />
-                          </linearGradient>
-                        </defs>
-                        <Bar 
-                          dataKey="peserta" 
-                          fill="url(#barGradient)" 
-                          barSize={40} 
-                          radius={[5, 5, 0, 0]} 
-                          animationDuration={1500}
-                        />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Progress Verifikasi */}
+        {/* Progress Verifikasi
         <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.8s", animationFillMode: "forwards" }}>
           <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
             <div className="p-5">
@@ -300,7 +208,7 @@ export function Profil() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Tabel Pendapatan per Kategori dan Gelombang */}
         <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}>
@@ -346,70 +254,7 @@ export function Profil() {
           </div>
         </div>
 
-        {/* Tabel Aktivitas Terakhir */}
-        <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.9s", animationFillMode: "forwards" }}>
-          <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="p-5">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg text-purple-800 font-semibold">
-                  Aktivitas Terakhir
-                </h3>
-                <div className="text-purple-500">
-                  <i className="fas fa-history"></i>
-                </div>
-              </div>
-              <div className="overflow-x-auto rounded-lg">
-                <table className="w-full text-left table-auto">
-                  <thead>
-                    <tr className="bg-purple-50">
-                      <th className="px-4 py-3 font-medium text-purple-900 border-b">Tanggal</th>
-                      <th className="px-4 py-3 font-medium text-purple-900 border-b">Nama Peserta</th>
-                      <th className="px-4 py-3 font-medium text-purple-900 border-b">Aksi</th>
-                      <th className="px-4 py-3 font-medium text-purple-900 border-b">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      { date: "20 Apr 2025", name: "Ahmad Zaki", action: "Mengirim Karya", status: "success" },
-                      { date: "20 Apr 2025", name: "Nadia Salma", action: "Edit Biodata", status: "info" },
-                      { date: "19 Apr 2025", name: "Doni Wijaya", action: "Submit Jawaban CBT", status: "warning" },
-                      { date: "19 Apr 2025", name: "Sinta Dewi", action: "Verifikasi Email", status: "success" },
-                      { date: "18 Apr 2025", name: "Rendi Pratama", action: "Pendaftaran Baru", status: "success" },
-                    ].map((item, idx) => (
-                      <tr key={idx} className="border-b hover:bg-purple-50 transition-colors duration-200">
-                        <td className="px-4 py-3 text-gray-700">{item.date}</td>
-                        <td className="px-4 py-3 font-medium text-gray-900">
-                          <div className="flex items-center">
-                            <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mr-2 font-bold">
-                              {item.name.charAt(0)}
-                            </div>
-                            {item.name}
-                          </div>
-                        </td>
-                        <td className="px-4 py-3 text-gray-700">{item.action}</td>
-                        <td className="px-4 py-3">
-                          <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${
-                            item.status === 'success' ? 'bg-green-100 text-green-800' : 
-                            item.status === 'info' ? 'bg-blue-100 text-blue-800' : 
-                            'bg-amber-100 text-amber-800'
-                          }`}>
-                            <span className={`w-2 h-2 mr-1 rounded-full ${
-                              item.status === 'success' ? 'bg-green-600' : 
-                              item.status === 'info' ? 'bg-blue-600' : 
-                              'bg-amber-600'
-                            }`}></span>
-                            {item.status === 'success' ? 'Selesai' : 
-                             item.status === 'info' ? 'Diproses' : 'Menunggu'}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   );
