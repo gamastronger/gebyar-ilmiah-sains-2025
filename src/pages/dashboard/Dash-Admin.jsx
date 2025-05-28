@@ -242,98 +242,7 @@ export function Profil() {
             </div>
           ))}
         </div>
-
-        {/* Row 1: Grafik */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Grafik Pengumpulan Karya */}
-          <div className="opacity-0 animate-slide-left" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
-            <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="p-5">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg text-purple-800 font-semibold">
-                    Perkembangan Pengumpulan Karya
-                  </h3>
-                  <div className="text-purple-500">
-                    <i className="fas fa-chart-line"></i>
-                  </div>
-                </div>
-                <div className="h-64">
-                  {isLoaded && (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={karyaData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                        <defs>
-                          <linearGradient id="colorKarya" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0}/>
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                        <XAxis dataKey="name" stroke="#6B7280" />
-                        <YAxis stroke="#6B7280" />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Area 
-                          type="monotone" 
-                          dataKey="karya" 
-                          stroke="#8B5CF6" 
-                          fillOpacity={1} 
-                          fill="url(#colorKarya)" 
-                          strokeWidth={3} 
-                          activeDot={{ r: 6, stroke: '#8B5CF6', strokeWidth: 2, fill: '#ffffff' }}
-                        />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Distribusi peserta per jenjang */}
-          <div className="opacity-0 animate-slide-right" style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}>
-            <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="p-5">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg text-indigo-800 font-semibold">
-                    Peserta per Jenjang
-                  </h3>
-                  <div className="text-indigo-500">
-                    <i className="fas fa-chart-bar"></i>
-                  </div>
-                </div>
-                <div className="h-64">
-                  {isLoaded && (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart 
-                        data={pendapatanKategori} 
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                        <XAxis dataKey="kategori" stroke="#6B7280" />
-                        <YAxis stroke="#6B7280" />
-                        <Tooltip content={<CustomTooltip />} />
-                        <defs>
-                          <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#6366F1" stopOpacity={1} />
-                            <stop offset="100%" stopColor="#8B5CF6" stopOpacity={1} />
-                          </linearGradient>
-                        </defs>
-                        <Bar 
-                          dataKey="peserta" 
-                          fill="url(#barGradient)" 
-                          barSize={40} 
-                          radius={[5, 5, 0, 0]} 
-                          animationDuration={1500}
-                        />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Progress Verifikasi */}
+        {/* Progress Verifikasi
         <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.8s", animationFillMode: "forwards" }}>
           <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
             <div className="p-5">
@@ -370,7 +279,7 @@ export function Profil() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Tabel Pendapatan per Kategori dan Gelombang */}
         <div className="opacity-0 animate-slide-up" style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}>

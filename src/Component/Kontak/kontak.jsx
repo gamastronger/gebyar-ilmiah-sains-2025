@@ -31,7 +31,7 @@ const Kontak = () => {
       title: "Science Competition",
       contacts: [
         { name: "Nisa", role: "Koordinator", phone: "+6287876440866" },
-        { name: "Dzaky", role: "Wakil Koordinator", phone: "+62087758375435" }
+        { name: "Zaky", role: "Wakil Koordinator", phone: "+62087758375435" }
       ]
     }
   ];
