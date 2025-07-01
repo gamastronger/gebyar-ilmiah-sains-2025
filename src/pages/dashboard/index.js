@@ -4,7 +4,7 @@ export * from "@/pages/dashboard/SWC-Admin";
 export * from "@/pages/dashboard/Tabel";
 export * from "@/pages/dashboard/AdminUser";
 export * from "@/pages/dashboard/SC-Admin";
-export * from "@/pages/dashboard/KelolaSoal";
+export { default as Paket } from "@/pages/dashboard/KelolaSoal";
 export * from "@/pages/dashboard/Testimoni";
 export * from "@/pages/dashboard/Faq";
-export * from "@/pages/dashboard/SC-Admin";
+

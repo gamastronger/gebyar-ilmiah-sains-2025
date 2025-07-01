@@ -97,28 +97,38 @@ tiktok: (
               <div className="h-1 w-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mb-4"></div>
             </div>
             <ul className="space-y-4">
-              {[
-                { name: "Science Writing Competition", icon: "📄", url: "/competition/kti", desc: "Menulis karya ilmiah" },
-                { name: "Science Competition", icon: "🏆", url: "/competition/cbt", desc: "Uji pengetahuan sains" },
-                
-              ].map((competition, index) => (
-                <li key={index} className="group">
-                  <Link
-                    to={competition.url}
-                    className="flex items-center transition-all duration-300"
-                  >
-                    <div className="w-12 h-12 bg-purple-800/50 rounded-lg flex items-center justify-center group-hover:bg-purple-700 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-purple-900/20">
-                      <span className="text-lg">{competition.icon}</span>
-                    </div>
-                    <div className="ml-3">
-                      <span className="text-purple-100 group-hover:text-white block group-hover:translate-x-1 transition-all duration-300 font-medium">
-                        {competition.name}
-                      </span>
-                      <span className="text-purple-300/60 text-xs">{competition.desc}</span>
-                    </div>
-                  </Link>
-                </li>
-              ))}
+              <li className="group">
+                <a
+                  href="/swc"
+                  className="flex items-center transition-all duration-300"
+                >
+                  <div className="w-12 h-12 bg-purple-800/50 rounded-lg flex items-center justify-center group-hover:bg-purple-700 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-purple-900/20">
+                    <span className="text-lg">📄</span>
+                  </div>
+                  <div className="ml-3">
+                    <span className="text-purple-100 group-hover:text-white block group-hover:translate-x-1 transition-all duration-300 font-medium">
+                      Science Writing Competition
+                    </span>
+                    <span className="text-purple-300/60 text-xs">Menulis karya ilmiah</span>
+                  </div>
+                </a>
+              </li>
+              <li className="group">
+                <a
+                  href="/sc"
+                  className="flex items-center transition-all duration-300"
+                >
+                  <div className="w-12 h-12 bg-purple-800/50 rounded-lg flex items-center justify-center group-hover:bg-purple-700 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-purple-900/20">
+                    <span className="text-lg">🏆</span>
+                  </div>
+                  <div className="ml-3">
+                    <span className="text-purple-100 group-hover:text-white block group-hover:translate-x-1 transition-all duration-300 font-medium">
+                      Science Competition
+                    </span>
+                    <span className="text-purple-300/60 text-xs">Uji pengetahuan sains</span>
+                  </div>
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -134,8 +144,9 @@ tiktok: (
               
               <li>
                 <a
-                  href="mailto:gisunesa2025@unesa.ac.id"
+                  href="https://maps.app.goo.gl/nQfAZ7GVwWWLqCe46"
                   className="flex items-center group transition-all duration-300"
+                  target="_blank"
                 >
                   <div className="w-12 h-12 bg-purple-800/50 rounded-lg flex items-center justify-center group-hover:bg-purple-600 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-purple-900/20">
                   <svg className="w-5 h-5 text-purple-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
