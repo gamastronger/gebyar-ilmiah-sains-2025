@@ -118,19 +118,23 @@ const FormInput = ({
 export default function ParticipantDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({});
 
   // ===================== STATE =====================
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    whatsapp: "",
+    nomor_wa: "",
     alamat: "",
-    sekolah: "",
+    asal_sekolah: "",
     nisn: "",
     kelas: "",
     jenjang: "",
     jenis_lomba: "",
+    guru: "",
+    wa_guru: "",
+    email_guru: "",
+    link_twibbon: "",
+    status: "",
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -140,9 +144,6 @@ export default function ParticipantDetail() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [openImageDialog, setOpenImageDialog] = useState(false);
-
-  // ===================== FORM HANDLER =====================
-
 
   // ===================== FETCH DATA =====================
   useEffect(() => {
@@ -180,7 +181,7 @@ export default function ParticipantDetail() {
         }
 
         setFormData({
-          name: data.name || "",
+          name: data.name || data.nama || "",
           email: data.email || "",
           nomor_wa: data.nomor_wa || "",
           alamat: data.alamat || "",
@@ -236,10 +237,9 @@ export default function ParticipantDetail() {
     fetchData();
   }, [id]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  // ===================== FORM HANDLER =====================
+  const handleChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
-    
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -251,68 +251,37 @@ export default function ParticipantDetail() {
   const validateForm = () => {
     const newErrors = {};
     const requiredFields = [
-      "name", "email", "nomor_wa", 
-      "alamat", "asal_sekolah", "nisn"
       "name",
       "email",
-      "whatsapp",
+      "nomor_wa",
       "alamat",
-      "sekolah",
+      "asal_sekolah",
       "nisn",
       "kelas",
       "jenis_lomba",
     ];
-    
+
     requiredFields.forEach(field => {
       if (!formData[field]) newErrors[field] = "Wajib diisi";
     });
-    
+
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email tidak valid";
     }
-    
+
     if (formData.nomor_wa && !/^\d+$/.test(formData.nomor_wa)) {
       newErrors.nomor_wa = "Nomor WhatsApp harus berupa angka";
     } else if (formData.nomor_wa && !/^[+]?[\d\s-]{10,15}$/.test(formData.nomor_wa)) {
       newErrors.nomor_wa = "Nomor telepon tidak valid";
     }
-    
+
     if (formData.nisn && !/^\d+$/.test(formData.nisn)) {
       newErrors.nisn = "NISN harus berupa angka";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
-  // ===================== FETCH DATA =====================
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getParticipantById(id);
-        if (data) {
-          setFormData({
-            name: data.name || data.nama || "",
-            email: data.email || "",
-            whatsapp: data.nomor_wa || "",
-            alamat: data.alamat || "",
-            sekolah: data.asal_sekolah || "",
-            nisn: data.nisn || "",
-            kelas: data.kelas || "",
-            jenjang: data.jenjang || "",
-            jenis_lomba: data.jenis_lomba || "",
-          });
-          // Fetch file uploads (replace with your API if needed)
-          setFileUploads(data.files || []);
-        }
-      } catch (error) {
-        Swal.fire("Gagal", "Gagal mengambil data peserta.", "error");
-      }
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [id]);
 
   // ===================== SUBMIT HANDLER =====================
   const handleSubmit = async (e) => {
@@ -667,7 +636,7 @@ export default function ParticipantDetail() {
                             value={formData.email}
                             placeholder="contoh@email.com"
                             error={errors.email}
-                            nextField="whatsapp"
+                            nextField="nomor_wa"
                             autocomplete="email"
                             onChange={(e) => handleChange(e.target.name, e.target.value)}
                           />
@@ -678,6 +647,7 @@ export default function ParticipantDetail() {
                             value={formData.nomor_wa}
                             placeholder="08xxxxxxxxxx"
                             error={errors.nomor_wa}
+                            onChange={(e) => handleChange(e.target.name, e.target.value)}
                           />
                           <FormInput
                             label="Alamat Lengkap"
@@ -685,7 +655,7 @@ export default function ParticipantDetail() {
                             value={formData.alamat}
                             placeholder="Masukkan alamat lengkap"
                             error={errors.alamat}
-                            nextField="sekolah"
+                            nextField="asal_sekolah"
                             autocomplete="street-address"
                             onChange={(e) => handleChange(e.target.name, e.target.value)}
                           />
@@ -696,6 +666,7 @@ export default function ParticipantDetail() {
                             value={formData.asal_sekolah}
                             placeholder="Masukkan nama sekolah"
                             error={errors.asal_sekolah}
+                            onChange={(e) => handleChange(e.target.name, e.target.value)}
                           />
                           <FormInput
                             label="NISN"
@@ -708,13 +679,29 @@ export default function ParticipantDetail() {
                           />
                           {/* Baris 4: Jenis Lomba (full width) */}
                           <div className="md:col-span-2">
-                            <FormInput 
-                              label="Jenis Lomba" 
-                              name="jenis_lomba" 
-                              value={formData.jenis_lomba}
-                              placeholder="Masukkan jenis lomba"
-                              error={errors.jenis_lomba}
-                            />
+                            <label htmlFor="jenis_lomba" className="text-sm font-medium text-gray-700 mb-1 block">
+                              Jenis Lomba
+                            </label>
+                            <select
+                              id="jenis_lomba"
+                              name="jenis_lomba"
+                              value={formData.jenis_lomba || ""}
+                              onChange={(e) => handleChange(e.target.name, e.target.value)}
+                              className={`w-full px-4 py-3 border rounded-lg text-gray-800 ${
+                                errors.jenis_lomba ? "border-red-500" : "border-gray-300"
+                              } focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault();
+                                  document.querySelector('button[type="submit"]')?.focus();
+                                }
+                              }}
+                            >
+                              <option value="">Pilih jenis lomba</option>
+                              <option value="KTI">Science Writing Competition</option>
+                              <option value="CBT">Science Competition</option>
+                            </select>
+                            {errors.jenis_lomba && <p className="text-red-500 text-xs mt-1">{errors.jenis_lomba}</p>}
                           </div>
                           {/* Baris 5 */}
                           <FormInput 
@@ -734,7 +721,7 @@ export default function ParticipantDetail() {
                               id="jenjang"
                               name="jenjang"
                               value={formData.jenjang || ""}
-                              onChange={(e) => handleChange("jenjang", e.target.value)}
+                              onChange={(e) => handleChange(e.target.name, e.target.value)}
                               className={`w-full px-4 py-3 border rounded-lg text-gray-800 ${
                                 errors.jenjang ? "border-red-500" : "border-gray-300"
                               } focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
@@ -746,31 +733,6 @@ export default function ParticipantDetail() {
                             </select>
                             {errors.jenjang && <p className="text-red-500 text-xs mt-1">{errors.jenjang}</p>}
                           </div>
-                          <div className="md:col-span-2">
-                            <label htmlFor="jenis_lomba" className="text-sm font-medium text-gray-700 mb-1 block">
-                              Jenis Lomba
-                            </label>
-                            <select
-                              id="jenis_lomba"
-                              name="jenis_lomba"
-                              value={formData.jenis_lomba || ""}
-                              onChange={(e) => handleChange("jenis_lomba", e.target.value)}
-                              className={`w-full px-4 py-3 border rounded-lg text-gray-800 ${
-                                errors.jenis_lomba ? "border-red-500" : "border-gray-300"
-                              } focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                  e.preventDefault();
-                                  document.querySelector('button[type="submit"]')?.focus();
-                                }
-                              }}
-                            >
-                              <option value="">Pilih jenis lomba</option>
-                              <option value="KTI">Science Writing Competition</option>
-                              <option value="CBT">Science Competition</option>
-                            </select>
-                            {errors.jenis_lomba && <p className="text-red-500 text-xs mt-1">{errors.jenis_lomba}</p>}
-                          </div>
                           {/* Baris 6 */}
                           <FormInput 
                             label="Guru Pembimbing" 
@@ -778,6 +740,7 @@ export default function ParticipantDetail() {
                             value={formData.guru}
                             placeholder="Nama guru pembimbing"
                             error={errors.guru}
+                            onChange={(e) => handleChange(e.target.name, e.target.value)}
                           />
                           <FormInput 
                             label="WA Guru" 
@@ -785,6 +748,7 @@ export default function ParticipantDetail() {
                             value={formData.wa_guru}
                             placeholder="Nomor WA guru"
                             error={errors.wa_guru}
+                            onChange={(e) => handleChange(e.target.name, e.target.value)}
                           />
                           <FormInput 
                             label="Email Guru" 
@@ -792,6 +756,7 @@ export default function ParticipantDetail() {
                             value={formData.email_guru}
                             placeholder="Email guru"
                             error={errors.email_guru}
+                            onChange={(e) => handleChange(e.target.name, e.target.value)}
                           />
                           <FormInput 
                             label="Status" 
@@ -799,6 +764,7 @@ export default function ParticipantDetail() {
                             value={formData.status}
                             placeholder="Status peserta"
                             error={errors.status}
+                            onChange={(e) => handleChange(e.target.name, e.target.value)}
                           />
                         </div>
                       </div>
