@@ -406,7 +406,7 @@ const Deskripsi = () => {
                 </div>
                 
                 <div className="flex flex-wrap gap-4">
-                  <GradientButton primary={true} onClick={() => navigate('/kti')}>
+                  <GradientButton primary={true} onClick={() => navigate('/swc')}>
                     Selengkapnya
                   </GradientButton>
                   
@@ -465,7 +465,7 @@ const Deskripsi = () => {
                 </div>
                 
                 <div className="flex flex-wrap gap-4">
-                <GradientButton primary={true} onClick={() => navigate('/cbt')}>
+                <GradientButton primary={true} onClick={() => navigate('/sc')}>
                     Selengkapnya
                   </GradientButton>
                 </div>

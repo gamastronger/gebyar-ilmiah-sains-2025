@@ -126,7 +126,7 @@ export default function ParticipantDetail() {
     nisn: "",
     kelas: "",
     jenjang: "",
-    jenisLomba: "",
+    jenis_lomba: "",
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -157,7 +157,7 @@ export default function ParticipantDetail() {
       "sekolah",
       "nisn",
       "kelas",
-      "jenisLomba",
+      "jenis_lomba",
     ];
 
     requiredFields.forEach((field) => {
@@ -194,13 +194,13 @@ export default function ParticipantDetail() {
           setFormData({
             name: data.name || data.nama || "",
             email: data.email || "",
-            whatsapp: data.whatsapp || "",
+            whatsapp: data.nomor_wa || "",
             alamat: data.alamat || "",
-            sekolah: data.sekolah || "",
+            sekolah: data.asal_sekolah || "",
             nisn: data.nisn || "",
             kelas: data.kelas || "",
             jenjang: data.jenjang || "",
-            jenisLomba: data.jenisLomba || "",
+            jenis_lomba: data.jenis_lomba || "",
           });
           // Fetch file uploads (replace with your API if needed)
           setFileUploads(data.files || []);
@@ -627,16 +627,16 @@ export default function ParticipantDetail() {
                             {errors.jenjang && <p className="text-red-500 text-xs mt-1">{errors.jenjang}</p>}
                           </div>
                           <div className="md:col-span-2">
-                            <label htmlFor="jenisLomba" className="text-sm font-medium text-gray-700 mb-1 block">
+                            <label htmlFor="jenis_lomba" className="text-sm font-medium text-gray-700 mb-1 block">
                               Jenis Lomba
                             </label>
                             <select
-                              id="jenisLomba"
-                              name="jenisLomba"
-                              value={formData.jenisLomba || ""}
-                              onChange={(e) => handleChange("jenisLomba", e.target.value)}
+                              id="jenis_lomba"
+                              name="jenis_lomba"
+                              value={formData.jenis_lomba || ""}
+                              onChange={(e) => handleChange("jenis_lomba", e.target.value)}
                               className={`w-full px-4 py-3 border rounded-lg text-gray-800 ${
-                                errors.jenisLomba ? "border-red-500" : "border-gray-300"
+                                errors.jenis_lomba ? "border-red-500" : "border-gray-300"
                               } focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
@@ -646,10 +646,10 @@ export default function ParticipantDetail() {
                               }}
                             >
                               <option value="">Pilih jenis lomba</option>
-                              <option value="KTI">Karya Tulis Ilmiah (KTI)</option>
-                              <option value="CBT">Computer Based Test (CBT)</option>
+                              <option value="KTI">Science Writing Competition</option>
+                              <option value="CBT">Science Competition</option>
                             </select>
-                            {errors.jenisLomba && <p className="text-red-500 text-xs mt-1">{errors.jenisLomba}</p>}
+                            {errors.jenis_lomba && <p className="text-red-500 text-xs mt-1">{errors.jenis_lomba}</p>}
                           </div>
                         </div>
                       </div>

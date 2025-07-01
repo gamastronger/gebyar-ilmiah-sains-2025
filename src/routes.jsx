@@ -1,17 +1,17 @@
 import {
-  HomeIcon,
+  // HomeIcon,
   UserCircleIcon,
-  TableCellsIcon,
+  // TableCellsIcon,
   ServerStackIcon,
-  RectangleStackIcon,
+  // RectangleStackIcon,
   Squares2X2Icon,
   DocumentIcon,
   ClipboardDocumentCheckIcon,
-  ShoppingCartIcon,
-  ChatBubbleLeftEllipsisIcon,
-  QuestionMarkCircleIcon,
+  // ShoppingCartIcon,
+  // ChatBubbleLeftEllipsisIcon,
+  // QuestionMarkCircleIcon,
 } from "@heroicons/react/24/solid";
-import { Beranda, Profil, Tabel, Portofolio, Layanan, Paket, Pesanan, Testimoni, Faq } from "@/pages/dashboard";
+import { Profil, Portofolio, Layanan, Paket } from "@/pages/dashboard";
 import { Daftar, Masuk } from "@/pages/auth";
 
 
@@ -57,33 +57,33 @@ export const routes = [
         path: "/kelola-soal",
         element: <Paket />,
       },
-      {
-        icon: <ShoppingCartIcon {...icon} />,
-        name: "Admin",
-        path: "/AdminUser",
-        element: <Pesanan />,
-      },
+      // {
+      //   icon: <ShoppingCartIcon {...icon} />,
+      //   name: "Admin",
+      //   path: "/AdminUser",
+      //   element: <Pesanan />,
+      // },
      
     ],
   },
-  {
-    title: "Autentikasi",
-    layout: "auth",
-    pages: [
-      {
-        icon: <ServerStackIcon {...icon} />,
-        name: "masuk",
-        path: "/masuk",
-        element: <Masuk />,
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-        name: "daftar",
-        path: "/daftar",
-        element: <Daftar />,
-      },
-    ],
-  },
+  // {
+  //   title: "Autentikasi",
+  //   layout: "auth",
+  //   pages: [
+  //     {
+  //       icon: <ServerStackIcon {...icon} />,
+  //       name: "masuk",
+  //       path: "/masuk",
+  //       element: <Masuk />,
+  //     },
+  //     {
+  //       icon: <ServerStackIcon {...icon} />,
+  //       name: "daftar",
+  //       path: "/daftar",
+  //       element: <Daftar />,
+  //     },
+  //   ],
+  // },
 ];
 
 

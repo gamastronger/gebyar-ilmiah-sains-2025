@@ -68,7 +68,7 @@ const Navbar = () => {
         {/* Desktop Links with Auth Buttons */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           <a href="/" className="hover:text-[#A78BFA] transition duration-300 relative group">
-            Home
+            Beranda
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
           <a href="/swc" className="hover:text-[#A78BFA] transition duration-300 relative group">
@@ -80,7 +80,7 @@ const Navbar = () => {
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
           <a href="/kontak" className="hover:text-[#A78BFA] transition duration-300 relative group">
-            Contact
+            Kontak
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A78BFA] transition-all duration-300 group-hover:w-full"></span>
           </a>
           <a 
