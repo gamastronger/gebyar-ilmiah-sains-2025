@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { Search, Plus, Trash2, Eye, FileText, Image, CheckCircle, XCircle, CheckCircle2 } from 'lucide-react';
-import TambahSoal from "./TambahSoal";
+import TambahSoal from "./tambahsoal";
 
 // Util: mapping data dari API -> struktur UI lokal
 const mapApiQuestions = (apiQuestions = [], jenjang) => {
