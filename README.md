@@ -34,7 +34,7 @@ npm run preview
 
 **Status:** ✅ **SIAP DEPLOY!**
 
-### Langkah Deploy:
+### Langkah Deploy
 
 1. **Login ke Vercel** → [vercel.com](https://vercel.com)
 2. **Import repository** ini
