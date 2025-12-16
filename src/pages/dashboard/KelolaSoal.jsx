@@ -1,59 +1,73 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { Search, Plus, Trash2, Eye, FileText, Image, CheckCircle, XCircle, CheckCircle2 } from 'lucide-react';
 import TambahSoal from "./TambahSoal";
 
-// Hapus kategori dan tingkat dari dummySoalSD & dummySoalSMP
-const dummySoalSD = [
-  {
-    id: 1,
-    pertanyaan: "Apa rumus luas lingkaran?",
-    tipe: "text",
-    jenjang: "SD",
-    jawaban: [
-      { id: 'a', teks: "π × r²", tipe: "text", benar: true },
-      { id: 'b', teks: "2 × π × r", tipe: "text", benar: false },
-      { id: 'c', teks: "π × d", tipe: "text", benar: false },
-      { id: 'd', teks: "r²", tipe: "text", benar: false }
-    ]
-  },
-  {
-    id: 2,
-    pertanyaan: "Manakah gambar yang menunjukkan segitiga siku-siku?",
-    tipe: "text",
-    jenjang: "SD",
-    jawaban: [
-      { id: 'a', teks: "Gambar A", tipe: "image", url: "/placeholder-triangle-a.jpg", benar: false },
-      { id: 'b', teks: "Gambar B", tipe: "image", url: "/placeholder-triangle-b.jpg", benar: true },
-      { id: 'c', teks: "Gambar C", tipe: "image", url: "/placeholder-triangle-c.jpg", benar: false },
-      { id: 'd', teks: "Gambar D", tipe: "image", url: "/placeholder-triangle-d.jpg", benar: false }
-    ]
-  }
-];
+// Util: mapping data dari API -> struktur UI lokal
+const mapApiQuestions = (apiQuestions = [], jenjang) => {
+  const toArray = (val) => (Array.isArray(val) ? val : []);
+  const letterByIndex = (i) => String.fromCharCode(97 + i); // 0->'a'
 
-const dummySoalSMP = [
-  {
-    id: 3,
-    pertanyaan: "Sebutkan ibu kota Indonesia!",
-    tipe: "text",
-    jenjang: "SMP",
-    jawaban: [
-      { id: 'input', teks: "Jakarta", tipe: "input", benar: true }
-    ]
-  },
-  {
-    id: 4,
-    pertanyaan: "Apa satuan SI untuk gaya?",
-    tipe: "text",
-    jenjang: "SMP",
-    jawaban: [
-      { id: 'a', teks: "Newton", tipe: "text", benar: true },
-      { id: 'b', teks: "Joule", tipe: "text", benar: false },
-      { id: 'c', teks: "Watt", tipe: "text", benar: false },
-      { id: 'd', teks: "Pascal", tipe: "text", benar: false }
-    ]
-  }
-];
+  return toArray(apiQuestions).map((q, idx) => {
+    const id = q?.id || q?._id || q?.question_id || q?.uuid || idx + 1;
+    const pertanyaan = q?.question_text || q?.pertanyaan || q?.text || q?.title || "";
+
+    // Deteksi tipe konten soal
+    const gambarSoal = q?.image || q?.gambar || q?.image_url || null;
+    const tipe = gambarSoal ? 'image' : 'text';
+
+    // Ambil opsi jawaban dari berbagai kemungkinan key
+    const rawOptions = q?.options || q?.choices || q?.jawaban || q?.answers || [];
+    let jawaban = toArray(rawOptions).map((opt, i) => {
+      const teks =
+        typeof opt === 'string'
+          ? opt
+          : opt?.text || opt?.teks || opt?.label || opt?.optionText || '';
+      const gambar = opt?.image || opt?.gambar || opt?.url || null;
+      const tipeJawab = gambar ? 'image' : (opt?.tipe || 'text');
+      const benar = Boolean(
+        opt?.correct || opt?.benar || opt?.is_correct || opt?.isCorrect || false
+      );
+      return {
+        id: letterByIndex(i),
+        teks: String(teks ?? ''),
+        tipe: tipeJawab,
+        benar,
+        ...(gambar ? { gambar } : {}),
+      };
+    });
+
+    // Jika tidak ada flag benar pada opsi, coba pakai field penanda jawaban benar di level soal
+    const anyCorrect = jawaban.some((j) => j.benar);
+    if (!anyCorrect) {
+      const correctOpt = q?.correct_option || q?.correctOption || q?.answer || q?.correctAnswer;
+      const correctIdx =
+        typeof correctOpt === 'number'
+          ? correctOpt
+          : typeof correctOpt === 'string'
+            ? (correctOpt.toUpperCase().charCodeAt(0) - 65) // 'A' -> 0
+            : -1;
+      if (correctIdx >= 0 && correctIdx < jawaban.length) {
+        jawaban = jawaban.map((j, i) => ({ ...j, benar: i === correctIdx }));
+      }
+    }
+
+    // Tipe isian singkat jika tidak ada opsi tetapi ada jawaban benar text
+    if (jawaban.length === 0 && (q?.correct_answer_text || q?.correctText)) {
+      jawaban = [{ id: 'input', teks: q?.correct_answer_text || q?.correctText, tipe: 'input', benar: true }];
+    }
+
+    return {
+      id,
+      pertanyaan,
+      tipe,
+      jenjang,
+      ...(gambarSoal ? { gambarSoal } : {}),
+      jawaban,
+    };
+  });
+};
 
 const KelolaSoal = () => {
   const [currentView, setCurrentView] = useState('list'); // 'list' or 'answers'
@@ -69,8 +83,45 @@ const KelolaSoal = () => {
   const navigate = useNavigate();
 
   // Data soal per jenjang
-  const [soalDataSD, setSoalDataSD] = useState(dummySoalSD);
-  const [soalDataSMP, setSoalDataSMP] = useState(dummySoalSMP);
+  const [soalDataSD, setSoalDataSD] = useState([]);
+  const [soalDataSMP, setSoalDataSMP] = useState([]);
+
+  // Loader data dari API berdasarkan jenjang
+  const loadSoal = async (level) => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('token'); // Replace with the actual key where the token is stored
+      if (!token) {
+        throw new Error('Token tidak ditemukan');
+      }
+    
+      const { data } = await axios.get(
+        'https://ujicoba-gis-backend.karyavisual.com/api/exam/questions',
+        {
+          params: { level },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    
+      const payload = data?.data ?? data ?? [];
+      const mapped = mapApiQuestions(payload, level);
+      if (level === 'SD') setSoalDataSD(mapped);
+      if (level === 'SMP') setSoalDataSMP(mapped);
+    } catch (error) {
+      console.error('Gagal memuat soal:', error);
+      showAlert('error', `Gagal memuat soal ${level}.`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Muat data saat pertama dan saat jenjang berubah
+  useEffect(() => {
+    loadSoal(selectedJenjang);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedJenjang]);
 
   // Pilih data soal sesuai jenjang
   const soalData = selectedJenjang === 'SD' ? soalDataSD : soalDataSMP;
