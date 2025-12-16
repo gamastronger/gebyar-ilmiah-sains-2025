@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useMotionTemplate} from "framer-motion";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 // import foto4 from "../../assets/sc.jpg";
 // import facebookLogo from "../../assets/facebooklogo.png";
 // import instagramLogo from "../../assets/instagramlogo.png";
@@ -96,7 +97,9 @@ const TiltCard = ({ children }) => {
   );
 };
 
-
+TiltCard.propTypes = {
+  children: PropTypes.node,
+};
 
 // Custom button component
 const GradientButton = ({ children, onClick, primary = true }) => {
@@ -117,6 +120,12 @@ const GradientButton = ({ children, onClick, primary = true }) => {
   );
 };
 
+GradientButton.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
+  primary: PropTypes.bool,
+};
+
 // Section title component
 const SectionTitle = ({ children, subtitle }) => {
   return (
@@ -134,17 +143,9 @@ const SectionTitle = ({ children, subtitle }) => {
   );
 };
 
-// Image display component with hover effect
-const ImageDisplay = ({ src, alt, className }) => {
-  return (
-    <div className={`overflow-hidden rounded-lg shadow-xl ${className}`}>
-      <img
-        src={src}
-        alt={alt}
-        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-      />
-    </div>
-  );
+SectionTitle.propTypes = {
+  children: PropTypes.node.isRequired,
+  subtitle: PropTypes.string,
 };
 
 // Tambahkan komponen EnhancedPosterSection di sini
