@@ -362,7 +362,7 @@ const Daftar = () => {
 
               <div className="text-center text-sm text-gray-600">
                 Sudah punya akun?{" "}
-                <Link to="/masuk" className="text-purple-600 font-medium hover:underline">
+                <Link to="/auth/masuk" className="text-purple-600 font-medium hover:underline">
                   Masuk
                 </Link>
               </div>

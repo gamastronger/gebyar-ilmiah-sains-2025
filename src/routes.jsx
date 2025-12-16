@@ -66,24 +66,24 @@ export const routes = [
      
     ],
   },
-  // {
-  //   title: "Autentikasi",
-  //   layout: "auth",
-  //   pages: [
-  //     {
-  //       icon: <ServerStackIcon {...icon} />,
-  //       name: "masuk",
-  //       path: "/masuk",
-  //       element: <Masuk />,
-  //     },
-  //     {
-  //       icon: <ServerStackIcon {...icon} />,
-  //       name: "daftar",
-  //       path: "/daftar",
-  //       element: <Daftar />,
-  //     },
-  //   ],
-  // },
+  {
+    title: "Autentikasi",
+    layout: "auth",
+    pages: [
+      {
+        icon: <ServerStackIcon {...icon} />,
+        name: "masuk",
+        path: "/masuk",
+        element: <Masuk />,
+      },
+      {
+        icon: <ServerStackIcon {...icon} />,
+        name: "daftar",
+        path: "/daftar",
+        element: <Daftar />,
+      },
+    ],
+  },
 ];
 
 
